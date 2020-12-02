@@ -51,12 +51,9 @@ CREATE TABLE Games (
 	DateCreated datetime not null, 
 	GameIconId int null, 
 	FOREIGN KEY(GameIconId) REFERENCES GameIcons(Id),
-);
-
--- ADDED later:
-ALTER TABLE Games
-ADD PhotoUrl nvarchar(1000) null,
+	PhotoUrl nvarchar(1000) null,
 	Keywords nvarchar(1000) null
+);
 
 CREATE TABLE GameAges (
 	Id int Identity(1,1) Primary Key not null, 
@@ -194,6 +191,9 @@ VALUES('Medium (1-4 hours)', '')
 
 INSERT INTO PreworkLevels([Name], IconUrl)
 VALUES('High (>4 hours)', '')
+
+
+
 
 insert into Users(firstName, lastName,email,dateCreated,password,IsActive,photoUrl,firebaseUid)
 values('Felix', 'Jordan', 'felix.jordan@gmail.com', '2020', 'password123', 1,'https://cdn.pixabay.com/photo/2019/12/20/01/11/headshot-4707400_1280.jpg','')
@@ -501,7 +501,7 @@ INSERT INTO [dbo].[Games]
      VALUES('Countdown to Valentine’s Day Practice Chart',1,'','Improve a specific set of skills or difficult spot by working on it 100 times!',1,'Print the chart and pick a reward to give the student.','1. Print the chart. 
  2. Pick a set of skills to focus on. 
  3. Have the student mark down every time they practice that specific skill set or difficult spot.
- 4. Reward the student when they read 100 practices for this skill set!','Suzuki Violin Practice Shop','https://www.teacherspayteachers.com/Product/Suzuki-5-Practice-Chart-Valentines-Day-3592686',1,'2020-01-01',1,'https://ecdn.teacherspayteachers.com/thumbitem/Suzuki-5-Practice-Chart-Valentine-s-Day-3592686-1554897191/original-3592686-1.jpg','Practice Chart, Valentine’s Day,')
+ 4. Reward the student when they read 100 practices for this skill set!','Suzuki Violin Practice Shop','https://www.teacherspayteachers.com/Product/Suzuki-Violin-Practice-Chart-Valentines-Day-3592686',1,'2020-01-01',1,'https://ecdn.teacherspayteachers.com/thumbitem/Suzuki-5-Practice-Chart-Valentine-s-Day-3592686-1554897191/original-3592686-1.jpg','Practice Chart, Valentine’s Day,')
 GO
 
 
@@ -509,20 +509,20 @@ GO
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
      VALUES('Review Songs Card Game',1,'','Reviewing past repertoire songs is an important component of a child’s ongoing development given that all new songs build on skills learned in prior songs. But reviewing past songs doesn’t have to be a bore!',2,'Buy the cards (or make them).','1. Shuffle cards.
- 2. Let child pick 2 review song cards to practice that day /week.','Suzuki 5 Practice Shop','https://www.teacherspayteachers.com/Product/Valentines-Day-Suzuki-5-Review-Cards-Book-1-3588897',2,'2020-01-01',2,'https://ecdn.teacherspayteachers.com/thumbitem/Valentine-s-Day-Suzuki-5-Review-Cards-Book-1-3588897-1551559262/original-3588897-2.jpg','Review, Cards, Valentine’s Day')
+ 2. Let child pick 2 review song cards to practice that day /week.','Suzuki 5 Practice Shop','https://www.teacherspayteachers.com/Product/Valentines-Day-Suzuki-Violin-Review-Cards-Book-1-3588897',2,'2020-01-01',2,'https://ecdn.teacherspayteachers.com/thumbitem/Valentine-s-Day-Suzuki-Violin-Review-Cards-Book-1-3588897-1551559262/original-3588897-2.jpg','Review, Cards, Valentine’s Day')
 GO
 
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
      VALUES('Task Cards',1,'','Help your student practice specific skills with new or past songs while giving them the independence of picking the skill to work on themselves and the fun surprise element of not knowing which one they will pick!',2,'Buy the cards (or make them).','1. Shuffle cards.
- 2. Let child pick 2 review song cards to practice that day /week.','Suzuki 5 Practice Shop','https://www.teacherspayteachers.com/Product/Suzuki-5-Valentines-Cards-3631183',3,'2020-01-01',3,'https://ecdn.teacherspayteachers.com/thumbitem/Suzuki-5-Valentine-s-Cards-3631183-1581247051/original-3631183-3.jpg','Review, Cards, Valentine’s Day')
+ 2. Let child pick 2 review song cards to practice that day /week.','Suzuki 5 Practice Shop','https://www.teacherspayteachers.com/Product/Suzuki-Violin-Valentines-Cards-3631183',3,'2020-01-01',3,'https://ecdn.teacherspayteachers.com/thumbitem/Suzuki-Violin-Valentine-s-Cards-3631183-1581247051/original-3631183-3.jpg','Review, Cards, Valentine’s Day')
 GO
 
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
      VALUES('Music Tour',1,'','Take the student “on tour” —playing something different in each room of the house, on the front or back porch or in a different places in the yard.',1,'None','1. Ask the student to pick 5 (or the number of songs they need to play) places in the house / neighborhood where they would like to practice. 
  1. Go to each location and play.
- 1. Notice how the instrument sound may be different in different locations - for example, based on room size or whether it is inside or outside.','Sarah Mitchell','',4,'2020-01-01',4,'https://cdn.pixabay.com/photo/2016/08/24/19/18/5-1617787_1280.jpg','Review, Home, House')
+ 1. Notice how the instrument sound may be different in different locations - for example, based on room size or whether it is inside or outside.','Sarah Mitchell','',4,'2020-01-01',4,'https://cdn.pixabay.com/photo/2016/08/24/19/18/violin-1617787_1280.jpg','Review, Home, House')
 GO
 
 
@@ -561,7 +561,7 @@ INSERT INTO [dbo].[Games]
      VALUES(
 'Bow Parts Song',1,'Bow Parts Song','Sing the parts of the bow to make it easier to remember them.',1,'None','1. Parent asks the question: Where is the frog? And the child answers in the same note: Here is the frog. 
  2. Parent keeps asking question, raising the pitch with each question and having the child match her pitch. 
- 3. Show the child how to make exaggerated dramatic No No No hand gestures to answer the last question: Where is the hair? Answer: DON’T TOUCH THE HAIR!','Sarah Mitchell','',8,'2020-01-01',9,'https://cdn.pixabay.com/photo/2018/05/12/23/47/5-3394881_1280.jpg','Bow, Song, Car, Travel'
+ 3. Show the child how to make exaggerated dramatic No No No hand gestures to answer the last question: Where is the hair? Answer: DON’T TOUCH THE HAIR!','Sarah Mitchell','',8,'2020-01-01',9,'https://cdn.pixabay.com/photo/2018/05/12/23/47/violin-3394881_1280.jpg','Bow, Song, Car, Travel'
 )
 GO
 
@@ -587,6 +587,8 @@ VALUES(
  )
 GO
 
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
 VALUES(
 'Birthday Candle',1,'','Let the time it takes for a birthday candle to burn dictate the length of the practice session!',2,'Get a set of birthday candles.','Light a birthday candle (make some type of holder) and have that be the length of the practice session.','Suzuki Association of the Americas','https://static1.squarespace.com/static/590a327459cc68c870460707/t/59c14d990abd04286b87c33b/1505840540058/Practicing+Games-A+Collection.pdf',1,'2020-01-01',12,'https://cdn.pixabay.com/photo/2018/07/22/16/36/muffin-3554917_1280.jpg','Home, House')
 GO
@@ -621,7 +623,7 @@ VALUES(
  4. Let the child pick refreshments to serve.','1. Send out invitations. 
  2. Let the child select the pieces that will be played.
  3. Practice for a week in preparation. 
- 4. Set up a stage and make a spotlight!','Suzuki Association of the Americas','https://static1.squarespace.com/static/590a327459cc68c870460707/t/59c14d990abd04286b87c33b/1505840540058/Practicing+Games-A+Collection.pdf',5,'2020-01-01',16,'https://cdn.pixabay.com/photo/2016/08/24/19/18/5-1617787__480.jpg','Recital, Show, Family'
+ 4. Set up a stage and make a spotlight!','Suzuki Association of the Americas','https://static1.squarespace.com/static/590a327459cc68c870460707/t/59c14d990abd04286b87c33b/1505840540058/Practicing+Games-A+Collection.pdf',5,'2020-01-01',16,'https://cdn.pixabay.com/photo/2016/08/24/19/18/violin-1617787__480.jpg','Recital, Show, Family'
  )
 GO
 
@@ -763,14 +765,14 @@ VALUES(
  (Can you see what’s coming?)
  “How many noses have you got?”
  Bigger smiles now, and the little violinist answers, “Two!!!“ or just looks at me, laughing and trying to keep playing, while giggles and guffaws break out from the parents.
- Once they’ve got used to how the game works, I venture more complicated questions such as, “How old are you at your next birthday? What’s 11 plus 3?” and finally, “What is your telephone number at home – backwards?”','John Berger','https://teachsuzuki5.com/category/games/',5,'2020-01-01',33,'https://cdn.pixabay.com/photo/2015/06/28/21/21/person-824921__480.jpg','Review, Skills, Practice Spot'
+ Once they’ve got used to how the game works, I venture more complicated questions such as, “How old are you at your next birthday? What’s 11 plus 3?” and finally, “What is your telephone number at home – backwards?”','John Berger','https://teachsuzukiviolin.com/category/games/',5,'2020-01-01',33,'https://cdn.pixabay.com/photo/2015/06/28/21/21/person-824921__480.jpg','Review, Skills, Practice Spot'
 )
 GO
 
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
 VALUES(
-'Bingo Game',1,'','B-I-N-G-O!',2,'Make your own bingo cards with different notes and rhythms on each square and pass them out to students.','After you play a note or rhythm, students will check their board to see if it’s present. If it is, they will place a penny on the appropriate square. The first person with five pennies in a row wins!','TakeLessons','https://takelessons.com/blog/5-games-for-kids-z08',6,'2020-01-01',33,'https://takelessons.com/blog/wp-content/uploads/2015/09/2.Bingo_.jpg','Practice Spot, Review, Bingo'
+'Bingo Game',1,'','B-I-N-G-O!',2,'Make your own bingo cards with different notes and rhythms on each square and pass them out to students.','After you play a note or rhythm, students will check their board to see if it’s present. If it is, they will place a penny on the appropriate square. The first person with five pennies in a row wins!','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',6,'2020-01-01',33,'https://takelessons.com/blog/wp-content/uploads/2015/09/2.Bingo_.jpg','Practice Spot, Review, Bingo'
 )
 GO
 
@@ -778,7 +780,7 @@ GO
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
 VALUES(
-'What Note Am I?',1,'','This violin game is very similar to the game “Who Am I?” but instead of guessing what famous person they are, students will guess what note they are.',3,'Start by making large cards with notes.','Hand out a card to each student and have them place it on their forehead without peeking. Then have the students ask each other questions to find out what note is on their card; for example, “Do I have a stem?”','TakeLessons','https://takelessons.com/blog/5-games-for-kids-z08',7,'2020-01-01',34,'https://takelessons.com/blog/wp-content/uploads/2015/09/3.-What-Note-Am-I.jpg','Music Reading, Notes, Car, Travel')
+'What Note Am I?',1,'','This violin game is very similar to the game “Who Am I?” but instead of guessing what famous person they are, students will guess what note they are.',3,'Start by making large cards with notes.','Hand out a card to each student and have them place it on their forehead without peeking. Then have the students ask each other questions to find out what note is on their card; for example, “Do I have a stem?”','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',7,'2020-01-01',34,'https://takelessons.com/blog/wp-content/uploads/2015/09/3.-What-Note-Am-I.jpg','Music Reading, Notes, Car, Travel')
 GO
 
 INSERT INTO [dbo].[Games]
@@ -813,7 +815,7 @@ GO
 INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
 VALUES(
-'The Alphabet Game',1,'','Teach the right posture in a fun way!',1,'None','Gently help the student get into the correct position. Then ask him or her to freeze in this position until you sing the entire alphabet song forward and backward. The student will enjoy hearing you fumble while trying to sing the alphabet backwards.','TakeLessons','https://takelessons.com/blog/5-games-for-kids-z08',5,'2020-01-01',40,'https://takelessons.com/blog/wp-content/uploads/2015/09/7.The-Alphabet-Game.jpg','Position, Posture'
+'The Alphabet Game',1,'','Teach the right posture in a fun way!',1,'None','Gently help the student get into the correct position. Then ask him or her to freeze in this position until you sing the entire alphabet song forward and backward. The student will enjoy hearing you fumble while trying to sing the alphabet backwards.','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',5,'2020-01-01',40,'https://takelessons.com/blog/wp-content/uploads/2015/09/7.The-Alphabet-Game.jpg','Position, Posture'
 )
 GO
 
@@ -890,7 +892,7 @@ INSERT INTO [dbo].[Games]
            ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
 VALUES(
 'Music Notes Flash Cards',1,'','On long terms, it is a bad habit to refer to tones in terms like “open A” or “first finger on E-string”. Tones have names: A, F sharp, etc., and they have a notation: between the 2nd and 3rd line, on the 5th line, etc. A convenient way to teach and practice these references is with flash cards.',2,'There are prefabricated flash cards available, or you can make your own.','There are many possible things that can be done with the flash cards. If you have 2 students, you can even play games:
-  Show a flash card (with a note) to the first child. The child plays the tone on his violin. The second child who can hear and see the sibling but not the flash card has to write the note down. If the notes are identical, the children score; otherwise, you score.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',6,'2020-01-01',49,'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/5_Music_Reading_Cards.JPG/440px-5_Music_Reading_Cards.JPG','Notes, Cards'
+  Show a flash card (with a note) to the first child. The child plays the tone on his violin. The second child who can hear and see the sibling but not the flash card has to write the note down. If the notes are identical, the children score; otherwise, you score.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',6,'2020-01-01',49,'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Violin_Music_Reading_Cards.JPG/440px-5_Music_Reading_Cards.JPG','Notes, Cards'
 )
 GO
 
@@ -904,7 +906,7 @@ VALUES(
  The first player takes 1 card from the pile and adds it to his hand. If he can match any pairs, he puts them on the table, face up. Last, he chooses 1 card from his hand that he does not need and puts it on a new pile, face up.
  The second player takes 1 card either from the covered or from the open pile. Etc.
  Winner is the player who is the first to get rid of all of his cards.
- There are many variations possible, depending on what particular skill you want to practice. If you also want to establish the names of the notes (for example “C#”), you can use triplet cards instead of pairs, or you can declare that every player who puts a pair on the table must say the name.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',7,'2020-01-01',50,'https://upload.wikimedia.org/wikipedia/commons/5/5e/5_Music_Reading_Cards.JPG','Notes, Cards, 5 Hand, Finger Position'
+ There are many variations possible, depending on what particular skill you want to practice. If you also want to establish the names of the notes (for example “C#”), you can use triplet cards instead of pairs, or you can declare that every player who puts a pair on the table must say the name.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',7,'2020-01-01',50,'https://upload.wikimedia.org/wikipedia/commons/5/5e/Violin_Music_Reading_Cards.JPG','Notes, Cards, 5 Hand, Finger Position'
 )
 GO
 
@@ -928,9 +930,6 @@ GO
 
 
 
-
-USE [BackendCapstone]
-GO
 
 INSERT INTO [dbo].[PracticePlanGames]
            ([Name]
@@ -1386,13 +1385,13 @@ INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
 INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
      VALUES(52, 3)
 INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
-     VALUES(54, 1)
+     VALUES(53, 1)
 INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
-     VALUES(54, 2)
+     VALUES(53, 2)
 INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
-     VALUES(55, 3)
+     VALUES(54, 3)
 INSERT INTO [dbo].[GameAges]([GameId],[AgeId])
-     VALUES(55, 4)
+     VALUES(54, 4)
 
 
 
@@ -1513,11 +1512,9 @@ VALUES(51,1)
 INSERT INTO [dbo].[GameInstruments]([GameId],[InstrumentId])
 VALUES(52,1)
 INSERT INTO [dbo].[GameInstruments]([GameId],[InstrumentId])
-VALUES(53,1)
+VALUES(53,3)
 INSERT INTO [dbo].[GameInstruments]([GameId],[InstrumentId])
 VALUES(54,3)
-INSERT INTO [dbo].[GameInstruments]([GameId],[InstrumentId])
-VALUES(55,3)
 GO
 
 
