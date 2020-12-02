@@ -14,7 +14,7 @@ namespace BackendCapstone.DataAccess
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<Age> GetAllAges()
+        public IEnumerable<Age> GetAllAges()
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -22,10 +22,7 @@ namespace BackendCapstone.DataAccess
 
             var allAges = db.Query<Age>(sqlForAllAges);
 
-            List<Age> agesList = new List<Age>();
-            agesList = allAges.ToList();
-
-            return agesList;
+            return allAges;
         }
     }
 }
