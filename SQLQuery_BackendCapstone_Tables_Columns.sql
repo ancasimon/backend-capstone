@@ -809,3 +809,413 @@ VALUES(
 'Spot the Mistake',1,'','Let your child correct you!',1,'None','Start by showing students the proper bow hold, then ask them to close their eyes while you set up your bow hold with one obvious mistake; for example, a straight thumb. Once you’re ready, ask students to open their eyes and spot the mistake.','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',4,'2020-01-01',38,'https://takelessons.com/blog/wp-content/uploads/2015/09/12.-Spot-the-Mistake.jpg','Bow, For the parent who plays'
 )
 GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'The Alphabet Game',1,'','Teach the right posture in a fun way!',1,'None','Gently help the student get into the correct position. Then ask him or her to freeze in this position until you sing the entire alphabet song forward and backward. The student will enjoy hearing you fumble while trying to sing the alphabet backwards.','TakeLessons','https://takelessons.com/blog/5-games-for-kids-z08',5,'2020-01-01',40,'https://takelessons.com/blog/wp-content/uploads/2015/09/7.The-Alphabet-Game.jpg','Position, Posture'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Roll the Dice',1,'','Practice notes',2,'Cover a large square box with white construction paper to look like a life-sized dice. On each side of the dice, draw a note or a rhythm.','Have your students stand in one big circle and give each one a chance to roll the dice. Students will have to play whatever note or rhythm is rolled.','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',6,'2020-01-01',41,'https://takelessons.com/blog/wp-content/uploads/2015/09/15.Roll-the-Dice.jpg','Notes'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Who Am I? Version 2',1,'','Let them learn and teach each other!',1,'None','Every week, assign a famous 5 player or composer to a student. After researching the individual, the student will stand in front of the class while others students ask him or her questions about the individual. The student must answer the questions as if he or she were the famous violin player or composer.','TakeLessons','https://takelessons.com/blog/violin-games-for-kids-z08',7,'2020-01-01',42,'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Johann_Sebastian_Bach.jpg/440px-Johann_Sebastian_Bach.jpg','Composers, Music History'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'PowerPoint',1,'','Prompt your child’s practice not with handwritten notes but with a PowerPoint presentation. Some kids might even want to create their own PowerPoint practice file. (Make sure they include all the exercises they are supposed to do.)',3,'1. Make the PowerPoint - or help the student make it.
+ 2. They can even include sound files, pictures or small videos. (Grasp that opportunity and have them show off their best violin playing, bow hold etc. for the camera or for the sound recorder.)','Use the PowerPoint to guide practices.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',8,'2020-01-01',43,'https://cdn.pixabay.com/photo/2013/04/22/07/04/girl-106428__480.jpg','Video, Review Songs'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Ping Pong Review',1,'','This is a fun practice idea for students who are a bit more advanced and already have more pieces to review than they can keep track of.',3,'Purchase a pack of ping pong balls. You need as many balls as you have review pieces. Using a permanent marker, write the names of the review pieces one on every ball. Put the balls in a non-transparent bag (a pillow case does fine).','For the practice, let the child randomly pull a ball out of the bag and play the piece.
+ To make sure that every review piece will be played sooner or later, don’t put the used balls back into the bag, but keep them aside until the bag is empty.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',9,'2020-01-01',44,'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f3/Ping_Pong_Review.jpg/440px-Ping_Pong_Review.jpg','Review'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Dice Game Review',1,'','Make them want to review!',4,'Order large foam dice from an educational supplier or make your own with cardboard box. Make up laminated cards (the size of the face of the large dice) with name of song from relevant books and a picture to represent the song. Stick Velcro dots to the faces of the die and the opposite part of the Velcro dots to the back of the song cards and attach 6 songs to the faces of the dice (you can play with one die or two or more dice).','The child rolls the die to see what song to play for review. You can change the song cards each week as appropriate.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',1,'2020-01-01',45,'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1c7beDomqkTTYMURh2T3NgLbGNhJXNF4DNw&usqp=CAU','Review, Dice'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Hire a Puppet',1,'','Tired of reminding your six-year-old for the gazillionth time that she can use more of her bow than just an inch and that her tone will sound so much better? You need a time out. A teacher assistant or visiting teacher should take over. Hire a puppet or a stuffed animal. Puppets make awesome teacher assistants. They are low-maintenance, they might be more patient and relaxed than you are and kids love them and listen to them.',2,'Find a puppet.','Introduce the puppet to the child as an “expert” for the problem that needs to be tackled (“Meet Professor Long Bow”).','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',2,'2020-01-01',46,'https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Sockcat.jpg/280px-Sockcat.jpg','Bow, Posture, Practice Spots'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Moods',1,'','Change moods as you play through a number of review songs!',2,'Find a puppet, doll, etc.','Create scenarios to guide your child: 
+ Professor Long Bow has the unfortunate tendency to get a fly in his eye. In order to help him to get that fly out, the child can make him cry. The best way to do so is to play something sad, like Go, Tell Aunt Rhody. The sadder the expression, the better. If the child does well, Professor Long Bow will probably be sobbing, and his eye will be okay again. But he is so sad now, that he needs some cheering up. As you could have guessed, the child has to play something cheerful, like Allegro. The happier the expression, the better.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',3,'2020-01-01',47,'https://cdn.pixabay.com/photo/2015/02/18/16/46/doll-640995__480.jpg','Review'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Piggy Back Ride',1,'','This is a fun exercise to improve the left hand position.',1,'None','You child can only use her left hand efficiently when the fingers are in a nice position hovering above the strings.
+ The middle sections of your child’s fingers need to be in a horizontal position. You can call it ""tables"".
+ To practice this position, you can have your child play an A scale with a Mississippi Hotdog rhythm, and on each finger that she is setting down, you set some sort of a little object, like a cheerio or a button or a little toy like in the picture. The goal is not to let that object fall down while she is playing.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',4,'2020-01-01',48,'https://upload.wikimedia.org/wikipedia/commons/thumb/f/ff/Piggies_for_violin_practice.jpg/440px-Piggies_for_violin_practice.jpg','Violin Hand, Posture, Practice Spots'
+)
+GO
+
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'House of Music',1,'','The following is a fun project that can be used as an introduction to music reading.',4,'Take a sheet of paper, the larger the better. Design a tall apartment house in cross section view. The house must be a split-level-building with 9 apartments on the left side, and 8 apartments on the right (17 half-levels overall). The 9 apartments on the left represent the spaces between the staff lines, while the 8 apartments to the right represent the staff lines themselves. Add a roof that marks the upper levels as attics, and brick walls or a horizontal base line that mark the lower levels as basements. If you want to, you can add balconies, window sills or other decorations to the apartments that represent the area of the actual staff lines.','In the second and last step, make families move into the apartments. The A-apartment (between 2nd and 3rd line) could house an alligator for example, or an ant or antelope; no baby animals in this apartment, because A is an open string and no fingers used. In the F#-apartment (5th line) there might live a fly, a fish or a flamingo, but make sure that they have 1 child, since F# is being played with the 1st finger. Etc.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',5,'2020-01-01',48,'https://upload.wikimedia.org/wikipedia/commons/c/c1/House_of_Music.JPG','Notes, Home, House'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Music Notes Flash Cards',1,'','On long terms, it is a bad habit to refer to tones in terms like “open A” or “first finger on E-string”. Tones have names: A, F sharp, etc., and they have a notation: between the 2nd and 3rd line, on the 5th line, etc. A convenient way to teach and practice these references is with flash cards.',2,'There are prefabricated flash cards available, or you can make your own.','There are many possible things that can be done with the flash cards. If you have 2 students, you can even play games:
+  Show a flash card (with a note) to the first child. The child plays the tone on his violin. The second child who can hear and see the sibling but not the flash card has to write the note down. If the notes are identical, the children score; otherwise, you score.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',6,'2020-01-01',49,'https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/5_Music_Reading_Cards.JPG/440px-5_Music_Reading_Cards.JPG','Notes, Cards'
+)
+GO
+
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Musical Rummy',1,'','This card game helps beginning music readers to establish and to internalize the association between a particular note (for example C#) and the corresponding fingering on the violin (2nd finger on A-string).',3,'You need a self-made deck of cards that matches every note that you want to teach with the corresponding fingering (the latter either in words or in graphic). For a beginning student, 8 pairs will probably do. Later you can add more, until the whole 1st position is covered.','Here come the rules for the game:
+ The dealer deals 4 cards to each player (if you have 16 or more pairs, deal at least 6 cards).
+ The extra cards go on a pile, face down.
+ The first player takes 1 card from the pile and adds it to his hand. If he can match any pairs, he puts them on the table, face up. Last, he chooses 1 card from his hand that he does not need and puts it on a new pile, face up.
+ The second player takes 1 card either from the covered or from the open pile. Etc.
+ Winner is the player who is the first to get rid of all of his cards.
+ There are many variations possible, depending on what particular skill you want to practice. If you also want to establish the names of the notes (for example “C#”), you can use triplet cards instead of pairs, or you can declare that every player who puts a pair on the table must say the name.','Suzuki Community','https://en.wikibooks.org/wiki/Practice_Ideas_for_Suzuki_Students',7,'2020-01-01',50,'https://upload.wikimedia.org/wikipedia/commons/5/5e/5_Music_Reading_Cards.JPG','Notes, Cards, 5 Hand, Finger Position'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Recognize Pitch',1,'','Another important aspect of learning to play piano relates to pitch.',1,'None','For small children, you can try fun games on the piano like asking your child to play what Papa, Mama and Baby Bear sound like (low, medium, high).','Belinda Williams for Roland Corporation Australia','https://rolandcorp.com.au/blog/piano-games-to-play-with-your-child',9,'2020-01-01',51,'https://cdn.pixabay.com/photo/2016/08/29/17/27/cute-girl-playing-piano-1628763__480.jpg','Pitch'
+)
+GO
+
+INSERT INTO [dbo].[Games]
+           ([Name],[IsActive],[Songs],[Description],[PreworkLevelId],[Prework],[Instructions],[Credit],[WebsiteUrl],[SubmittedByUserId],[DateCreated],[GameIconId],[PhotoUrl],[Keywords])
+VALUES(
+'Intervals',1,'','Older and more advanced children will appreciate scale games and interval recognition.',1,'None','Start by playing a scale and then stop on a certain note, asking them to identify which note you stopped on using solfége syllables: do, re, mi, fa, so, la, ti, do. They can sing it back to help them determine the correct note. After they have mastered this skill, you can have them name intervals such as major seconds and major thirds. Let them test you for some extra fun!','Belinda Williams for Roland Corporation Australia','https://rolandcorp.com.au/blog/piano-games-to-play-with-your-child',1,'2020-01-01',51,'https://cdn.pixabay.com/photo/2013/02/06/11/12/3-78492__480.jpg','Scales, Notes'
+)
+GO
+
+
+
+
+
+
+
+
+USE [BackendCapstone]
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,4,'2021-01-03','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,5,'2021-01-04','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,7,'2021-01-05','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,4,'2021-01-06','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,5,'2021-01-07','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,6,'2021-01-08','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',1,4,'2021-01-09','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,1,'2021-01-10','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,5,'2021-01-11','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,5,'2021-01-12','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,6,'2021-01-13','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,7,'2021-01-14','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,8,'2021-01-15','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',2,9,'2021-01-16','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',3,1,'2021-01-17','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',4,5,'2021-01-24','"This is where I will add notes for our practices in January.',0,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,10,'2020-07-01','Went great!',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,14,'2020-07-02','Pretty well!',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,15,'2020-07-03','',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,16,'2020-07-04','"Loved to add some change to the piggy bank!"',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,14,'2020-07-05','',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,15,'2020-07-06','',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,9,'2020-07-07','"Worked great for traveling in the car!"',1,1)
+GO
+
+INSERT INTO [dbo].[PracticePlanGames]
+           ([Name]
+           ,[PracticePlanId]
+           ,[GameId]
+           ,[PracticeDate]
+           ,[UserNotes]
+           ,[IsCompleted]
+           ,[IsActive])
+     VALUES
+           ('Our version',5,10,'2020-07-07','"Worked great for traveling in the car!"',1,1)
+GO
