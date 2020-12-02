@@ -42,6 +42,10 @@ namespace BackendCapstone
 
             app.UseAuthorization();
 
+            // Added CORS requests below to connect to frontend application:
+
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
