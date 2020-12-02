@@ -6,11 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BackendCapstone.Models;
 using BackendCapstone.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendCapstone.Controllers
 {
     [Route("api/users")]
     [ApiController]
+    [Authorize]
     public class UsersController : ControllerBase
     {
         UserRepository _userRepo;
