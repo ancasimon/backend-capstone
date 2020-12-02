@@ -14,7 +14,7 @@ namespace BackendCapstone.DataAccess
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<User> GetAllActiveUsers()
+        public IEnumerable<User> GetAllActiveUsers()
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -22,10 +22,7 @@ namespace BackendCapstone.DataAccess
 
             var allActiveUsers = db.Query<User>(sqlForAllUsers);
 
-            List<User> usersActiveList = new List<User>();
-            usersActiveList = allActiveUsers.ToList();
-
-            return usersActiveList;
+            return allActiveUsers;
         }
     }
 }

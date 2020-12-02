@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BackendCapstone.Models
 {
-    public class Game
+    public class GameWithMetadata
     {
         public int Id { get; set; }
         public string Name { get; set; }
@@ -24,5 +24,13 @@ namespace BackendCapstone.Models
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
         public int GameIconId { get; set; }
+        // NEWLY ADDED TO THIS MODEL ONLY:
+        public string PreworkLevelName { get; set; }
+        public string UserFirstName { get; set; }
+        public string UserLastName { get; set; }
+        public string GameIconUrl { get; set; }
+        public List<Age> AgesForGame { get; set; } = new List<Age>();
+        public List<Instrument> InstrumentsForGame { get; set; } = new List<Instrument>();
+
     }
 }

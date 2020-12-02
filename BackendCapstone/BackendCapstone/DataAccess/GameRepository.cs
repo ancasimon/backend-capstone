@@ -13,7 +13,7 @@ namespace BackendCapstone.DataAccess
         static List<Game> games = new List<Game>();
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<Game> GetAllActiveGames()
+        public IEnumerable<Game> GetAllActiveGames()
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -21,11 +21,19 @@ namespace BackendCapstone.DataAccess
 
             var allActiveGames = db.Query<Game>(sqlForAllGames);
 
-            List<Game> gamesActiveList = new List<Game>();
+            return allActiveGames;
+        }
 
-            gamesActiveList = allActiveGames.ToList();
+        public Game GetGameById(int id)
+        {
+            using var db = new SqlConnection(_connectionString);
 
-            return gamesActiveList;
+            var sqlForSingleGameById = "select * from Games where Id = @id";
+            var parameterForGameId = new { Id = id };
+
+            var selectedGame = db.QueryFirstOrDefault<Game>(sqlForSingleGameById, parameterForGameId);
+
+            return selectedGame;
         }
 
     }

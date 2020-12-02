@@ -14,18 +14,33 @@ namespace BackendCapstone.Controllers
     public class GamesController : ControllerBase
     {
         GameRepository _gameRepo;
+        GameWithMetadataRepository _gameWithDataRepo;
 
         public GamesController()
         {
             _gameRepo = new GameRepository();
+            _gameWithDataRepo = new GameWithMetadataRepository();
         }
 
+        // Changed method below to call the method for the game with metadata instead of the regular game record:
         [HttpGet]
         public IActionResult GetAllActiveGames()
         {
-            var allActiveGames = _gameRepo.GetAllActiveGames();
+            var allActiveGames = _gameWithDataRepo.GetAllActiveGamesWithMetadata();
 
             return Ok(allActiveGames);
+        }
+
+
+        // Changed method below to call the method for the game with metadata instead of the regular game record:
+        [HttpGet("{id}")]
+        public IActionResult GetGameById(int id)
+        {
+            if (_gameRepo.GetGameById(id) == null) return NoContent();
+
+            var selectedGame = _gameWithDataRepo.GetGameByIdWithMetadata(id);
+
+            return Ok(selectedGame);
         }
     }
 }

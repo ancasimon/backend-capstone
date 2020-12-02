@@ -14,17 +14,14 @@ namespace BackendCapstone.DataAccess
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<Instrument> GetAllInstruments()
+        public IEnumerable<Instrument> GetAllInstruments()
         {
             using var db = new SqlConnection(_connectionString);
             var sqlForAllInstruments = "select * from Instruments";
 
             var allInstruments = db.Query<Instrument>(sqlForAllInstruments);
 
-            List<Instrument> instrumentsList = new List<Instrument>();
-            instrumentsList = allInstruments.ToList();
-
-            return instrumentsList;
+            return allInstruments;
         }
     }
 }

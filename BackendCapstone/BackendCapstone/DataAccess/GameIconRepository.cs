@@ -14,17 +14,14 @@ namespace BackendCapstone.DataAccess
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<GameIcon> GetAllGameIcons()
+        public IEnumerable<GameIcon> GetAllGameIcons()
         {
             using var db = new SqlConnection(_connectionString);
             var sqlForAllGameIcons = "select * from GameIcons";
 
             var allGameIcons = db.Query<GameIcon>(sqlForAllGameIcons);
-            List<GameIcon> gameIconsList = new List<GameIcon>();
 
-            gameIconsList = allGameIcons.ToList();
-
-            return gameIconsList;
+            return allGameIcons;
         }
     }
 }

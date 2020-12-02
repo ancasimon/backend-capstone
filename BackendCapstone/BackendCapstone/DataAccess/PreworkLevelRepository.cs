@@ -14,18 +14,14 @@ namespace BackendCapstone.DataAccess
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
-        public List<PreworkLevel> GetAllPreworkLevels()
+        public IEnumerable<PreworkLevel> GetAllPreworkLevels()
         {
             using var db = new SqlConnection(_connectionString);
             var sqlForAllPreworkLevels = "select * from PreworkLevels";
 
             var allPreworkLevels = db.Query<PreworkLevel>(sqlForAllPreworkLevels);
 
-            List<PreworkLevel> preworkLevelsList = new List<PreworkLevel>();
-
-            preworkLevelsList = allPreworkLevels.ToList();
-
-            return preworkLevelsList;
+            return allPreworkLevels;
         }
     }
 }
