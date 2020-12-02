@@ -24,5 +24,17 @@ namespace BackendCapstone.DataAccess
             return allActiveGames;
         }
 
+        public Game GetGameById(int id)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForSingleGameById = "select * from Games where Id = @id";
+            var parameterForGameId = new { Id = id };
+
+            var selectedGame = db.QueryFirstOrDefault<Game>(sqlForSingleGameById, parameterForGameId);
+
+            return selectedGame;
+        }
+
     }
 }

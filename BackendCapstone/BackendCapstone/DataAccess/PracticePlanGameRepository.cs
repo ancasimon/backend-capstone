@@ -7,5 +7,6 @@ namespace BackendCapstone.DataAccess
 {
     public class PracticePlanGameRepository
     {
+
     }
 }
