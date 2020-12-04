@@ -1,47 +1,82 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import 'firebase/auth';
+
+import PropTypes from 'prop-types';
+
 import { Link } from 'react-router-dom';
- 
+
 import authData from '../../../helpers/data/authData';
- 
+
 class Login extends React.Component {
+  static propTypes = {
+    authed: PropTypes.bool.isRequired,
+  }
+
   state = {
     user: {
       email: '',
       password: '',
+      firstName: '',
+      lastName: '',
     },
   };
- 
+
   loginClickEvent = (e) => {
     const { user } = this.state;
     e.preventDefault();
-    authRequests
+    authData
       .loginUser(user)
       .then(() => {
-        this.props.history.push('/games');
+        this.props.history.push('/home');
       })
-      .catch(error => {
-        console.error('there was an error in registering', error);
+      .catch((error) => {
+        console.error('There was an error while logging in.', error);
       });
   };
- 
-  emailChange = e => {
+
+  registerClickEvent = (e) => {
+    const { user } = this.state;
+    e.preventDefault();
+    authData
+      .registerUser(user)
+      .then(() => {
+        this.props.history.push('/home');
+      })
+      .catch((error) => console.error('There was an error in registering.', error));
+  }
+
+  emailChange = (e) => {
     const tempUser = { ...this.state.user };
     tempUser.email = e.target.value;
     this.setState({ user: tempUser });
   };
- 
-  passwordChange = e => {
+
+  passwordChange = (e) => {
     const tempUser = { ...this.state.user };
     tempUser.password = e.target.value;
     this.setState({ user: tempUser });
   };
- 
-  render () {
+
+  firstNameChange = (e) => {
+    const tempUser = { ...this.state.user };
+    tempUser.firstName = e.target.value;
+    this.setState({ user: tempUser });
+  };
+
+  lastNameChange = (e) => {
+    const tempUser = { ...this.state.user };
+    tempUser.lastName = e.target.value;
+    this.setState({ user: tempUser });
+  };
+
+  render() {
     const { user } = this.state;
+    const { authed } = this.props;
     return (
-      <div className="Login">
+      <div className="Login" {...this.props}>
         <div id="login-form">
-          <h1 className="text-center">Login</h1>
+          <h1 className="text-center">Log In</h1>
           <form className="form-horizontal col-sm-6 col-sm-offset-3">
             <div className="form-group">
               <label htmlFor="inputEmail" className="col-sm-4 control-label">
@@ -95,5 +130,5 @@ class Login extends React.Component {
     );
   }
 }
- 
+
 export default Login;
