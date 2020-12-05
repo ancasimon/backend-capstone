@@ -7,17 +7,11 @@ import {
   Input,
 } from 'reactstrap';
 
-import PropTypes from 'prop-types';
-
 import authData from '../../../helpers/data/authData';
 
 import './Register.scss';
 
 class Register extends React.Component {
-  // static propTypes = {
-  //   authed: PropTypes.bool.isRequired,
-  // }
-
   state = {
     user: {
       email: '',
@@ -30,7 +24,6 @@ class Register extends React.Component {
 
   registerClickEvent = (e) => {
     const { user } = this.state;
-    console.error('user in register event', user);
     e.preventDefault();
     authData.registerUser(user)
       .then(() => {
@@ -130,7 +123,7 @@ class Register extends React.Component {
               onChange={this.passwordChange}
             />
           </FormGroup>
-      <Button type="submit" onClick={this.registerUser}>Submit</Button>
+      <Button type="submit" onClick={this.registerClickEvent}>Submit</Button>
     </Form>
       </div>
     );

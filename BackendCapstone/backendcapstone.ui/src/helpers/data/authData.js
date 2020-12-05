@@ -20,7 +20,7 @@ const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(us
     console.error('getting back from FB', cred.user);
     // get email and other user data from firebase
     const userInfo = {
-      uid: firebase.auth().currentUser.uid,
+      firebaseUid: firebase.auth().currentUser.uid,
       email: user.email,
       password: user.password,
       firstName: user.firstName,

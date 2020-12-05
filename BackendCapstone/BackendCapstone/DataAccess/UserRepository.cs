@@ -38,7 +38,7 @@ namespace BackendCapstone.DataAccess
                                                ,[LastName]
                                                ,[PhotoUrl]
                                                ,[DateCreated])
-                                         OUTPUT INSERTED.ID
+                                         OUTPUT INSERTED.*
                                          VALUES
                                                (1
                                                ,@firebaseUid
