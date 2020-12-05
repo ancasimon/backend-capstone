@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import practicePlanShape from '../../../helpers/propz/practicePlanShape';
+import SinglePracticePlanView from '../../pages/SinglePracticePlanView/SinglePracticePlanView';
 
 import './PracticePlanItem.scss';
 

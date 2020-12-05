@@ -35,8 +35,7 @@ class MyPracticePlans extends React.Component {
 
     return (
       <div className="MyPracticePlans">
-        <h2>My Practice Plans = a list of all the practice plans I have set up</h2>
-        {/* <Link to='/practiceplans/1'>View Practice Plan Details</Link> */}
+        <h2>My Practice Plans</h2>
         <Link to='/practiceplans/new'>Add a New Practice Plan</Link>
 
         <Table>
