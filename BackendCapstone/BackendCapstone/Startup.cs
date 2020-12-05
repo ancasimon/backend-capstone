@@ -10,6 +10,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace BackendCapstone
 {
@@ -26,6 +28,22 @@ namespace BackendCapstone
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //adding code block below to support authentication via Firebase:
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+                .AddJwtBearer(options =>
+                {
+                    options.IncludeErrorDetails = true;
+                    options.Authority = "https://securetoken.google.com/backendcapstone-bccf6";
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateLifetime = true,
+                        ValidateAudience = true,
+                        ValidateIssuer = true,
+                        ValidAudience = "backendcapstone-bccf6",
+                        ValidIssuer = "https://securetoken.google.com/backendcapstone-bccf6"
+                    };
+                });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +59,10 @@ namespace BackendCapstone
             app.UseRouting();
 
             app.UseAuthorization();
+
+            // Added CORS requests below to connect to frontend application:
+
+            app.UseCors(policy => policy.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
             app.UseEndpoints(endpoints =>
             {

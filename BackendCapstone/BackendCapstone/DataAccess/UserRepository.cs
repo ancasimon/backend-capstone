@@ -24,5 +24,47 @@ namespace BackendCapstone.DataAccess
 
             return allActiveUsers;
         }
+
+        public int GetUserIdByUid(string uid)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForUserRecordByUid = "select * from Users where FirebaseUid = @uid";
+
+            var parameterForUid = new { uid = uid };
+
+            var selectedUserId = db.ExecuteScalar<int>(sqlForUserRecordByUid, parameterForUid);
+
+            return selectedUserId;
+        }
+
+        public User AddUser(User newUser)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToAddNewUser = @"INSERT INTO [dbo].[Users]
+                                               ([IsActive]
+                                               ,[FirebaseUid]
+                                               ,[Email]
+                                               ,[Password]
+                                               ,[FirstName]
+                                               ,[LastName]
+                                               ,[PhotoUrl]
+                                               ,[DateCreated])
+                                         OUTPUT INSERTED.*
+                                         VALUES
+                                               (1
+                                               ,@firebaseUid
+                                               ,@email
+                                               ,@password
+                                               ,@firstName
+                                               ,@lastName
+                                               ,@photoUrl
+                                               ,GETDATE())";
+
+            var newUserRecord = db.QueryFirstOrDefault<User>(sqlToAddNewUser, newUser);
+
+            return newUserRecord;
+        }
     }
 }
