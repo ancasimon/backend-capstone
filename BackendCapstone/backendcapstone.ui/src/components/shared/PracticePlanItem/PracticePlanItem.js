@@ -7,7 +7,7 @@ import SinglePracticePlanView from '../../pages/SinglePracticePlanView/SinglePra
 import './PracticePlanItem.scss';
 
 class PracticePlanItem extends React.Component {
-  static = {
+  static propTypes = {
     practicePlanItem: practicePlanShape.practicePlanShape,
   }
 
