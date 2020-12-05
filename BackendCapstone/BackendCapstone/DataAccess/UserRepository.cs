@@ -25,7 +25,20 @@ namespace BackendCapstone.DataAccess
             return allActiveUsers;
         }
 
-        public void AddUser(User newUser)
+        public int GetUserIdByUid(string uid)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForUserRecordByUid = "select * from Users where FirebaseUid = @uid";
+
+            var parameterForUid = new { uid = uid };
+
+            var selectedUserId = db.ExecuteScalar<int>(sqlForUserRecordByUid, parameterForUid);
+
+            return selectedUserId;
+        }
+
+        public User AddUser(User newUser)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -49,9 +62,9 @@ namespace BackendCapstone.DataAccess
                                                ,@photoUrl
                                                ,GETDATE())";
 
-            var newId = db.ExecuteScalar<int>(sqlToAddNewUser, newUser);
+            var newUserRecord = db.QueryFirstOrDefault<User>(sqlToAddNewUser, newUser);
 
-            newUser.Id = newId;
+            return newUserRecord;
         }
     }
 }

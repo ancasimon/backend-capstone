@@ -12,8 +12,7 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    //[Authorize]
-    public class UsersController : ControllerBase
+    public class UsersController : FirebaseEnabledController
     {
         UserRepository _userRepo;
 
@@ -28,6 +27,14 @@ namespace BackendCapstone.Controllers
             var allActiveUsers = _userRepo.GetAllActiveUsers();
 
             return Ok(allActiveUsers);
+        }
+
+        [HttpGet("{uid}")]
+        public IActionResult GetUserIdByUid(string uid)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(uid);
+
+            return Ok(currentUserId);
         }
 
         [HttpPost]

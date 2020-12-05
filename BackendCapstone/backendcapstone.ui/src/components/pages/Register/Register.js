@@ -65,7 +65,7 @@ class Register extends React.Component {
   render() {
     const { user } = this.state;
     return (
-      <div>
+      <div className="col-md-12">
         <h2>Register Here!</h2>
         <Form>
         <FormGroup>
@@ -96,7 +96,7 @@ class Register extends React.Component {
               type="input"
               name="photoUrl"
               id="photoUrl"
-              placeholder="Please add a link to a photo."
+              placeholder="Please add a link to your photo."
               value={user.photoUrl}
               onChange={this.photoUrlChange}
             />
