@@ -35,41 +35,6 @@ class Login extends React.Component {
       });
   };
 
-  registerClickEvent = (e) => {
-    const { user } = this.state;
-    e.preventDefault();
-    authData
-      .registerUser(user)
-      .then(() => {
-        this.props.history.push('/home');
-      })
-      .catch((error) => console.error('There was an error in registering.', error));
-  }
-
-  emailChange = (e) => {
-    const tempUser = { ...this.state.user };
-    tempUser.email = e.target.value;
-    this.setState({ user: tempUser });
-  };
-
-  passwordChange = (e) => {
-    const tempUser = { ...this.state.user };
-    tempUser.password = e.target.value;
-    this.setState({ user: tempUser });
-  };
-
-  firstNameChange = (e) => {
-    const tempUser = { ...this.state.user };
-    tempUser.firstName = e.target.value;
-    this.setState({ user: tempUser });
-  };
-
-  lastNameChange = (e) => {
-    const tempUser = { ...this.state.user };
-    tempUser.lastName = e.target.value;
-    this.setState({ user: tempUser });
-  };
-
   render() {
     const { user } = this.state;
     const { authed } = this.props;
@@ -77,12 +42,12 @@ class Login extends React.Component {
       <div className="Login" {...this.props}>
         <div id="login-form">
           <h1 className="text-center">Log In</h1>
-          <form className="form-horizontal col-sm-6 col-sm-offset-3">
+          <form className="form-horizontal col-sm-12 col-sm-offset-3">
             <div className="form-group">
               <label htmlFor="inputEmail" className="col-sm-4 control-label">
                 Email:
               </label>
-              <div className="col-sm-8">
+              <div className="col-sm-6">
                 <input
                   type="email"
                   className="form-control"
@@ -97,7 +62,7 @@ class Login extends React.Component {
               <label htmlFor="inputPassword" className="col-sm-4 control-label">
                 Password:
               </label>
-              <div className="col-sm-8">
+              <div className="col-sm-6">
                 <input
                   type="password"
                   className="form-control"

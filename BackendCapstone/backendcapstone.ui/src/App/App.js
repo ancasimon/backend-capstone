@@ -20,6 +20,7 @@ import MyGameSuggestions from '../components/pages/MyGameSuggestions/MyGameSugge
 import MyPracticePlans from '../components/pages/MyPracticePlans/MyPracticePlans';
 import PracticePlanEdit from '../components/pages/PracticePlanEdit/PracticePlanEdit';
 import PracticePlanNew from '../components/pages/PracticePlanNew/PracticePlanNew';
+import Register from '../components/pages/Register/Register';
 import SingleGameView from '../components/pages/SingleGameView/SingleGameView';
 import SinglePracticePlanView from '../components/pages/SinglePracticePlanView/SinglePracticePlanView';
 
@@ -82,6 +83,7 @@ class App extends React.Component {
                     <Route path='/login' component={Login} authed={authed} />
                     <Route path='/games/:gameid' component={SingleGameView} authed={authed} />
                     <Route path='/games' component={Games} authed={authed} />
+                    <Route path='/register' component={Register} authed={authed} />
 
                     <Redirect from="*" to='/home'></Redirect>
                   </Switch>

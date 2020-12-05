@@ -12,7 +12,7 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/users")]
     [ApiController]
-    [Authorize]
+    //[Authorize]
     public class UsersController : ControllerBase
     {
         UserRepository _userRepo;
@@ -28,6 +28,14 @@ namespace BackendCapstone.Controllers
             var allActiveUsers = _userRepo.GetAllActiveUsers();
 
             return Ok(allActiveUsers);
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser(User user)
+        {
+            _userRepo.AddUser(user);
+
+            return Created($"/api/users/{user.Id}", user);
         }
     }
 }
