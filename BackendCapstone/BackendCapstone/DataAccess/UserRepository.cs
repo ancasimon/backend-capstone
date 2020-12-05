@@ -10,7 +10,6 @@ namespace BackendCapstone.DataAccess
 {
     public class UserRepository
     {
-        static List<User> users = new List<User>();
 
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 

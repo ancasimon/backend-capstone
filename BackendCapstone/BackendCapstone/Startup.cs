@@ -58,6 +58,8 @@ namespace BackendCapstone
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             // Added CORS requests below to connect to frontend application:
