@@ -235,7 +235,27 @@ insert into Users(firstName, lastName,email,dateCreated,password,IsActive,photoU
 values('Stephanie', 'Plum', 'stephanie.plum@gmail.com', '2020', 'password123', 1,'https://ca-times.brightspotcdn.com/dims4/default/2f4d391/2147483647/strip/true/crop/3200x4000+0+0/resize/840x1050!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F80%2Fa4%2F6ee9ea8e4c1382bb213f66b19f59%2Fla-photos-handouts-la-ca-twisted-twenty-six-book-111.JPG','')
 
 
+-- USER RECORD UPDATES:
+UPDATE Users
+SET Password = 'test123'
 
+-- ADDING FIREBASE UID:
+
+  UPDATE Users
+  set FirebaseUid = '4oOhDpuITbcXDL26btC0O7ba95M2'
+  where Id = 1
+
+  UPDATE Users
+  set FirebaseUid = 'u2jL7hczu5eEXYboHvPj5tPzeC02'
+  where Id = 2
+
+  UPDATE Users
+  set FirebaseUid = 'jS4wajUO1chmdNr0FY064lO6NtQ2'
+  where Id = 3
+
+  UPDATE Users
+  set FirebaseUid = 'xxrUWYaPYIai6I5O91ph7K5nOVY2'
+  where Id = 4
 
 
 INSERT INTO GameIcons([Name],[IconUrl])
