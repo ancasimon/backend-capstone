@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import practicePlanShape from '../../../helpers/propz/practicePlanShape';
+import SinglePracticePlanView from '../../pages/SinglePracticePlanView/SinglePracticePlanView';
 
 import './PracticePlanItem.scss';
 
 class PracticePlanItem extends React.Component {
-  static = {
+  static propTypes = {
     practicePlanItem: practicePlanShape.practicePlanShape,
   }
 

@@ -7,6 +7,7 @@ const practicePlanShape = PropTypes.shape({
   startDate: PropTypes.string.isRequired,
   endDate: PropTypes.string.isRequired,
   isActive: PropTypes.bool.isRequired,
+  plannedGames: PropTypes.array,
 });
 
 export default { practicePlanShape };

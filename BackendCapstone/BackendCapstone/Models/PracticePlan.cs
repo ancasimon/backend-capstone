@@ -13,5 +13,6 @@ namespace BackendCapstone.Models
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public bool IsActive { get; set; }
+        public List<PracticePlanGameWithGameName> plannedGames { get; set; } = new List<PracticePlanGameWithGameName>();
     }
 }
