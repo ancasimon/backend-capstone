@@ -73,7 +73,7 @@ class MyNavbar extends React.Component {
               <NavLink tag={RRNavLink} to="/profile">Profile</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={this.logoutClickEvent}>Log Out</NavLink>
+              <NavLink onClick={this.logoutClickEvent} className="pointerHand">Log Out</NavLink>
             </NavItem>
           </Nav>
         );
