@@ -10,4 +10,6 @@ const getUserPracticePlans = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export default { getUserPracticePlans };
+const getSinglePracticePlan = (planId) => axios.get(`${baseUrl}/practiceplans/${planId}`);
+
+export default { getUserPracticePlans, getSinglePracticePlan };

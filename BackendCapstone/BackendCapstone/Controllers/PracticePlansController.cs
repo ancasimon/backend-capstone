@@ -30,5 +30,12 @@ namespace BackendCapstone.Controllers
             return Ok(userActivePracticePlans);
         }
 
+        [HttpGet("{planId}")]
+        public IActionResult GetSinglePracticePlanById(int planId)
+        {
+            var selectedPracticePlan = _practicePlanRepo.GetPracticePlanById(planId);
+            return Ok(selectedPracticePlan);
+        }
+
     }
 }
