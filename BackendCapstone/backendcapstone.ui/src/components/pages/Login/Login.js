@@ -17,8 +17,6 @@ class Login extends React.Component {
     user: {
       email: '',
       password: '',
-      firstName: '',
-      lastName: '',
     },
   };
 
@@ -35,6 +33,18 @@ class Login extends React.Component {
       });
   };
 
+  emailChange = (e) => {
+    const tempUser = { ...this.state.user };
+    tempUser.email = e.target.value;
+    this.setState({ user: tempUser });
+  };
+
+  passwordChange = (e) => {
+    const tempUser = { ...this.state.user };
+    tempUser.password = e.target.value;
+    this.setState({ user: tempUser });
+  };
+
   render() {
     const { user } = this.state;
     const { authed } = this.props;
@@ -42,6 +52,11 @@ class Login extends React.Component {
       <div className="Login" {...this.props}>
         <div id="login-form">
           <h1 className="text-center">Log In</h1>
+          <div className="form-group">
+              <div className="col-sm-12 text-center">
+                <Link to="/register">Need to Register?</Link>
+              </div>
+            </div>
           <form className="form-horizontal col-sm-12 col-sm-offset-3">
             <div className="form-group">
               <label htmlFor="inputEmail" className="col-sm-4 control-label">
@@ -71,11 +86,6 @@ class Login extends React.Component {
                   value={user.password}
                   onChange={this.passwordChange}
                 />
-              </div>
-            </div>
-            <div className="form-group">
-              <div className="col-sm-12 text-center">
-                <Link to="/register">Need to Register?</Link>
               </div>
             </div>
             <div className="form-group">

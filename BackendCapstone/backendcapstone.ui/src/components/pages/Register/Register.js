@@ -30,9 +30,9 @@ class Register extends React.Component {
 
   registerClickEvent = (e) => {
     const { user } = this.state;
+    console.error('user in register event', user);
     e.preventDefault();
-    authData
-      .registerUser(user)
+    authData.registerUser(user)
       .then(() => {
         this.props.history.push('/home');
       })
@@ -70,6 +70,7 @@ class Register extends React.Component {
   };
 
   render() {
+    const { user } = this.state;
     return (
       <div>
         <h2>Register Here!</h2>
@@ -81,7 +82,7 @@ class Register extends React.Component {
               name="firstName"
               id="firstName"
               placeholder="Enter your first name."
-              value={this.state.user.firstName}
+              value={user.firstName}
               onChange={this.firstNameChange}
             />
           </FormGroup>
@@ -92,7 +93,7 @@ class Register extends React.Component {
               name="lastName"
               id="lastName"
               placeholder="Enter your last name."
-              value={this.state.user.lastName}
+              value={user.lastName}
               onChange={this.lastNameChange}
             />
           </FormGroup>
@@ -103,7 +104,7 @@ class Register extends React.Component {
               name="photoUrl"
               id="photoUrl"
               placeholder="Please add a link to a photo."
-              value={this.state.user.photoUrl}
+              value={user.photoUrl}
               onChange={this.photoUrlChange}
             />
           </FormGroup>
@@ -114,7 +115,7 @@ class Register extends React.Component {
               name="email"
               id="email"
               placeholder="Enter you email address."
-              value={this.state.user.email}
+              value={user.email}
               onChange={this.emailChange}
             />
           </FormGroup>
@@ -125,7 +126,7 @@ class Register extends React.Component {
               name="password"
               id="password"
               placeholder="Choose a password."
-              value={this.state.user.password}
+              value={user.password}
               onChange={this.passwordChange}
             />
           </FormGroup>

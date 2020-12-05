@@ -92,7 +92,7 @@ class MyNavbar extends React.Component {
         <div className="MyNavbar">
           <Navbar className="nav" expand="md">
               <NavbarBrand href="/">
-                  <img src={logo} width="75" alt="company logo" />
+                  <img src={logo} width="150" alt="company logo" />
               </NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.isOpen} navbar>

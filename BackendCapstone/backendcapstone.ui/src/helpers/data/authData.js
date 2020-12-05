@@ -16,13 +16,16 @@ axios.interceptors.request.use((request) => {
 // sub out whatever auth method firebase provides that you want to use.
 const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(user.email, user.password)
   .then((cred) => {
+    console.error('sending to FB', user.email);
+    console.error('getting back from FB', cred.user);
     // get email and other user data from firebase
     const userInfo = {
-      firebaseUid: firebase.auth().currentUser.uid,
-      email: cred.user.email,
-      password: cred.user.password,
-      firstName: cred.user.firstName,
-      lastName: cred.user.lastName,
+      uid: firebase.auth().currentUser.uid,
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      photoUrl: user.photoUrl,
     };
 
     // get token from firebase
@@ -30,7 +33,10 @@ const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(us
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token))
       // save the user to the the api
-      .then(() => axios.post(`${baseUrl}/users`, userInfo));
+      .then(() => {
+        console.error('new user object', userInfo);
+        axios.post(`${baseUrl}/users`, userInfo);
+      });
   });
 
 // sub out whatever auth method firebase provides that you want to use.
