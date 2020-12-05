@@ -8,6 +8,7 @@ class SinglePracticePlanView extends React.Component {
     return (
       <div className="SinglePracticePlanView">
         Single Practice Plan Details
+        <Link to='/practiceplans'>Back to My Practice Plans</Link>
         <Link to='/practiceplans/edit/1'>Edit This Practice Plan</Link>
       </div>
     );
