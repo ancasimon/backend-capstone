@@ -11,6 +11,25 @@ body {
   @include buttons;
 }
 
+.iconButtons {
+  color: $red;
+  border: none;
+  background: none;
+  &:hover {
+    color: $blue;
+    text-decoration: none;
+  }
+}
+
+.addButtons {
+  position: absolute;
+  right: 0;
+}
+
+.paddingExtra {
+  padding: .5em 2em .5em 2em;
+}
+
 .buttonDiv {
   margin-top: 2em;
   margin-bottom: 2em;
