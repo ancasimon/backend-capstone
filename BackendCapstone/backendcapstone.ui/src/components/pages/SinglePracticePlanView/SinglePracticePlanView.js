@@ -37,6 +37,23 @@ class SinglePracticePlanView extends React.Component {
     this.buildSingleView(practiceplanid);
   }
 
+  inactivatePracticePlan = (e) => {
+    const { practiceplanid } = this.props.match.params;
+    const { selectedPracticePlan } = this.state;
+    const updatedObject = {
+      isActive: false,
+      name: selectedPracticePlan.name,
+      startDate: selectedPracticePlan.startDate,
+      endDate: selectedPracticePlan.endDate,
+      userId: selectedPracticePlan.userId,
+    };
+    practicePlansData.updatePracticePlan(practiceplanid, updatedObject)
+      .then(() => {
+        this.props.history.push('/practiceplans');
+      })
+      .catch((error) => console.error('Unable to delete this practice plan.', error));
+  }
+
   render() {
     const { selectedPracticePlan, selectedGames } = this.state;
     const { practiceplanid } = this.props.match.params;
@@ -52,6 +69,7 @@ class SinglePracticePlanView extends React.Component {
         <div className="row">
           <Link to='/practiceplans' className="col-md-6">Back to My Practice Plans</Link>
           <Link to={`/practiceplans/edit/${practiceplanid}`} className="col-md-6">Edit This Practice Plan</Link>
+          <button onClick={this.inactivatePracticePlan}>Delete Practice Plan</button>
         </div>
         <Table>
           <thead>

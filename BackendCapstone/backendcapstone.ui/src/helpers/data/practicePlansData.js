@@ -12,4 +12,6 @@ const getUserPracticePlans = () => new Promise((resolve, reject) => {
 
 const getSinglePracticePlan = (planId) => axios.get(`${baseUrl}/practiceplans/${planId}`);
 
-export default { getUserPracticePlans, getSinglePracticePlan };
+const updatePracticePlan = (planId, updatedPracticePlan) => axios.put(`${baseUrl}/practiceplans/${planId}`, updatedPracticePlan);
+
+export default { getUserPracticePlans, getSinglePracticePlan, updatePracticePlan };
