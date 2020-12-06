@@ -6,7 +6,7 @@ class GameNew extends React.Component {
   render() {
     return (
       <div className="GameNew">
-        Add a New Game Page
+        <h2>Add a New Game</h2>
       </div>
     );
   }

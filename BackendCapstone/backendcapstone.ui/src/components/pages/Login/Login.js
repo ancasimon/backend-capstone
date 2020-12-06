@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 
 import authData from '../../../helpers/data/authData';
 
+import './Login.scss';
+
 class Login extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
@@ -49,20 +51,20 @@ class Login extends React.Component {
     const { user } = this.state;
     const { authed } = this.props;
     return (
-      <div className="Login" {...this.props}>
+      <div className="Login col-md-6 text-center" {...this.props}>
         <div id="login-form">
-          <h1 className="text-center">Log In</h1>
+          <h2>Log In</h2>
           <div className="form-group">
-              <div className="col-sm-12 text-center">
-                <Link to="/register">Need to Register?</Link>
+              <div className="col-sm-12">
+                <Link to="/register" className="link">Need to Register?</Link>
               </div>
             </div>
-          <form className="form-horizontal col-sm-12 col-sm-offset-3">
+          <form className="form-horizontal col-sm-12">
             <div className="form-group">
-              <label htmlFor="inputEmail" className="col-sm-4 control-label">
+              <label htmlFor="inputEmail" className="col-sm-4">
                 Email:
               </label>
-              <div className="col-sm-6">
+              <div>
                 <input
                   type="email"
                   className="form-control"
@@ -74,10 +76,10 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="form-group">
-              <label htmlFor="inputPassword" className="col-sm-4 control-label">
+              <label htmlFor="inputPassword" className="col-sm-4">
                 Password:
               </label>
-              <div className="col-sm-6">
+              <div>
                 <input
                   type="password"
                   className="form-control"
@@ -89,13 +91,13 @@ class Login extends React.Component {
               </div>
             </div>
             <div className="form-group">
-              <div className="col-sm-12">
+              <div className="col-sm-12 buttonDiv">
                 <button
                   type="submit"
-                  className="btn btn-default col-xs-12"
+                  className="mainButtons"
                   onClick={this.loginClickEvent}
                 >
-                  Login
+                  Log In
                 </button>
               </div>
             </div>

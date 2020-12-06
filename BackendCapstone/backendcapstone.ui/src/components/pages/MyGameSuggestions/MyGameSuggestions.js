@@ -7,7 +7,7 @@ class MyGameSuggestions extends React.Component {
   render() {
     return (
       <div className="MyGameSuggestions">
-        My Game Suggestions = a list of all the games I have added to the app
+        <h2>My Game Suggestions</h2>
         <Link to='/games/1'>View Single Game</Link>
         {/* ANCA: hardcoding game ID for now!! */}
       </div>

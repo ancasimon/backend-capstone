@@ -64,12 +64,18 @@ class SinglePracticePlanView extends React.Component {
 
     return (
       <div className="SinglePracticePlanView">
-        <h2>Details: {selectedPracticePlan.name}</h2>
+        <h2>Practice Plan Details: {selectedPracticePlan.name}</h2>
         <h4>{selectedPracticePlan.startDate} - {selectedPracticePlan.endDate}</h4>
         <div className="row">
-          <Link to='/practiceplans' className="col-md-6">Back to My Practice Plans</Link>
-          <Link to={`/practiceplans/edit/${practiceplanid}`} className="col-md-6">Edit This Practice Plan</Link>
-          <button onClick={this.inactivatePracticePlan}>Delete Practice Plan</button>
+          <div className="col-md-4 buttonDiv">
+            <Link to='/practiceplans' className="mainButtons px-5">Back</Link>
+          </div>
+          <div className=" col-md-4 buttonDiv">
+            <Link to={`/practiceplans/edit/${practiceplanid}`} className="mainButtons px-5">Edit</Link>
+          </div>
+          <div className="col-md-4 buttonDiv">
+            <button className="mainButtons px-5" onClick={this.inactivatePracticePlan}>Delete</button>
+          </div>
         </div>
         <Table>
           <thead>
