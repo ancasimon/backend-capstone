@@ -55,7 +55,7 @@ class PracticePlanGameItem extends React.Component {
             (practicePlanGame.isCompleted === true) ? <p>Yes!</p> : <p>Not yet.</p>
             }
           </td>
-          <td><button onClick={this.inactivateRecord}>Delete</button></td>
+          <td><button className="mainButtons" onClick={this.inactivateRecord}><i class="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
     );

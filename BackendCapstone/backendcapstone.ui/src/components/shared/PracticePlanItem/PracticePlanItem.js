@@ -21,7 +21,7 @@ class PracticePlanItem extends React.Component {
           <th scope="row">{practicePlanItem.name}</th>
           <td>{practicePlanItem.startDate}</td>
           <td>{practicePlanItem.endDate}</td>
-          <td><Link to={singleLink}>View</Link></td>
+          <td><Link to={singleLink} className="mainButtons"><i class="fas fa-binoculars"></i></Link></td>
         </tr>
       </tbody>
     );

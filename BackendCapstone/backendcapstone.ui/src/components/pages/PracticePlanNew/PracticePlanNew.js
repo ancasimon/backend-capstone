@@ -6,7 +6,7 @@ class PracticePlanNew extends React.Component {
   render() {
     return (
       <div className="PracticePlanNew">
-        Add New Practice Plan Page
+        <h2>Add New Practice Plan</h2>
       </div>
     );
   }

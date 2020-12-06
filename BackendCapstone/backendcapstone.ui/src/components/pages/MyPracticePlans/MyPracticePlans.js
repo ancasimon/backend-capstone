@@ -36,7 +36,9 @@ class MyPracticePlans extends React.Component {
     return (
       <div className="MyPracticePlans">
         <h2>My Practice Plans</h2>
-        <Link to='/practiceplans/new'>Add a New Practice Plan</Link>
+        <div className="buttonDiv">
+          <Link to='/practiceplans/new' className="mainButtons">Add a New Practice Plan</Link>
+        </div>
 
         <Table>
           <thead>

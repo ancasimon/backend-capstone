@@ -7,10 +7,15 @@ class Games extends React.Component {
   render() {
     return (
       <div className="Games">
-        Games Page with a list of all the games available
+        <h2>Games</h2>
+        <div className="row">
+          <div className="buttonDiv">
+            <Link to='/games/new' className="mainButtons">Add a New Game</Link>
+          </div>
+        </div>
         <Link to='/games/1'>View Single Game</Link>
         {/* ANCA: NOTE - hardcoding game ID for now ; wil change once the link is in the individual game cards!! */}
-        <Link to='/games/new'>Add a New Game</Link>
+
       </div>
     );
   }
