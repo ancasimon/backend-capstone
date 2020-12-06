@@ -8,6 +8,7 @@ const practicePlanGameShape = PropTypes.shape({
   userNotes: PropTypes.string.isRequired,
   isCompleted: PropTypes.bool.isRequired,
   isActive: PropTypes.bool.isRequired,
+  practicePlanId: PropTypes.number.isRequired,
 });
 
 export default { practicePlanGameShape };
