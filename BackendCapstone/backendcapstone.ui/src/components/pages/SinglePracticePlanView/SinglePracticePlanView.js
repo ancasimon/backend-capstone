@@ -28,7 +28,6 @@ class SinglePracticePlanView extends React.Component {
           selectedGames: practicePlanResponse.data.plannedGames,
         });
         console.error('pp info coming back', practicePlanResponse);
-        console.error('games??', this.state.selectedGames);
       })
       .catch((error) => console.error('Could not get the details of this practice plan.', error));
   }
@@ -43,7 +42,7 @@ class SinglePracticePlanView extends React.Component {
     const { practiceplanid } = this.props.match.params;
 
     const buildGamesGrid = () => selectedGames.map((item) => (
-      <PracticePlanGameItem key={item.id} practicePlanGame={item} />
+      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} buildSingleView={this.buildSingleView} />
     ));
 
     return (
