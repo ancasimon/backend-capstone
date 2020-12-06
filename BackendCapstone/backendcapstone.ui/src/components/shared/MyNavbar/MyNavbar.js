@@ -58,42 +58,42 @@ class MyNavbar extends React.Component {
         return (
           <Nav className="ml-auto" navbar>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/home">Home</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/home">Home</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/games">Games</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/games">Games</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/practiceplans">My Practice Plans</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/practiceplans">My Practice Plans</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/suggestions">My Suggestions</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/suggestions">My Suggestions</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink tag={RRNavLink} to="/profile">Profile</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/profile">Profile</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink onClick={this.logoutClickEvent} className="pointerHand">Log Out</NavLink>
+              <NavLink className="navLinks" onClick={this.logoutClickEvent} className="pointerHand">Log Out</NavLink>
             </NavItem>
           </Nav>
         );
       }
       return <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/home">Home</NavLink>
+            <NavLink className="navLinks" className="navLinks" tag={RRNavLink} to="/home">Home</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/games">Games</NavLink>
+            <NavLink className="navLinks" tag={RRNavLink} to="/games">Games</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={RRNavLink} to="/login">Log In</NavLink>
+            <NavLink className="navLinks" tag={RRNavLink} to="/login">Log In</NavLink>
           </NavItem>
         </Nav>;
     };
 
     return (
-        <div className="MyNavbar">
-          <Navbar className="nav" expand="md">
+        <div className="MyNavbar content">
+          <Navbar className="nav sticky" id="navbar" expand="md">
               <NavbarBrand href="/">
                   <img src={logo} width="150" alt="company logo" />
               </NavbarBrand>

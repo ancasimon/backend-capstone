@@ -1,9 +1,12 @@
 @mixin buttons {
-  padding: .5em;
+  padding: 0;
+  padding-left: .5em;
+  padding-right: .5em;
   background-color: $red;
   border-radius: 10px;
   font-weight: bold;
   color: white;
+  border: none;
   &:hover {
       background-color: $blue;
       color: white;
