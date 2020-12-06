@@ -37,5 +37,12 @@ namespace BackendCapstone.Controllers
             return Ok(selectedPracticePlan);
         }
 
+        [HttpPut("{planId}")]
+        public IActionResult UpdatePracticePlan(int planId, PracticePlan updatedPPObject)
+        {
+            var updatedPracticePlan = _practicePlanRepo.UpdatePracticePlan(planId, updatedPPObject);
+            return Ok(updatedPracticePlan);
+        }
+
     }
 }

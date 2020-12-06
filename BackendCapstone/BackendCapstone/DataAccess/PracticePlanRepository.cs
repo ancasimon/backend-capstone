@@ -53,5 +53,32 @@ namespace BackendCapstone.DataAccess
 
             return selectedPlan;
         }
+
+        public PracticePlan UpdatePracticePlan(int planId, PracticePlan updatedPpObject)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToUpdatePracticePlan = @"UPDATE [dbo].[PracticePlans]
+                                           SET [Name] = @name
+                                              ,[UserId] = @userId
+                                              ,[StartDate] = @startDate
+                                              ,[EndDate] = @endDate
+                                              ,[IsActive] = @isActive
+                                         OUTPUT INSERTED.*
+                                         WHERE Id = @planId";
+            var parametersForUpdatedPracticePlan = new
+            {
+                updatedPpObject.Name,
+                updatedPpObject.UserId,
+                updatedPpObject.StartDate,
+                updatedPpObject.EndDate,
+                updatedPpObject.IsActive,
+                planId,
+            };
+
+            var updatedPracticePlan = db.QueryFirstOrDefault<PracticePlan>(sqlToUpdatePracticePlan, parametersForUpdatedPracticePlan);
+
+            return updatedPracticePlan;
+        }
     }
 }
