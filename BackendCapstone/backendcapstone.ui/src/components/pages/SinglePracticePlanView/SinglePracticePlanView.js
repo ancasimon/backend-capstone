@@ -65,7 +65,7 @@ class SinglePracticePlanView extends React.Component {
     return (
       <div className="SinglePracticePlanView container">
         <div className="row">
-          <div className="col-md-4 buttonDiv">
+          <div className="col-md-4">
             <Link to='/practiceplans' className="mainButtons p-2">Back</Link>
           </div>
           <div className="col-md-9 text-center">

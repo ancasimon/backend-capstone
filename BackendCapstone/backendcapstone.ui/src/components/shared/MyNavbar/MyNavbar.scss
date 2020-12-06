@@ -1,3 +1,34 @@
+@import '../../../styles//variables';
+
 .pointerHand {
   cursor: pointer;
+}
+
+// style navbar:
+#navbar {
+  overflow: hidden;
+  background-color: lightgray;
+  z-index: 1;
+}
+
+.navLinks {
+  color: $blue;
+  text-decoration: none;
+  a :hover {
+    color: $red;
+  }
+}
+
+// style links:
+
+// add sticky class:
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+// add some top padding to the page content:
+.content {
+  padding-top: 60px;
 }
