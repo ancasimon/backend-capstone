@@ -93,12 +93,12 @@ class MyNavbar extends React.Component {
 
     return (
         <div className="MyNavbar content">
-          <Navbar className="nav sticky" id="navbar" expand="md">
+          <Navbar className="nav sticky navbar-light" id="navbar" expand="md">
               <NavbarBrand href="/">
                   <img src={logo} width="150" alt="company logo" />
               </NavbarBrand>
               <NavbarToggler onClick={this.toggle} />
-              <Collapse isOpen={this.isOpen} navbar>
+              <Collapse isOpen={isOpen} navbar>
                 { buildNavbar() }
               </Collapse>
           </Navbar>
