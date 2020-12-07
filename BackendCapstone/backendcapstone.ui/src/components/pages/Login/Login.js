@@ -51,7 +51,7 @@ class Login extends React.Component {
     const { user } = this.state;
     const { authed } = this.props;
     return (
-      <div className="Login col-md-6 text-center" {...this.props}>
+      <div className="Login text-center" {...this.props}>
         <div id="login-form">
           <h2>Log In</h2>
           <div className="form-group">
@@ -59,7 +59,7 @@ class Login extends React.Component {
                 <Link to="/register" className="link">Need to Register?</Link>
               </div>
             </div>
-          <form className="form-horizontal col-sm-12">
+          <form className="form-horizontal w-50 mx-auto">
             <div className="form-group">
               <label htmlFor="inputEmail" className="col-sm-4">
                 Email:
@@ -94,7 +94,7 @@ class Login extends React.Component {
               <div className="col-sm-12 buttonDiv">
                 <button
                   type="submit"
-                  className="mainButtons"
+                  className="mainButtons p-2"
                   onClick={this.loginClickEvent}
                 >
                   Log In

@@ -34,23 +34,30 @@ class MyPracticePlans extends React.Component {
     ));
 
     return (
-      <div className="MyPracticePlans">
-        <h2>My Practice Plans</h2>
-        <div className="buttonDiv">
-          <Link to='/practiceplans/new' className="mainButtons">Add a New Practice Plan</Link>
+      <div className="MyPracticePlans container">
+        <div className="row">
+          <div className="col-md-9">
+            <h2 className="text-center">My Practice Plans</h2>
+          </div>
+          <div className="col-md-3">
+            <div className="buttonDiv text-center">
+              <Link to='/practiceplans/new' className="mainButtons p-2">Add New Practice Plan</Link>
+            </div>
+          </div>
         </div>
-
+        <div className="row">
         <Table>
           <thead>
             <tr>
               <th>Name</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-              <th>Details</th>
+              <th className="d-none d-md-table-cell">Start Date</th>
+              <th className="d-none d-md-table-cell">End Date</th>
+              <th>View</th>
             </tr>
           </thead>
             {buildPracticePlansGrid()}
         </Table>
+        </div>
       </div>
     );
   }

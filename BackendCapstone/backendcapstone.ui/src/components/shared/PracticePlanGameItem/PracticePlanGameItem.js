@@ -47,15 +47,15 @@ class PracticePlanGameItem extends React.Component {
       <tbody>
         <tr>
           <th scope="row">{practicePlanGame.practiceName}</th>
-          <td>{practicePlanGame.gameName}</td>
+          <td className="d-none d-md-table-cell">{practicePlanGame.gameName}</td>
           <td>{practicePlanGame.practiceDate}</td>
-          <td>{practicePlanGame.userNotes}</td>
-          <td>
+          <td className="d-none d-md-table-cell">{practicePlanGame.userNotes}</td>
+          <td className="d-none d-md-table-cell">
             {
             (practicePlanGame.isCompleted === true) ? <p>Yes!</p> : <p>Not yet.</p>
             }
           </td>
-          <td><button className="mainButtons" onClick={this.inactivateRecord}><i class="fas fa-trash-alt"></i></button></td>
+          <td><button className="iconButtons" onClick={this.inactivateRecord}><i class="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
     );
