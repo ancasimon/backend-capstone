@@ -1,25 +1,39 @@
-@import '../../../styles//variables';
-
-.pointerHand {
-  cursor: pointer;
-}
+@import '../../../styles/variables';
 
 // style navbar:
 #navbar {
   overflow: hidden;
-  background-color: lightgray;
+  background-color: $gray;
   z-index: 1;
-}
-
-.navLinks {
-  color: $blue;
-  text-decoration: none;
-  a :hover {
-    color: $red;
-  }
+  text-align: right;
 }
 
 // style links:
+.navLinks {
+  font-weight: bolder;
+  color: $blue !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.navLinks:hover {
+  color: $red !important;
+}
+
+// style buttons in navbar:
+
+.pointerHand {
+  cursor: pointer;
+  font-weight: bolder;
+  color: $blue !important;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.pointerHand:hover {
+  color: $red !important;
+}
+
 
 // add sticky class:
 .sticky {
