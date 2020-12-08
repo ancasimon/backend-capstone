@@ -37,7 +37,9 @@ namespace BackendCapstone.DataAccess
             var parameterForPlanId = new { planId };
 
             PracticePlan selectedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlForSinglePlan, parameterForPlanId);
-            var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
+            if (selectedPlan != null)
+            {
+                var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
                                                 from PracticePlans pp
 	                                                join PracticePlanGames ppg
 	                                                on pp.Id = ppg.PracticePlanId
@@ -45,16 +47,17 @@ namespace BackendCapstone.DataAccess
 		                                                on g.Id = ppg.GameId
                                                 where pp.Id = @planId AND pp.IsActive = 1 AND ppg.IsActive = 1";
 
-            var gamesForThisPlan = db.Query<PracticePlanGameWithGameName>(sqlForPracticeGamesByPlanId, parameterForPlanId);
+                var gamesForThisPlan = db.Query<PracticePlanGameWithGameName>(sqlForPracticeGamesByPlanId, parameterForPlanId);
 
-            List<PracticePlanGameWithGameName> gamesList = gamesForThisPlan.ToList();
+                List<PracticePlanGameWithGameName> gamesList = gamesForThisPlan.ToList();
 
-            selectedPlan.plannedGames.AddRange(gamesList);
+                selectedPlan.plannedGames.AddRange(gamesList);
+            }
 
             return selectedPlan;
         }
 
-        public PracticePlan UpdatePracticePlan(int planId, PracticePlan updatedPpObject)
+        public PracticePlan UpdatePracticePlan(int planId, PracticePlan updatedPpObject, int userId)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -69,7 +72,7 @@ namespace BackendCapstone.DataAccess
             var parametersForUpdatedPracticePlan = new
             {
                 updatedPpObject.Name,
-                updatedPpObject.UserId,
+                userId,
                 updatedPpObject.StartDate,
                 updatedPpObject.EndDate,
                 updatedPpObject.IsActive,
