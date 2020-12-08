@@ -17,10 +17,12 @@ namespace BackendCapstone.Controllers
     public class PracticePlansController : FirebaseEnabledController
     {
         PracticePlanRepository _practicePlanRepo;
+        UserRepository _userRepo;
 
         public PracticePlansController()
         {
             _practicePlanRepo = new PracticePlanRepository();
+            _userRepo = new UserRepository();
         }
 
         [HttpGet]
@@ -42,6 +44,15 @@ namespace BackendCapstone.Controllers
         {
             var updatedPracticePlan = _practicePlanRepo.UpdatePracticePlan(planId, updatedPPObject);
             return Ok(updatedPracticePlan);
+        }
+
+        [HttpPost]
+        public IActionResult AddPracticePlan(PracticePlan newPracticePlan)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+            var newPracticePlanObject = _practicePlanRepo.AddPracticePlan(currentUserId, newPracticePlan);
+
+            return Created($"/api/practiceplans/{newPracticePlan.Id}", newPracticePlanObject);
         }
 
     }

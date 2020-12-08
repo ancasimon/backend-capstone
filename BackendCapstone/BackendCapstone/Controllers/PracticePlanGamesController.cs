@@ -35,5 +35,13 @@ namespace BackendCapstone.Controllers
 
             return Ok(updatedPpgObject);
         }
+
+        [HttpPost]
+        public IActionResult AddPracticePlanGame(PracticePlanGame newPracticePlanGame)
+        {
+            var newPracticePlanObject = _practicePlanGameRepo.AddPracticePlanGame(newPracticePlanGame);
+
+            return Created($"/api/practiceplangames/{newPracticePlanGame.Id}", newPracticePlanObject);
+        }
     }
 }
