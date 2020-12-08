@@ -172,6 +172,7 @@ class PracticePlanNew extends React.Component {
 
   render() {
     const {
+      practicePlanId,
       practicePlanName,
       practicePlanStartDate,
       practicePlanEndDate,
@@ -191,7 +192,11 @@ class PracticePlanNew extends React.Component {
 
     return (
       <div className="PracticePlanNew">
-        <h2>Add New Practice Plan</h2>
+        {
+          practicePlanId === 0
+            ? <h2>Add New Practice Plan</h2>
+            : <h2>Update Practice Plan: {practicePlanName}</h2>
+        }
         <div className="row">
           <div className="col-md-9">
             {/* form for new practice plan info below: */}
