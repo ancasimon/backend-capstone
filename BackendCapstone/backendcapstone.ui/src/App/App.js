@@ -11,6 +11,7 @@ import {
 
 import fbConnection from '../helpers/data/connection';
 
+import Footer from '../components/shared/Footer/Footer';
 import GameEdit from '../components/pages/GameEdit/GameEdit';
 import GameNew from '../components/pages/GameNew/GameNew';
 import Games from '../components/pages/Games/Games';
@@ -93,6 +94,7 @@ class App extends React.Component {
               </div>
           </React.Fragment>
         </BrowserRouter>
+        <Footer></Footer>
       </div>
     );
   }
