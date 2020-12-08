@@ -12,7 +12,7 @@ class PracticePlanGameItem extends React.Component {
   static propTypes = {
     practicePlanGame: practicePlanGameShape.practicePlanGameShape,
     practicePlanId: PropTypes.number.isRequired,
-    buildSingleView: PropTypes.func.isRequired,
+    buildSingleView: PropTypes.func,
   }
 
   state = {
