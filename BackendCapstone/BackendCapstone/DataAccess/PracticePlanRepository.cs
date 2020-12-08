@@ -80,5 +80,28 @@ namespace BackendCapstone.DataAccess
 
             return updatedPracticePlan;
         }
+
+        public int AddPracticePlan(int id, PracticePlan newPracticePlan)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToAddNewPracticePlan = @"INSERT INTO [dbo].[PracticePlans]
+                                                       ([Name]
+                                                       ,[UserId]
+                                                       ,[StartDate]
+                                                       ,[EndDate]
+                                                       ,[IsActive])
+                                                 OUTPUT INSERTED.Id
+                                                 VALUES
+                                                       (@name
+                                                       ,@userId
+                                                       ,@startDate
+                                                       ,@endDate
+                                                       ,1)";
+            var parametersForNewPracticePlan = new { name = newPracticePlan.Name, userId = id, startDate = newPracticePlan.StartDate, endDate = newPracticePlan.EndDate };
+            var newId = db.ExecuteScalar<int>(sqlToAddNewPracticePlan, parametersForNewPracticePlan);
+
+            return newId;
+        }
     }
 }

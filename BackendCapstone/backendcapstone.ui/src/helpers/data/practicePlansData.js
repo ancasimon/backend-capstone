@@ -14,4 +14,11 @@ const getSinglePracticePlan = (planId) => axios.get(`${baseUrl}/practiceplans/${
 
 const updatePracticePlan = (planId, updatedPracticePlan) => axios.put(`${baseUrl}/practiceplans/${planId}`, updatedPracticePlan);
 
-export default { getUserPracticePlans, getSinglePracticePlan, updatePracticePlan };
+const createPracticePlan = (newPracticePlan) => axios.post(`${baseUrl}/practiceplans`, newPracticePlan);
+
+export default {
+  getUserPracticePlans,
+  getSinglePracticePlan,
+  updatePracticePlan,
+  createPracticePlan,
+};

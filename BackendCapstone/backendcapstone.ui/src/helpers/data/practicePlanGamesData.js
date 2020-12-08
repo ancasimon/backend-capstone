@@ -3,4 +3,6 @@ import { baseUrl } from '../constants.json';
 
 const updatePracticePlanGame = (id, updatedPracticePlanGameRecord) => axios.put(`${baseUrl}/practiceplangames/${id}`, updatedPracticePlanGameRecord);
 
-export default { updatePracticePlanGame };
+const createNewPracticePlanGame = (newPracticePlanGameRecord) => axios.post(`${baseUrl}/practiceplangames`, newPracticePlanGameRecord);
+
+export default { updatePracticePlanGame, createNewPracticePlanGame };
