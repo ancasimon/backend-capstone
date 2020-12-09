@@ -1,10 +1,35 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import GameItem from '../../shared/GameItem/GameItem';
+
+import gamesData from '../../../helpers/data/gamesData';
+
 import './Games.scss';
 
 class Games extends React.Component {
+  state = {
+    gamesList: [],
+  }
+
+  componentDidMount() {
+    this.getGames();
+  }
+
+  getGames = () => {
+    gamesData.getAllActiveGames()
+      .then((gamesResponse) => {
+        this.setState({ gamesList: gamesResponse });
+      });
+  }
+
   render() {
+    const { gamesList } = this.state;
+
+    const buildGames = () => gamesList.map((game) => (
+      <GameItem key={game.id} gameItem={game} />
+    ));
+
     return (
       <div className="Games container">
         <div className="row">
@@ -24,6 +49,7 @@ class Games extends React.Component {
                 </div>
               </div>
             </div>
+            {buildGames()}
           </div>
         </div>
         <Link to='/games/1'>View Single Game</Link>
