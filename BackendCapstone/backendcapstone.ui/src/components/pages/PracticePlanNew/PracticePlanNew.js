@@ -27,9 +27,9 @@ import './PracticePlanNew.scss';
 class PracticePlanNew extends React.Component {
   state = {
     newRecordForm: true,
-    practicePlanId: 0,
+    practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    practicePlanStartDate: '',
+    practicePlanStartDate: new Date().toLocaleDateString('en-US'),
     practicePlanEndDate: '',
     practicePlanActive: false,
     gamesList: [],
@@ -53,29 +53,32 @@ class PracticePlanNew extends React.Component {
     this.getGamesList();
   }
 
+  getPracticePlanDetails = () => {
+    practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
+      .then((practicePlanIdResponse) => {
+        console.error('practplnaresponse', practicePlanIdResponse);
+        if (practicePlanIdResponse.status === 200) {
+          this.setState({
+            selectedGames: practicePlanIdResponse.data.plannedGames,
+            practicePlanName: practicePlanIdResponse.data.name,
+            practicePlanStartDate: practicePlanIdResponse.data.startDate,
+            practicePlanEndDate: practicePlanIdResponse.data.endDate,
+            practicePlanActive: practicePlanIdResponse.data.isActive,
+          });
+        }
+      })
+      .catch((error) => console.error('Could not upload practice plan data.', error));
+  }
+
   getCurrentPracticePlan = () => {
     if (this.props.match.params.practiceplanid === undefined) {
       this.setState({ practicePlanId: 0, newRecordForm: true });
     } else {
-      const { practicePlanId } = this.props.match.params.practiceplanid;
       this.setState({
         practicePlanId: this.props.match.params.practiceplanid * 1,
         newRecordForm: false,
       });
-      practicePlansData.getSinglePracticePlan(this.props.match.params.practiceplanid)
-        .then((practicePlanIdResponse) => {
-          console.error('practplnaresponse', practicePlanIdResponse);
-          if (practicePlanIdResponse.status === 200) {
-            this.setState({
-              selectedGames: practicePlanIdResponse.data.plannedGames,
-              practicePlanName: practicePlanIdResponse.data.name,
-              practicePlanStartDate: practicePlanIdResponse.data.startDate,
-              practicePlanEndDate: practicePlanIdResponse.data.endDate,
-              practicePlanActive: practicePlanIdResponse.data.isActive,
-            });
-          }
-        })
-        .catch((error) => console.error('Could not upload practice plan data.', error));
+      this.getPracticePlanDetails();
     }
   }
 
@@ -226,7 +229,7 @@ class PracticePlanNew extends React.Component {
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
         this.closeGameFormModal();
-        this.buildNewPracticePlanPage();
+        this.getPracticePlanDetails();
         console.error('new ppg', newPpgResponse);
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));

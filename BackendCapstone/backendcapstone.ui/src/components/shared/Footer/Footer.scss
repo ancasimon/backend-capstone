@@ -1,6 +1,7 @@
 @import '../../../styles/variables';
 
 footer {
+  overflow: hidden;
   background-color: $gray;
   color: $blue;
   font-weight: bolder;
