@@ -22,7 +22,6 @@ class PracticePlanGameItem extends React.Component {
   inactivateRecord = (e) => {
     const { practicePlanGame, practicePlanId } = this.props;
     const { gameId } = this.state;
-    console.error('id', gameId);
     const updatedObject = {
       id: gameId,
       isActive: false,
@@ -32,11 +31,9 @@ class PracticePlanGameItem extends React.Component {
       userNotes: practicePlanGame.userNotes,
       isCompleted: practicePlanGame.isCompleted,
     };
-    console.error('updated obj', updatedObject);
     practicePlanGamesData.updatePracticePlanGame(gameId, updatedObject)
       .then(() => {
         this.props.refreshPage(practicePlanId);
-        console.error('inactivated id:', gameId);
       })
       .catch((error) => console.error('Could not delete this game from your plan.', error));
   }

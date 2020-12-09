@@ -22,7 +22,7 @@ import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
 import practicePlansData from '../../../helpers/data/practicePlansData';
 
-import './PracticePlanNew.scss';
+import './PracticePlanNewOrEdit.scss';
 
 class PracticePlanNew extends React.Component {
   state = {
@@ -56,7 +56,6 @@ class PracticePlanNew extends React.Component {
   getPracticePlanDetails = () => {
     practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
       .then((practicePlanIdResponse) => {
-        console.error('practplnaresponse', practicePlanIdResponse);
         if (practicePlanIdResponse.status === 200) {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
@@ -86,7 +85,6 @@ class PracticePlanNew extends React.Component {
     gamesData.getAllActiveGames()
       .then((gamesListResponse) => {
         this.setState({ gamesList: gamesListResponse });
-        console.error('gameslist in new plan', gamesListResponse);
       })
       .catch((error) => console.error('Unable to get list of games.', error));
   }
@@ -96,7 +94,6 @@ class PracticePlanNew extends React.Component {
   }
 
   // change functions for the fields on the new practice plan form:
-
   changePracticePlanName = (e) => {
     e.preventDefault();
     this.setState({ practicePlanName: e.target.value });
@@ -150,8 +147,7 @@ class PracticePlanNew extends React.Component {
       isActive: practicePlanActive,
     };
     practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
-      .then((updatedPracticePlanResponse) => {
-        // this.buildNewPracticePlanPage();
+      .then(() => {
         this.props.history.push(`/practiceplans/${practicePlanId}`);
       })
       .catch((error) => console.error('Unable to update practice plan details.', error));
@@ -162,7 +158,6 @@ class PracticePlanNew extends React.Component {
   }
 
   // functions for the new practice plan game form on the modal:
-
   toggleGameFormModal = () => {
     this.setState({ gameFormModal: !this.state.gameFormModal });
   }
@@ -180,9 +175,7 @@ class PracticePlanNew extends React.Component {
           selectedGameId: singleGameResponse.data.id,
           practiceGameName: singleGameResponse.data.name,
         });
-        console.error('singlegameresponse', singleGameResponse);
       });
-    console.error('opened modal!! and set game id to', e.target.value);
   };
 
   changePracticeGameName = (e) => {
@@ -234,7 +227,6 @@ class PracticePlanNew extends React.Component {
       .then((newPpgResponse) => {
         this.closeGameFormModal();
         this.getPracticePlanDetails();
-        console.error('new ppg', newPpgResponse);
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }

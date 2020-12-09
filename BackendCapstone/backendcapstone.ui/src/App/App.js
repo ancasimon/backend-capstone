@@ -19,8 +19,7 @@ import Home from '../components/pages/Home/Home';
 import Login from '../components/pages/Login/Login';
 import MyGameSuggestions from '../components/pages/MyGameSuggestions/MyGameSuggestions';
 import MyPracticePlans from '../components/pages/MyPracticePlans/MyPracticePlans';
-import PracticePlanEdit from '../components/pages/PracticePlanEdit/PracticePlanEdit';
-import PracticePlanNew from '../components/pages/PracticePlanNew/PracticePlanNew';
+import PracticePlanNewOrEdit from '../components/pages/PracticePlanNewOrEdit/PracticePlanNewOrEdit';
 import Profile from '../components/pages/Profile/Profile';
 import Register from '../components/pages/Register/Register';
 import SingleGameView from '../components/pages/SingleGameView/SingleGameView';
@@ -75,8 +74,8 @@ class App extends React.Component {
                   <Switch authed={authed}>
                     <PrivateRoute path='/games/edit/:gameid' component={GameEdit} authed={authed} />
                     <PrivateRoute path='/games/new' component={GameNew} authed={authed} />
-                    <PrivateRoute path='/practiceplans/edit/:practiceplanid' component={PracticePlanNew} authed={authed} />
-                    <PrivateRoute path='/practiceplans/new' component={PracticePlanNew} authed={authed} />
+                    <PrivateRoute path='/practiceplans/edit/:practiceplanid' component={PracticePlanNewOrEdit} authed={authed} />
+                    <PrivateRoute path='/practiceplans/new' component={PracticePlanNewOrEdit} authed={authed} />
                     <PrivateRoute path='/practiceplans/:practiceplanid' component={SinglePracticePlanView} authed={authed} />
                     <PrivateRoute path='/practiceplans' component={MyPracticePlans} authed={authed} />
                     <PrivateRoute path='/profile' component={Profile} authed={authed} />

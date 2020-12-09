@@ -27,7 +27,6 @@ class SinglePracticePlanView extends React.Component {
           selectedPracticePlan: practicePlanResponse.data,
           selectedGames: practicePlanResponse.data.plannedGames,
         });
-        console.error('pp info coming back', practicePlanResponse);
       })
       .catch((error) => console.error('Could not get the details of this practice plan.', error));
   }
