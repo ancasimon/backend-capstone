@@ -29,6 +29,7 @@ namespace BackendCapstone.Models
         public string UserFirstName { get; set; }
         public string UserLastName { get; set; }
         public string GameIconUrl { get; set; }
+        public string GameIconHtml { get; set; }
         public List<Age> AgesForGame { get; set; } = new List<Age>();
         public List<Instrument> InstrumentsForGame { get; set; } = new List<Instrument>();
 

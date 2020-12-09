@@ -22,6 +22,10 @@ CREATE TABLE GameIcons (
 	IconUrl nvarchar(1000) null
 );
 
+Alter Table GameIcons
+Add Html nvarchar(100) null
+
+
 CREATE TABLE Users (
 	Id int Identity(1,1) Primary Key not null,
 	IsActive bit not null,
@@ -439,7 +443,245 @@ INSERT INTO GameIcons([Name],[IconUrl])
 VALUES('User-cog', 'https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/user-cog.svg')
 
 
+Update GameIcons
+Set Html = 'fas fa-dice'
+where Id = 1
 
+Update GameIcons
+Set Html = 'fas fa-dice-six'
+where Id = 2
+
+Update GameIcons
+Set Html = 'fas fa-dice-one'
+where Id = 3
+
+Update GameIcons
+Set Html = 'fas fa-hands'
+where Id = 4
+
+Update GameIcons
+Set Html = 'fas fa-chess-knight'
+where Id = 5
+
+Update GameIcons
+Set Html = 'fas fa-puzzle-piece'
+where Id = 6
+
+Update GameIcons
+Set Html = 'fas fa-trophy'
+where Id = 7
+
+Update GameIcons
+Set Html = 'fas fa-heart'
+where Id = 8
+
+Update GameIcons
+Set Html = 'fas fa-hat-wizard'
+where Id = 9
+
+Update GameIcons
+Set Html = 'fas fa-video'
+where Id = 10
+
+Update GameIcons
+Set Html = 'fas fa-music'
+where Id = 11
+
+Update GameIcons
+Set Html = 'fas fa-play-circle'
+where Id = 12
+
+Update GameIcons
+Set Html = 'fas fa-drum'
+where Id = 13
+
+Update GameIcons
+Set Html = 'fas fa-clipboard-list'
+where Id = 14
+
+Update GameIcons
+Set Html = 'fas fa-sleigh'
+where Id = 15
+
+Update GameIcons
+Set Html = 'fas fa-exclamation-triangle'
+where Id = 16
+
+Update GameIcons
+Set Html = 'fas fa-history'
+where Id = 17
+
+Update GameIcons
+Set Html = 'fas fa-vector-square'
+where Id = 18
+
+Update GameIcons
+Set Html = 'fas fa-hourglass-half'
+where Id = 19
+
+Update GameIcons
+Set Html = 'fas fa-globe'
+where Id = 20
+
+Update GameIcons
+Set Html = 'fas fa-map-signs'
+where Id = 21
+
+Update GameIcons
+Set Html = 'fas fa-map-pin'
+where Id = 22
+
+Update GameIcons
+Set Html = 'fas fa-directions'
+where Id = 23
+
+Update GameIcons
+Set Html = 'fas fa-street-view'
+where Id = 24
+
+Update GameIcons
+Set Html = 'fas fa-traffic-light'
+where Id = 25
+
+Update GameIcons
+Set Html = 'fas fa-binoculars'
+where Id = 26
+
+Update GameIcons
+Set Html = 'fas fa-key'
+where Id = 27
+
+Update GameIcons
+Set Html = 'fas fa-gift'
+where Id = 28
+
+Update GameIcons
+Set Html = 'fas fa-gifts'
+where Id = 29
+
+Update GameIcons
+Set Html = 'fas fa-eye'
+where Id = 30
+
+Update GameIcons
+Set Html = 'fas fa-birthday-cake'
+where Id = 31
+
+Update GameIcons
+Set Html = 'fas fa-plane-departure'
+where Id = 32
+
+Update GameIcons
+Set Html = 'fas fa-snowman'
+where Id = 33
+
+Update GameIcons
+Set Html = 'fas fa-shapes'
+where Id = 34
+
+Update GameIcons
+Set Html = 'fas fa-robot'
+where Id = 35
+
+Update GameIcons
+Set Html = 'fas fa-ice-cream'
+where Id = 36
+
+Update GameIcons
+Set Html = 'fas fa-gem'
+where Id = 37
+
+Update GameIcons
+Set Html = 'fas fa-clock'
+where Id = 38
+
+Update GameIcons
+Set Html = 'fas fa-lock-open'
+where Id = 39
+
+Update GameIcons
+Set Html = 'fas fa-money-bill-alt'
+where Id = 40
+
+Update GameIcons
+Set Html = 'fas fa-camera'
+where Id = 41
+
+Update GameIcons
+Set Html = 'fas fa-star'
+where Id = 42
+
+Update GameIcons
+Set Html = 'fas fa-bell'
+where Id = 43
+
+Update GameIcons
+Set Html = 'fas fa-layer-group'
+where Id = 44
+
+Update GameIcons
+Set Html = 'fas fa-ethereum'
+where Id = 45
+
+Update GameIcons
+Set Html = 'fas fa-rainbow'
+where Id = 46
+
+Update GameIcons
+Set Html = 'fas fa-sun'
+where Id = 47
+
+Update GameIcons
+Set Html = 'fas fa-users'
+where Id = 48
+
+Update GameIcons
+Set Html = 'fas fa-grin-stars'
+where Id = 49
+
+Update GameIcons
+Set Html = 'fas fa-medal'
+where Id = 50
+
+Update GameIcons
+Set Html = 'fas fa-magic'
+where Id = 51
+
+Update GameIcons
+Set Html = 'fas fa-dragon'
+where Id = 52
+
+Update GameIcons
+Set Html = 'fas fa-grin-beam'
+where Id = 53
+
+Update GameIcons
+Set Html = 'fas fa-grin-hearts'
+where Id = 54
+
+Update GameIcons
+Set Html = 'fas fa-anchor'
+where Id = 55
+
+Update GameIcons
+Set Html = 'fas fa-user-circle'
+where Id = 56
+
+Update GameIcons
+Set Html = 'fas fa-chalkboard-teacher'
+where Id = 57
+
+Update GameIcons
+Set Html = 'fas fa-balance-scale'
+where Id = 58
+
+Update GameIcons
+Set Html = 'fas fa-user-friends'
+where Id = 59
+
+Update GameIcons
+Set Html = 'fas fa-user-cog'
+where Id = 60
 
 
 

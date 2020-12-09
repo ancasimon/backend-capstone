@@ -4,7 +4,6 @@ package-lock.json
 dist/
 .firebase/
 src/helpers/apiKeys.json
-.eslintcache
 
 # dependencies
 /node_modules

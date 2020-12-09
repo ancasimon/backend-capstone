@@ -49,12 +49,11 @@ class Games extends React.Component {
                 </div>
               </div>
             </div>
-            {buildGames()}
+            <div className="d-flex flex-wrap">
+              {buildGames()}
+            </div>
           </div>
         </div>
-        <Link to='/games/1'>View Single Game</Link>
-            {/* ANCA: NOTE - hardcoding game ID for now ; wil change once the link is in the individual game cards!! */}
-
       </div>
     );
   }
