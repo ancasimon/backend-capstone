@@ -36,13 +36,15 @@ namespace BackendCapstone.Controllers
         public IActionResult GetSinglePracticePlanById(int planId)
         {
             var selectedPracticePlan = _practicePlanRepo.GetPracticePlanById(planId);
+            if (selectedPracticePlan == null) return NotFound("we did not find a practice plan with this ID.");
             return Ok(selectedPracticePlan);
         }
 
         [HttpPut("{planId}")]
         public IActionResult UpdatePracticePlan(int planId, PracticePlan updatedPPObject)
         {
-            var updatedPracticePlan = _practicePlanRepo.UpdatePracticePlan(planId, updatedPPObject);
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+            var updatedPracticePlan = _practicePlanRepo.UpdatePracticePlan(planId, updatedPPObject, currentUserId);
             return Ok(updatedPracticePlan);
         }
 

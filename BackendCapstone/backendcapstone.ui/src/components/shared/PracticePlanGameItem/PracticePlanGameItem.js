@@ -12,7 +12,7 @@ class PracticePlanGameItem extends React.Component {
   static propTypes = {
     practicePlanGame: practicePlanGameShape.practicePlanGameShape,
     practicePlanId: PropTypes.number.isRequired,
-    buildSingleView: PropTypes.func.isRequired,
+    refreshPage: PropTypes.func,
   }
 
   state = {
@@ -35,7 +35,7 @@ class PracticePlanGameItem extends React.Component {
     console.error('updated obj', updatedObject);
     practicePlanGamesData.updatePracticePlanGame(gameId, updatedObject)
       .then(() => {
-        this.props.buildSingleView(practicePlanId);
+        this.props.refreshPage(practicePlanId);
         console.error('inactivated id:', gameId);
       })
       .catch((error) => console.error('Could not delete this game from your plan.', error));

@@ -9,12 +9,14 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Modal,
   ModalHeader,
   ModalBody,
   ModalFooter,
+  Table,
 } from 'reactstrap';
+
+import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
 import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
@@ -24,10 +26,12 @@ import './PracticePlanNew.scss';
 
 class PracticePlanNew extends React.Component {
   state = {
-    practicePlanId: 0,
+    newRecordForm: true,
+    practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    practicePlanStartDate: '',
+    practicePlanStartDate: new Date().toLocaleDateString('en-US'),
     practicePlanEndDate: '',
+    practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
     gameFormModal: false,
@@ -37,7 +41,61 @@ class PracticePlanNew extends React.Component {
     practiceDate: new Date().toLocaleDateString('en-US'),
     practiceNotes: '',
     practiceCompleted: false,
+    selectedGames: [],
   }
+
+  componentDidMount() {
+    this.buildNewPracticePlanPage();
+  }
+
+  buildNewPracticePlanPage = () => {
+    this.getCurrentPracticePlan();
+    this.getGamesList();
+  }
+
+  getPracticePlanDetails = () => {
+    practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
+      .then((practicePlanIdResponse) => {
+        console.error('practplnaresponse', practicePlanIdResponse);
+        if (practicePlanIdResponse.status === 200) {
+          this.setState({
+            selectedGames: practicePlanIdResponse.data.plannedGames,
+            practicePlanName: practicePlanIdResponse.data.name,
+            practicePlanStartDate: practicePlanIdResponse.data.startDate,
+            practicePlanEndDate: practicePlanIdResponse.data.endDate,
+            practicePlanActive: practicePlanIdResponse.data.isActive,
+          });
+        }
+      })
+      .catch((error) => console.error('Could not upload practice plan data.', error));
+  }
+
+  getCurrentPracticePlan = () => {
+    if (this.props.match.params.practiceplanid === undefined) {
+      this.setState({ practicePlanId: 0, newRecordForm: true });
+    } else {
+      this.setState({
+        practicePlanId: this.props.match.params.practiceplanid * 1,
+        newRecordForm: false,
+      });
+      this.getPracticePlanDetails();
+    }
+  }
+
+  getGamesList = () => {
+    gamesData.getAllActiveGames()
+      .then((gamesListResponse) => {
+        this.setState({ gamesList: gamesListResponse });
+        console.error('gameslist in new plan', gamesListResponse);
+      })
+      .catch((error) => console.error('Unable to get list of games.', error));
+  }
+
+  cancelAction = () => {
+    this.props.history.push('/practiceplans');
+  }
+
+  // change functions for the fields on the new practice plan form:
 
   changePracticePlanName = (e) => {
     e.preventDefault();
@@ -68,14 +126,42 @@ class PracticePlanNew extends React.Component {
     };
     practicePlansData.createPracticePlan(newPracticePlan)
       .then((newPracticePlanResponse) => {
-        this.setState({ practicePlanId: newPracticePlanResponse.data });
+        this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
       })
       .catch((error) => console.error('Unable to create this practice plan.', error));
+  }
+
+  // functions for the edit-version of this form:
+  saveUpdatedPracticePlan = (e) => {
+    const {
+      practicePlanId,
+      practicePlanName,
+      practicePlanStartDate,
+      practicePlanEndDate,
+      practicePlanActive,
+      selectedGames,
+    } = this.state;
+    e.preventDefault();
+    const updatedPracticePlan = {
+      planId: practicePlanId,
+      name: practicePlanName,
+      startDate: practicePlanStartDate,
+      endDate: practicePlanEndDate,
+      isActive: practicePlanActive,
+    };
+    practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
+      .then((updatedPracticePlanResponse) => {
+        // this.buildNewPracticePlanPage();
+        this.props.history.push(`/practiceplans/${practicePlanId}`);
+      })
+      .catch((error) => console.error('Unable to update practice plan details.', error));
   }
 
   toggleGamesDropdown = () => {
     this.setState({ gamesDropdownOpen: !this.state.gamesDropdownOpen });
   }
+
+  // functions for the new practice plan game form on the modal:
 
   toggleGameFormModal = () => {
     this.setState({ gameFormModal: !this.state.gameFormModal });
@@ -147,31 +233,15 @@ class PracticePlanNew extends React.Component {
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
         this.closeGameFormModal();
-        this.props.history.push(`/practiceplans/${practicePlanId}`);
+        this.getPracticePlanDetails();
         console.error('new ppg', newPpgResponse);
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }
 
-  getGamesList = () => {
-    gamesData.getAllActiveGames()
-      .then((gamesListResponse) => {
-        this.setState({ gamesList: gamesListResponse });
-        console.error('gameslist in new plan', gamesListResponse);
-      })
-      .catch((error) => console.error('Unable to get list of games.', error));
-  }
-
-  buildNewPracticePlanPage = () => {
-    this.getGamesList();
-  }
-
-  componentDidMount() {
-    this.buildNewPracticePlanPage();
-  }
-
   render() {
     const {
+      newRecordForm,
       practicePlanId,
       practicePlanName,
       practicePlanStartDate,
@@ -184,22 +254,27 @@ class PracticePlanNew extends React.Component {
       practiceNotes,
       practiceCompleted,
       selectedGame,
+      selectedGames,
     } = this.state;
 
     const buildGamesDropdownOptions = () => gamesList.map((game) => (
       <DropdownItem key={game.id} value={game.id} game={game} onClick={this.getGameForm}>{game.name}</DropdownItem>
     ));
 
+    const buildGamesGrid = () => selectedGames.map((item) => (
+      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} refreshPage={this.buildNewPracticePlanPage} />
+    ));
+
     return (
       <div className="PracticePlanNew">
         {
-          practicePlanId === 0
+          (newRecordForm === true)
             ? <h2>Add New Practice Plan</h2>
             : <h2>Update Practice Plan: {practicePlanName}</h2>
         }
         <div className="row">
-          <div className="col-md-9">
-            {/* form for new practice plan info below: */}
+          <div className="col-md-6">
+            {/* form for new practice plan info OR practice plan info to be edited below: */}
             <Form>
               <FormGroup>
                 <Label for="practiceName">Name</Label>
@@ -212,7 +287,9 @@ class PracticePlanNew extends React.Component {
                     onChange={this.changePracticePlanName}
                   />
               </FormGroup>
-              <FormGroup>
+
+              { (newRecordForm === true)
+                ? <FormGroup>
                 <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
                 <Input
                   type="input"
@@ -222,6 +299,18 @@ class PracticePlanNew extends React.Component {
                   onChange={this.changePracticePlanStartDate}
                 />
               </FormGroup>
+                : <FormGroup>
+                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
+                <Input
+                  type="input"
+                  name="practicePlanStartDate"
+                  value={practicePlanStartDate}
+                  id="practicePlanStartDate"
+                  onChange={this.changePracticePlanStartDate}
+                />
+              </FormGroup>
+              }
+
               <FormGroup>
                 <Label for="practicePlanEndDate">End Date (MM/DD/YYYY)</Label>
                 <Input
@@ -233,19 +322,21 @@ class PracticePlanNew extends React.Component {
                 />
               </FormGroup>
               {
-                this.state.practicePlanId === 0
+                newRecordForm === true
                   ? <Button onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
-                  : <Button onClick={this.saveUpdatedPracticePlan}>Save Practice Plan</Button>
+                  : <Button onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
               }
+              <Button onClick={this.cancelAction}>Cancel</Button>
             </Form>
           </div>
-          <div className="col-md-3">
+          <div className="col-md-6">
+            <div className="row">
           {
-            this.state.practicePlanId !== 0
+            newRecordForm === false
               ? <FormGroup>
                   <Dropdown isOpen={gamesDropdownOpen} toggle={this.toggleGamesDropdown}>
                     <DropdownToggle caret>
-                      Add a Game
+                      Add Game
                     </DropdownToggle>
                     <DropdownMenu>
                       {buildGamesDropdownOptions()}
@@ -254,6 +345,27 @@ class PracticePlanNew extends React.Component {
                 </FormGroup>
               : ''
           }
+              <div/>
+              <div className="row">
+                {
+                  this.state.selectedGames.length === 0
+                    ? ''
+                    : <Table>
+          <thead>
+            <tr>
+              <th>Practice Game</th>
+              <th className="d-none d-md-table-cell">Original Game</th>
+              <th>Practice Date</th>
+              <th className="d-none d-md-table-cell">Our Notes</th>
+              <th className="d-none d-md-table-cell">Completed?</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          {buildGamesGrid()}
+        </Table>
+                }
+              </div>
+            </div>
           </div>
         </div>
 
