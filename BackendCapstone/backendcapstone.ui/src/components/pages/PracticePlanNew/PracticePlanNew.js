@@ -91,6 +91,10 @@ class PracticePlanNew extends React.Component {
       .catch((error) => console.error('Unable to get list of games.', error));
   }
 
+  cancelAction = () => {
+    this.props.history.push('/practiceplans');
+  }
+
   // change functions for the fields on the new practice plan form:
 
   changePracticePlanName = (e) => {
@@ -322,6 +326,7 @@ class PracticePlanNew extends React.Component {
                   ? <Button onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
                   : <Button onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
               }
+              <Button onClick={this.cancelAction}>Cancel</Button>
             </Form>
           </div>
           <div className="col-md-6">
