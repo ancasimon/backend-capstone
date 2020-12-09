@@ -1,0 +1,33 @@
+@import '../../../styles/variables';
+
+.gameCard {
+  margin-bottom: 1em;
+}
+
+.gameCardHeader {
+  color: $blue;
+  text-align: center;
+}
+
+.gameIcon {
+  font-size: 2em;
+  display: inline;
+}
+
+.gameCardHeaderTitle {
+  margin-left: 2em;
+  display: inline;
+}
+
+.cardFooter {
+  text-align: center;
+}
+
+.doubleSize {
+  font-size: 2em;
+}
+
+.label {
+  font-weight: bolder;
+  font-style: italic;
+}

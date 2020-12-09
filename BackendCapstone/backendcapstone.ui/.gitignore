@@ -4,7 +4,6 @@ package-lock.json
 dist/
 .firebase/
 src/helpers/apiKeys.json
-.eslintcache
 
 # dependencies
 /node_modules
@@ -27,3 +26,4 @@ src/helpers/apiKeys.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/.eslintcache
