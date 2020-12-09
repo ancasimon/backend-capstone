@@ -349,7 +349,7 @@ class PracticePlanNew extends React.Component {
               <th className="d-none d-md-table-cell">Original Game</th>
               <th>Practice Date</th>
               <th className="d-none d-md-table-cell">Our Notes</th>
-              <th className="d-none d-md-table-cell">Completed?</th>
+              <th className="d-none d-md-table-cell">Done?</th>
               <th>Delete</th>
             </tr>
           </thead>
