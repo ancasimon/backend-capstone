@@ -262,7 +262,7 @@ class PracticePlanNew extends React.Component {
     ));
 
     const buildGamesGrid = () => selectedGames.map((item) => (
-      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} buildSingleView={this.buildSingleView} />
+      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} refreshPage={this.buildNewPracticePlanPage} />
     ));
 
     return (
