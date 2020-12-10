@@ -442,6 +442,15 @@ VALUES('User-friends', 'https://raw.githubusercontent.com/FortAwesome/Font-Aweso
 INSERT INTO GameIcons([Name],[IconUrl])
 VALUES('User-cog', 'https://raw.githubusercontent.com/FortAwesome/Font-Awesome/master/svgs/solid/user-cog.svg')
 
+INSERT INTO GameIcons([Name],[IconUrl], Html)
+VALUES('List-ol', '', 'fas fa-list-ol')
+
+INSERT INTO GameIcons([Name],[IconUrl], Html)
+VALUES('font', '', 'fas fa-font')
+
+INSERT INTO GameIcons([Name],[IconUrl], Html)
+VALUES('home', '', 'fas fa-home')
+
 
 Update GameIcons
 Set Html = 'fas fa-dice'
@@ -1185,6 +1194,176 @@ VALUES(
 'Intervals',1,'','Older and more advanced children will appreciate scale games and interval recognition.',1,'None','Start by playing a scale and then stop on a certain note, asking them to identify which note you stopped on using solfége syllables: do, re, mi, fa, so, la, ti, do. They can sing it back to help them determine the correct note. After they have mastered this skill, you can have them name intervals such as major seconds and major thirds. Let them test you for some extra fun!','Belinda Williams for Roland Corporation Australia','https://rolandcorp.com.au/blog/piano-games-to-play-with-your-child',1,'2020-01-01',51,'https://cdn.pixabay.com/photo/2013/02/06/11/12/3-78492__480.jpg','Scales, Notes'
 )
 GO
+
+
+  UPDATE Games
+  SET GameIconId = 17
+  WHERE Id = 1
+  
+
+  UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 2
+    UPDATE Games
+  SET GameIconId = 44
+  WHERE Id = 3
+      UPDATE Games
+  SET GameIconId = 32
+  WHERE Id = 4
+      UPDATE Games
+  SET GameIconId = 61
+  WHERE Id = 5
+      UPDATE Games
+  SET GameIconId = 7
+  WHERE Id = 6
+      UPDATE Games
+  SET GameIconId = 23
+  WHERE Id = 7
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 8
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 9
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 2
+      UPDATE Games
+  SET GameIconId = 4
+  WHERE Id = 11
+      UPDATE Games
+  SET GameIconId = 31
+  WHERE Id = 12
+      UPDATE Games
+  SET GameIconId = 2
+  WHERE Id = 13
+
+        UPDATE Games
+    SET GameIconId = 57
+  WHERE Id = 14
+
+      UPDATE Games
+  SET GameIconId = 40
+  WHERE Id = 15
+      UPDATE Games
+  SET GameIconId = 12
+  WHERE Id = 16
+      UPDATE Games
+  SET GameIconId = 1
+  WHERE Id = 17
+      UPDATE Games
+  SET GameIconId = 44
+  WHERE Id = 18
+      UPDATE Games
+  SET GameIconId = 44
+  WHERE Id = 19
+      UPDATE Games
+  SET GameIconId = 49
+  WHERE Id = 20
+      UPDATE Games
+  SET GameIconId = 10
+  WHERE Id = 21
+      UPDATE Games
+  SET GameIconId = 16
+  WHERE Id = 22
+      UPDATE Games
+  SET GameIconId = 5
+  WHERE Id = 23
+      UPDATE Games
+  SET GameIconId = 38
+  WHERE Id = 24
+      UPDATE Games
+  SET GameIconId = 44
+  WHERE Id = 25
+      UPDATE Games
+  SET GameIconId = 19
+  WHERE Id = 26
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 27
+      UPDATE Games
+  SET GameIconId = 7
+  WHERE Id = 28
+      UPDATE Games
+  SET GameIconId = 59
+  WHERE Id = 29
+      UPDATE Games
+  SET GameIconId = 43
+  WHERE Id = 30
+      UPDATE Games
+  SET GameIconId = 9
+  WHERE Id = 31
+      UPDATE Games
+  SET GameIconId = 9
+  WHERE Id = 32
+      UPDATE Games
+  SET GameIconId = 51
+  WHERE Id = 33
+      UPDATE Games
+  SET GameIconId = 42
+  WHERE Id = 34
+      UPDATE Games
+  SET GameIconId = 18
+  WHERE Id = 35
+    UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 36
+      UPDATE Games
+  SET GameIconId = 56
+  WHERE Id = 37
+      UPDATE Games
+  SET GameIconId = 48
+  WHERE Id = 38
+      UPDATE Games
+  SET GameIconId = 28
+  WHERE Id = 39
+      UPDATE Games
+  SET GameIconId = 30
+  WHERE Id = 40
+      UPDATE Games
+  SET GameIconId = 62
+  WHERE Id = 41
+      UPDATE Games
+  SET GameIconId = 1
+  WHERE Id = 42
+      UPDATE Games
+  SET GameIconId = 60
+  WHERE Id = 43
+      UPDATE Games
+  SET GameIconId = 12
+  WHERE Id = 44
+      UPDATE Games
+  SET GameIconId = 50
+  WHERE Id = 45
+      UPDATE Games
+  SET GameIconId = 1
+  WHERE Id = 46
+      UPDATE Games
+  SET GameIconId = 52
+  WHERE Id = 47
+      UPDATE Games
+  SET GameIconId = 49
+  WHERE Id = 48
+      UPDATE Games
+  SET GameIconId = 60
+  WHERE Id = 49
+      UPDATE Games
+  SET GameIconId = 63
+  WHERE Id = 50
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 51
+      UPDATE Games
+  SET GameIconId = 44
+  WHERE Id = 52
+      UPDATE Games
+  SET GameIconId = 11
+  WHERE Id = 53
+      UPDATE Games
+  SET GameIconId = 48
+  WHERE Id = 54
+
+
 
 
 
