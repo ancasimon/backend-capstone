@@ -24,7 +24,8 @@ namespace BackendCapstone.DataAccess
 				                                        on g.SubmittedByUserId = u.Id
 					                                        join GameIcons gi
 						                                        on g.GameIconId = gi.Id
-                                    where g.IsActive = 1";
+                                    where g.IsActive = 1
+                                    order by g.Name";
 
             var allActiveGames = db.Query<GameWithMetadata>(sqlForAllGames);
 

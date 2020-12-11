@@ -17,7 +17,10 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForAllGames = "select * from Games where IsActive = 1";
+            var sqlForAllGames = @"select *
+                                  from Games
+                                  where IsActive = 1
+                                  order by Name";
 
             var allActiveGames = db.Query<Game>(sqlForAllGames);
 

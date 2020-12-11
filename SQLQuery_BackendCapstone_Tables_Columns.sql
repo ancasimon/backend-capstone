@@ -1246,7 +1246,7 @@ GO
   SET GameIconId = 40
   WHERE Id = 15
       UPDATE Games
-  SET GameIconId = 12
+  SET GameIconId = 13
   WHERE Id = 16
       UPDATE Games
   SET GameIconId = 1
@@ -1364,10 +1364,29 @@ GO
   WHERE Id = 54
 
 
+   UPDATE Games
+  SET Name = 'Cheating Chess'
+  where Id = 23
 
+  UPDATE Games
+  SET Name = 'Collect the Animals'
+  where Id = 25
 
+    UPDATE Games
+  SET Name = 'Just a Minute'
+  where Id = 24
 
+    UPDATE Games
+  SET Name = 'Roll the Dice Version 1'
+  where Id = 17
 
+    UPDATE Games
+  SET Name = 'Roll the Dice Version 2'
+  where Id = 42
+
+    UPDATE Games
+  SET Name = 'Who Am I? Version 1'
+  where Id = 37
 
 
 
