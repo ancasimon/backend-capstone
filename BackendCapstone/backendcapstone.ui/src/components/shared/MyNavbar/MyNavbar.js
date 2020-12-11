@@ -64,10 +64,10 @@ class MyNavbar extends React.Component {
               <NavLink className="navLinks" tag={RRNavLink} to="/games">Games</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="navLinks" tag={RRNavLink} to="/practiceplans">My Practice Plans</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/practiceplans">Practice Plans</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink className="navLinks" tag={RRNavLink} to="/suggestions">My Suggestions</NavLink>
+              <NavLink className="navLinks" tag={RRNavLink} to="/contributions">Contributions</NavLink>
             </NavItem>
             <NavItem>
               <NavLink className="navLinks" tag={RRNavLink} to="/profile">Profile</NavLink>

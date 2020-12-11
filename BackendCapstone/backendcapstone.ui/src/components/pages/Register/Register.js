@@ -65,8 +65,8 @@ class Register extends React.Component {
   render() {
     const { user } = this.state;
     return (
-      <div className="col-md-12">
-        <h2>Register Here!</h2>
+      <div className="container">
+        <h2 className="pageTitle">Register Here!</h2>
         <Form>
         <FormGroup>
             <Label for="firstName">First Name</Label>

@@ -6,7 +6,7 @@ class Footer extends React.Component {
   render() {
     return (
       <div className="Footer">
-        <footer class="fixed-bottom">
+        <footer className="fixed-bottom">
           <p>
             <span className="italicized">"The potential of every child is
             <span className="red"> unlimited</span>." - Dr. Shinichi Suzuki

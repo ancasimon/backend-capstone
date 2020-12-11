@@ -41,7 +41,7 @@ class Games extends React.Component {
           <div className="col-md-9">
             <div className="row">
               <div className="col-md-9">
-                <h2 className="text-center">Games</h2>
+                <h2 className="pageTitle">Games</h2>
               </div>
               <div className="col-sm-3">
                 <div className="buttonDiv">

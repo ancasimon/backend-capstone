@@ -37,6 +37,14 @@ namespace BackendCapstone.Controllers
             return Ok(currentUserId);
         }
 
+        [HttpGet("user")]
+        public IActionResult GetUserByUid()
+        {
+            var currentUser = _userRepo.GetUserByUid(UserId);
+
+            return Ok(currentUser);
+        }
+
         [HttpPost]
         public IActionResult CreateUser(User user)
         {

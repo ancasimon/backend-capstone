@@ -6,7 +6,7 @@ class GameEdit extends React.Component {
   render() {
     return (
       <div className="GameEdit">
-        <h2>Edit a Game</h2>
+        <h2 className="pageTitle">Edit a Game</h2>
       </div>
     );
   }

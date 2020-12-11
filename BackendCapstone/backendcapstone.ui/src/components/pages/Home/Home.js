@@ -6,7 +6,7 @@ class Home extends React.Component {
   render() {
     return (
       <div className="Home">
-        <h2>Welcome to Unlimited!</h2>
+        <h2 className="pageTitle">Welcome to Unlimited!</h2>
       </div>
     );
   }

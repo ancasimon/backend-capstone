@@ -6,7 +6,7 @@ class GameNew extends React.Component {
   render() {
     return (
       <div className="GameNew">
-        <h2>Add a New Game</h2>
+        <h2 className="pageTitle">Add a New Game</h2>
       </div>
     );
   }

@@ -36,7 +36,7 @@ class MyPracticePlans extends React.Component {
       <div className="MyPracticePlans container">
         <div className="row">
           <div className="col-md-9">
-            <h2 className="text-center">My Practice Plans</h2>
+            <h2 className="pageTitle">My Practice Plans</h2>
           </div>
           <div className="col-md-3">
             <div className="buttonDiv text-center">
