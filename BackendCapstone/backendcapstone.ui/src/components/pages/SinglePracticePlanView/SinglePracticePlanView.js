@@ -76,7 +76,7 @@ class SinglePracticePlanView extends React.Component {
               </div>
             </div>
           </div>
-          <div className="col-md-2">
+          <div className="col-md-2 buttonDiv">
             <Link to='/practiceplans' className="mainButtons p-2">Back</Link>
           </div>
         </div>
