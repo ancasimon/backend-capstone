@@ -1,15 +1,21 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import AgeFilterItem from '../../shared/AgeFilterItem/AgeFilterItem';
 import GameItem from '../../shared/GameItem/GameItem';
 
 import gamesData from '../../../helpers/data/gamesData';
+
+import ageShape from '../../../helpers/propz/ageShape';
 
 import './Games.scss';
 
 class Games extends React.Component {
   state = {
     gamesList: [],
+    agesList: [1],
+    instrumentsList: [],
+    preworkLevelsList: [],
   }
 
   componentDidMount() {
@@ -24,19 +30,30 @@ class Games extends React.Component {
   }
 
   render() {
-    const { gamesList } = this.state;
+    const {
+      gamesList,
+      agesList,
+      instrumentsList,
+      preworkLevelsList,
+    } = this.state;
 
     const buildGames = () => gamesList.map((game) => (
       <GameItem key={game.id} gameItem={game} />
+    ));
+
+    const buildAgeFilters = () => agesList.map((age) => (
+      <AgeFilterItem key={age.id} ageFilter={age} />
     ));
 
     return (
       <div className="Games container">
         <div className="row">
           <div className="col-md-3 topMargin">
-            <p>Filter 1</p>
-            <p>Filter 1</p>
-            <p>Filter 1</p>
+            <h3>Filter</h3>
+            <div>
+              <h4>Age</h4>
+              {buildAgeFilters()}
+            </div>
           </div>
           <div className="col-md-9">
             <div className="row">
