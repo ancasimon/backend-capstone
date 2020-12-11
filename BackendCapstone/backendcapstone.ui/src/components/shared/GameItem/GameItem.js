@@ -50,7 +50,7 @@ class GameItem extends React.Component {
           </CardText>
         </CardBody>
         <CardFooter className="cardFooter">
-          <Link to='/games/{gameItem.id}' className="iconButtons doubleSize"><i class="fas fa-binoculars"></i></Link>
+          <Link to={singleGameLink} className="iconButtons doubleSize"><i class="fas fa-binoculars"></i></Link>
         </CardFooter>
       </Card>
 

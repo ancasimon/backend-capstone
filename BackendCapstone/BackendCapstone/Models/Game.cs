@@ -24,5 +24,6 @@ namespace BackendCapstone.Models
         public bool IsActive { get; set; }
         public DateTime DateCreated { get; set; }
         public int GameIconId { get; set; }
+        public string PhotoUrl { get; set; }
     }
 }
