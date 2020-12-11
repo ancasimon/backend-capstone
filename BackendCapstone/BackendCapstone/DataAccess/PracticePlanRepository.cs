@@ -21,7 +21,8 @@ namespace BackendCapstone.DataAccess
 	                                                join Users u
 		                                                on pp.UserId = u.Id
                                                 where u.FirebaseUid = @uid
-                                                AND pp.IsActive = 1";
+                                                AND pp.IsActive = 1
+                                                order by StartDate desc";
             var parameterforUserUid = new { uid };
 
             var userPracticePlans = db.Query<PracticePlan>(sqlForPracticePlansByUserUid, parameterforUserUid);
@@ -45,7 +46,8 @@ namespace BackendCapstone.DataAccess
 	                                                on pp.Id = ppg.PracticePlanId
 		                                                join Games g
 		                                                on g.Id = ppg.GameId
-                                                where pp.Id = @planId AND pp.IsActive = 1 AND ppg.IsActive = 1";
+                                                where pp.Id = @planId AND pp.IsActive = 1 AND ppg.IsActive = 1
+                                                order by PracticeDate desc";
 
                 var gamesForThisPlan = db.Query<PracticePlanGameWithGameName>(sqlForPracticeGamesByPlanId, parameterForPlanId);
 
