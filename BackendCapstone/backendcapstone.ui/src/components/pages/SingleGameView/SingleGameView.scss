@@ -1,3 +1,19 @@
+@import '../../../styles/index.scss';
+@import '../../../styles/variables';
+
 .SingleGameView {
   display: block;
+  width: 100%
+}
+
+.gameImage {
+  width: 80%;
+  border-radius: 10px;
+}
+
+.credit {
+  border: 1px $blue solid;
+  border-radius: 50px;
+  margin: 25px;
+  text-align: center;
 }
