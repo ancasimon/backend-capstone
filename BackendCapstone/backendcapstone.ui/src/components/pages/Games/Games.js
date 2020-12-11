@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
 import AgeFilterItem from '../../shared/AgeFilterItem/AgeFilterItem';
 import GameItem from '../../shared/GameItem/GameItem';
@@ -21,6 +22,9 @@ class Games extends React.Component {
     agesList: [],
     instrumentsList: [],
     preworkLevelsList: [],
+    selectedAges: [],
+    selectedInstruments: [],
+    selectedPreworkLevels: [],
   }
 
   componentDidMount() {
@@ -64,6 +68,9 @@ class Games extends React.Component {
       agesList,
       instrumentsList,
       preworkLevelsList,
+      selectedAges,
+      selectedInstruments,
+      selectedPreworkLevels,
     } = this.state;
 
     const buildGames = () => gamesList.map((game) => (
@@ -71,7 +78,7 @@ class Games extends React.Component {
     ));
 
     const buildAgeFilters = () => agesList.map((age) => (
-      <AgeFilterItem key={age.id} ageFilter={age} />
+      <AgeFilterItem key={age.id} ageFilter={age} selectedAges={selectedAges} />
     ));
 
     const buildInstrumentFilters = () => instrumentsList.map((instrument) => (
