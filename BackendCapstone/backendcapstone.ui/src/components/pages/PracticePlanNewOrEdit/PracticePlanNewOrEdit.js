@@ -261,8 +261,8 @@ class PracticePlanNew extends React.Component {
       <div className="PracticePlanNew">
         {
           (newRecordForm === true)
-            ? <h2>Add New Practice Plan</h2>
-            : <h2>Update Practice Plan: {practicePlanName}</h2>
+            ? <h2 className="pageTitle">Add New Practice Plan</h2>
+            : <h2 className="pageTitle">Update Practice Plan: {practicePlanName}</h2>
         }
         <div className="row">
           <div className="col-md-6">

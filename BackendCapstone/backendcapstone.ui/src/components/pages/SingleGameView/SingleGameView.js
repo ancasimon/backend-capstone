@@ -52,7 +52,7 @@ class SingleGameView extends React.Component {
         <div className="container">
           <div className="row">
             <div className="col-md-9">
-              <h2>Game Details: {selectedGame.name}</h2>
+              <h2 className="pageTitle">Game Details: {selectedGame.name}</h2>
             </div>
             <div className="col-md-3 buttonDiv">
               <Link to='/games' className="mainButtons p-2">Back</Link>

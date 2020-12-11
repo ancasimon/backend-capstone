@@ -17,7 +17,7 @@ import GameNew from '../components/pages/GameNew/GameNew';
 import Games from '../components/pages/Games/Games';
 import Home from '../components/pages/Home/Home';
 import Login from '../components/pages/Login/Login';
-import MyGameSuggestions from '../components/pages/MyGameSuggestions/MyGameSuggestions';
+import MyContributions from '../components/pages/MyContributions/MyContributions';
 import MyPracticePlans from '../components/pages/MyPracticePlans/MyPracticePlans';
 import PracticePlanNewOrEdit from '../components/pages/PracticePlanNewOrEdit/PracticePlanNewOrEdit';
 import Profile from '../components/pages/Profile/Profile';
@@ -79,7 +79,7 @@ class App extends React.Component {
                     <PrivateRoute path='/practiceplans/:practiceplanid' component={SinglePracticePlanView} authed={authed} />
                     <PrivateRoute path='/practiceplans' component={MyPracticePlans} authed={authed} />
                     <PrivateRoute path='/profile' component={Profile} authed={authed} />
-                    <PrivateRoute path='/suggestions' component={MyGameSuggestions} authed={authed} />
+                    <PrivateRoute path='/contributions' component={MyContributions} authed={authed} />
 
                     <Route path='/home' component={Home} authed={authed} />
                     <Route path='/login' component={Login} authed={authed} />

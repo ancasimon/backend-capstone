@@ -16,5 +16,6 @@ namespace BackendCapstone.Models
         public string FirebaseUid { get; set; }
         public DateTime DateCreated { get; set; }
         public bool IsActive { get; set; }
+        public string ActiveDate { get; set; }
     }
 }
