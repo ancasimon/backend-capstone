@@ -38,19 +38,19 @@ class GameItem extends React.Component {
       <div className="col-md-4 gameCard">
         <Card>
         <CardHeader className="gameCardHeader">
-          <div className="gameIcon"><i class={gameItem.gameIconHtml}></i></div>
+          <div className="gameIcon"><i className={gameItem.gameIconHtml}></i></div>
           <div className="gameCardHeaderTitle">{gameItem.name}</div>
         </CardHeader>
         <CardBody>
           <CardTitle tag="h5"></CardTitle>
           <CardText>
-            <p><span className="label">Instruments:</span>    {displayInstruments()}</p>
-            <p><span className="label">Prework Level:</span>    {gameItem.preworkLevelName}</p>
-            <p><span className="label">Ages:</span>    {displayAges()}</p>
+            <div><h6><span className="label">Instruments: </span></h6>{displayInstruments()}</div>
+            <h6><span className="label">Prework Level: </span>{gameItem.preworkLevelName}</h6>
+            <div><h6><span className="label">Ages: </span></h6>{displayAges()}</div>
           </CardText>
         </CardBody>
         <CardFooter className="cardFooter">
-          <Link to={singleGameLink} className="iconButtons doubleSize"><i class="fas fa-binoculars"></i></Link>
+          <Link to={singleGameLink} className="iconButtons doubleSize"><i className="fas fa-binoculars"></i></Link>
         </CardFooter>
       </Card>
 

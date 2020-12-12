@@ -12,6 +12,7 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/users")]
     [ApiController]
+    [Authorize]
     public class UsersController : FirebaseEnabledController
     {
         UserRepository _userRepo;
@@ -46,6 +47,7 @@ namespace BackendCapstone.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public IActionResult CreateUser(User user)
         {
             _userRepo.AddUser(user);
