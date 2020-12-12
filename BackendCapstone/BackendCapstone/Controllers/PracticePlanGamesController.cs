@@ -15,9 +15,9 @@ namespace BackendCapstone.Controllers
     {
         PracticePlanGameRepository _practicePlanGameRepo;
 
-        public PracticePlanGamesController()
+        public PracticePlanGamesController(PracticePlanGameRepository repo)
         {
-            _practicePlanGameRepo = new PracticePlanGameRepository();
+            _practicePlanGameRepo = repo;
         }
 
         [HttpGet("{id}")]

@@ -15,9 +15,9 @@ namespace BackendCapstone.Controllers
     {
         PreworkLevelRepository _preworkLevelRepo;
 
-        public PreworkLevelsController()
+        public PreworkLevelsController(PreworkLevelRepository repo)
         {
-            _preworkLevelRepo = new PreworkLevelRepository();
+            _preworkLevelRepo = repo;
         }
 
         [HttpGet]

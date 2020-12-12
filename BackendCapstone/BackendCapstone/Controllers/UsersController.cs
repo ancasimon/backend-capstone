@@ -16,9 +16,9 @@ namespace BackendCapstone.Controllers
     {
         UserRepository _userRepo;
 
-        public UsersController()
+        public UsersController(UserRepository repo)
         {
-            _userRepo = new UserRepository();
+            _userRepo = repo;
         }
 
         [HttpGet]

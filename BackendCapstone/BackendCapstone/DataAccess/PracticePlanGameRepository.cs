@@ -5,12 +5,17 @@ using System.Threading.Tasks;
 using BackendCapstone.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace BackendCapstone.DataAccess
 {
     public class PracticePlanGameRepository
     {
-        const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
+        readonly string _connectionString;
+        public PracticePlanGameRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("BackendCapstone");
+        }
 
         public PracticePlanGame GetPracticePlanGameById(int ppgId)
         {

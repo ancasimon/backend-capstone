@@ -15,9 +15,9 @@ namespace BackendCapstone.Controllers
     {
         GameIconRepository _gameIconRepo;
 
-        public GameIconsController()
+        public GameIconsController(GameIconRepository repo)
         {
-            _gameIconRepo = new GameIconRepository();
+            _gameIconRepo = repo;
         }
 
         [HttpGet]

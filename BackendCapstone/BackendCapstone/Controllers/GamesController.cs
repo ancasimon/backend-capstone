@@ -16,10 +16,10 @@ namespace BackendCapstone.Controllers
         GameRepository _gameRepo;
         GameWithMetadataRepository _gameWithDataRepo;
 
-        public GamesController()
+        public GamesController(GameRepository repo1, GameWithMetadataRepository repo2)
         {
-            _gameRepo = new GameRepository();
-            _gameWithDataRepo = new GameWithMetadataRepository();
+            _gameRepo = repo1;
+            _gameWithDataRepo = repo2;
         }
 
         // Changed method below to call the method for the game with metadata instead of the regular game record:
