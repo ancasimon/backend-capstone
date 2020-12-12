@@ -124,6 +124,7 @@ class PracticePlanNew extends React.Component {
     practicePlansData.createPracticePlan(newPracticePlan)
       .then((newPracticePlanResponse) => {
         this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
+        this.getPracticePlanDetails();
       })
       .catch((error) => console.error('Unable to create this practice plan.', error));
   }
@@ -254,7 +255,7 @@ class PracticePlanNew extends React.Component {
     ));
 
     const buildGamesGrid = () => selectedGames.map((item) => (
-      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} refreshPage={this.buildNewPracticePlanPage} />
+      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={this.state.practicePlanId} refreshPage={this.getPracticePlanDetails} />
     ));
 
     return (

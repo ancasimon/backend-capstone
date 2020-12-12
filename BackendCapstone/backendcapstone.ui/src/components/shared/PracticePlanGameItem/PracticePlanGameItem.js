@@ -18,6 +18,7 @@ class PracticePlanGameItem extends React.Component {
   state = {
     gameId: this.props.practicePlanGame.id,
     practiceCompleted: this.props.practicePlanGame.isCompleted,
+    practicePlanId: this.props.practicePlanId,
   }
 
   inactivateRecord = (e) => {
@@ -54,7 +55,7 @@ class PracticePlanGameItem extends React.Component {
     };
     practicePlanGamesData.updatePracticePlanGame(gameId, updatedObject)
       .then(() => {
-        this.props.refreshPage(practicePlanId);
+        this.props.refreshPage();
       })
       .catch((error) => console.error('Could not mark this game complete in your plan.', error));
   }
