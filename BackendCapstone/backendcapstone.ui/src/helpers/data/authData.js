@@ -44,13 +44,25 @@ const loginUser = (user) => firebase.auth().signInWithEmailAndPassword(user.emai
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token));
   });
-const logoutUser = () => firebase.auth().signOut();
 
-const getUid = () => firebase.auth().currentUser.uid;
+// const logoutUser = () => {
+//   sessionStorage.removeItem('token');
+//   firebase.auth().signOut();
+// };
+
+const getUid = () => {
+  const token = sessionStorage.getItem('token');
+  let uid = '';
+
+  if (token != null) {
+    uid = firebase.auth().currentUser.uid;
+  }
+  return uid;
+};
 
 export default {
   getUid,
   loginUser,
-  logoutUser,
+  // logoutUser,
   registerUser,
 };

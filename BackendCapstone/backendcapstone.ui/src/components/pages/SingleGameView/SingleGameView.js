@@ -77,7 +77,14 @@ class SingleGameView extends React.Component {
               <h6>Ages: {displayAges()}</h6>
               <h6>Prework Level: {selectedGame.preworkLevelName}</h6>
               <h6>Keywords: {selectedGame.keywords}</h6>
-              <h6>Submitted by: {selectedGame.userFirstName} {selectedGame.userLastName}</h6>
+              <div className="row">
+                <div className="col-md-6 verticallyCentered">
+                  <h6>Submitted by: {selectedGame.userFirstName} {selectedGame.userLastName}</h6>
+                </div>
+                <div className="col-md-6">
+                  <img src={selectedGame.userPhotoUrl} alt="user photo" className="userPhotoInGame" />
+                </div>
+              </div>
             </div>
           </div>
           <div className="row">

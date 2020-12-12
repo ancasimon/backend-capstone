@@ -27,6 +27,7 @@ class MyNavbar extends React.Component {
 
   state = {
     isOpen: false,
+    user: {},
   }
 
   toggle = () => {
@@ -34,20 +35,9 @@ class MyNavbar extends React.Component {
   }
 
   logoutClickEvent = (e) => {
-    e.preventDefault();
+    sessionStorage.removeItem('token');
     firebase.auth().signOut();
-  }
-
-  // logoutClickEvent = (e) => {
-  //   const { user } = this.state;
-  //   e.preventDefault();
-  //   authData
-  //     .logoutUser(user)
-  //     .then(() => {
-  //       this.props.history.push('/home');
-  //     })
-  //     .catch((error) => console.error('There was an error logging out.', error));
-  // }
+  };
 
   render() {
     const { isOpen } = this.state;
