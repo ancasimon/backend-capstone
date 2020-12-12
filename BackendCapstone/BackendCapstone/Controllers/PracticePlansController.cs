@@ -19,10 +19,10 @@ namespace BackendCapstone.Controllers
         PracticePlanRepository _practicePlanRepo;
         UserRepository _userRepo;
 
-        public PracticePlansController()
+        public PracticePlansController(PracticePlanRepository repo1, UserRepository repo2)
         {
-            _practicePlanRepo = new PracticePlanRepository();
-            _userRepo = new UserRepository();
+            _practicePlanRepo = repo1;
+            _userRepo = repo2;
         }
 
         [HttpGet]

@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 using BackendCapstone.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace BackendCapstone.DataAccess
 {
     public class GameAgeRepository
     {
-        static List<GameAge> gameAges = new List<GameAge>();
-
-        const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
+        readonly string _connectionString;
+        public GameAgeRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("BackendCapstone");
+        }
 
         public IEnumerable<GameAge> GetAgesForSelectedGame(int gameId)
         {

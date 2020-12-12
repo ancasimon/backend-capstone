@@ -15,9 +15,9 @@ namespace BackendCapstone.Controllers
     {
         AgeRepository _ageRepo;
 
-        public AgesController()
+        public AgesController(AgeRepository repo)
         {
-            _ageRepo = new AgeRepository();
+            _ageRepo = repo;
         }
 
         [HttpGet]

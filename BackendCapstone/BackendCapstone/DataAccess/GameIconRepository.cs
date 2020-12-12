@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 using BackendCapstone.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace BackendCapstone.DataAccess
 {
     public class GameIconRepository
     {
-        static List<GameIcon> gameIcons = new List<GameIcon>();
-
-        const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
+        readonly string _connectionString;
+        public GameIconRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("BackendCapstone");
+        }
 
         public IEnumerable<GameIcon> GetAllGameIcons()
         {
