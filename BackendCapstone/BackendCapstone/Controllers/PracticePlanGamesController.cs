@@ -6,11 +6,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using BackendCapstone.DataAccess;
 using BackendCapstone.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendCapstone.Controllers
 {
     [Route("api/practiceplangames")]
     [ApiController]
+    [Authorize]
     public class PracticePlanGamesController : ControllerBase
     {
         PracticePlanGameRepository _practicePlanGameRepo;

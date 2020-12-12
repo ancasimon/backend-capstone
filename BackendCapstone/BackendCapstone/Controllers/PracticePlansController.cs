@@ -13,7 +13,7 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/practiceplans")]
     [ApiController]
-    //[Authorize]
+    [Authorize]
     public class PracticePlansController : FirebaseEnabledController
     {
         PracticePlanRepository _practicePlanRepo;
