@@ -34,6 +34,7 @@ namespace BackendCapstone.Models
         public string GameIconHtml { get; set; }
         public List<Age> AgesForGame { get; set; } = new List<Age>();
         public List<Instrument> InstrumentsForGame { get; set; } = new List<Instrument>();
+        public string UserPhotoUrl { get; set; }
 
     }
 }
