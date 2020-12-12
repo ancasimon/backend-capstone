@@ -12,6 +12,77 @@ namespace BackendCapstone.DataAccess
     {
         const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
 
+
+        //Adding a new method to get all these games but filtered based on the age, instrument and prework level filters the user selects. 
+        //public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata(List<int> selectedAges)
+            public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata()
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForFilteredListOfGames = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName,g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
+                                            from Games g
+	                                        join PreworkLevels pl
+		                                        on g.PreworkLevelId = pl.Id
+			                                        join Users u
+				                                        on g.SubmittedByUserId = u.Id
+					                                        join GameIcons gi
+						                                        on g.GameIconId = gi.Id
+                                                                    join GameAges ga
+	                                                                    on g.Id = ga.GameId
+		                                                                    join GameInstruments ginst
+		                                                                        on g.Id = ginst.GameId
+                                    where g.IsActive = 1
+                                    AND g.PreworkLevelId In (1,2,3)
+                                    AND ga.AgeId IN (1,2,3,4,5)
+                                    AND ginst.InstrumentId IN (3)
+                                    group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.Keywords, gi.Id, gi.IconUrl, gi.Html
+                                    order by g.Name";
+            //TO PASS IN THE SELECTED FILTER IDs: 
+            // Updat sql query: AND ga.AgeId IN (@selectedAges) ...and so on for the other 2!
+            // var parametersForFilters = new { selectedAges };
+            // var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames, parametersForFilters);
+            var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames);
+
+
+            // change the result above to a list and do a foreach loop in order to get the related ages and instruments for each game returned here:
+            List <GameWithMetadata> filteredGamesList = new List<GameWithMetadata>();
+            filteredGamesList = filteredGames.ToList();
+
+            foreach (var item in filteredGamesList)
+            {
+                // get the game id first:
+                var gameId = item.Id;
+
+                // get all ages for this game:
+                var sqlForGameAgesForSelectedGame = @"select a.Id, a.Name,a.IconUrl
+                                    from GameAges ga
+	                                    join Games g
+		                                    on ga.GameId = g.Id
+			                                    join Ages a
+				                                    on ga.AgeId = a.Id
+                                    where GameId = @id";
+                var parameterForGameId = new { Id = gameId };
+                var selectedGameAges = db.Query<Age>(sqlForGameAgesForSelectedGame, parameterForGameId);
+                List<Age> selectedAgesList = selectedGameAges.ToList();
+
+                // assign it to the appropriate property on the game object:
+                item.AgesForGame.AddRange(selectedAgesList);
+
+                //get all instruments for this game:
+                var sqlForGameInstrumentsForSelectedGame = @"select i.Id, i.Name, i.IconUrl
+                                            from GameInstruments gi
+	                                            join Instruments i
+		                                            on gi.InstrumentId = i.Id
+                                            where gi.GameId = @id";
+                var selectedGameInstruments = db.Query<Instrument>(sqlForGameInstrumentsForSelectedGame, parameterForGameId);
+                List<Instrument> selectedInstrumentsList = selectedGameInstruments.ToList();
+
+                // assign it to the appropriate property on the game object:
+                item.InstrumentsForGame.AddRange(selectedInstrumentsList);
+            }
+
+            return filteredGames;
+        }
         public IEnumerable<GameWithMetadata> GetAllActiveGamesWithMetadata()
         {
             using var db = new SqlConnection(_connectionString);

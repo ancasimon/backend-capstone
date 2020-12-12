@@ -25,6 +25,7 @@ class Games extends React.Component {
     selectedAges: [],
     selectedInstruments: [],
     selectedPreworkLevels: [],
+    filteredGamesList: [],
   }
 
   componentDidMount() {
@@ -38,6 +39,15 @@ class Games extends React.Component {
     gamesData.getAllActiveGames()
       .then((gamesResponse) => {
         this.setState({ gamesList: gamesResponse });
+      });
+  }
+
+  getFilteredGamesList = () => {
+    // const { selectedAges } = this.state;
+    // gamesData.getFilteredGames(selectedAges)
+    gamesData.getFilteredGames()
+      .then((filteredGamesResponse) => {
+        this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
       });
   }
 
@@ -62,6 +72,74 @@ class Games extends React.Component {
       });
   }
 
+  // selectAge = (id) => {
+  //   this.setState({ selectedAges: [...this.state.selectedAges, id] });
+  // }
+
+  // unselectAge = (id) => {
+  //   const { selectedAges } = this.state;
+  //   const index = this.state.selectedAges.indexOf(id);
+  //   if (index > -1) {
+  //     this.state.selectedAges.splice(index, 1);
+  //     this.setState({ selectedAges });
+  //   }
+  // }
+
+  // changeSelectFilter = (e) => {
+  //   if (e.target.checked === true) {
+  //     this.selectAge(e.target.value);
+  //   } else if (e.target.checked === false) {
+  //     this.unselectAge(e.target.value);
+  //   }
+  // }
+  changeAgeFilter = (e) => {
+    const { selectedAges } = this.state;
+    if (e.target.checked === true) {
+      this.setState({ selectedAges: [...this.state.selectedAges, e.target.value] });
+    } else if (e.target.checked === false) {
+      const index = this.state.selectedAges.indexOf(e.target.value);
+      if (index > -1) {
+        this.state.selectedAges.splice(index, 1);
+        this.setState({ selectedAges });
+      }
+    }
+  }
+
+  changeInstrumentFilter = (e) => {
+    const { selectedInstruments } = this.state;
+    if (e.target.checked === true) {
+      this.setState({ selectedInstruments: [...this.state.selectedInstruments, e.target.value] });
+    } else if (e.target.checked === false) {
+      const index = this.state.selectedInstruments.indexOf(e.target.value);
+      if (index > -1) {
+        this.state.selectedInstruments.splice(index, 1);
+        this.setState({ selectedInstruments });
+      }
+    }
+  }
+
+  changePreworkLevelFilter = (e) => {
+    const { selectedPreworkLevels } = this.state;
+    if (e.target.checked === true) {
+      this.setState({ selectedPreworkLevels: [...this.state.selectedPreworkLevels, e.target.value] });
+    } else if (e.target.checked === false) {
+      const index = this.state.selectedPreworkLevels.indexOf(e.target.value);
+      if (index > -1) {
+        this.state.selectedPreworkLevels.splice(index, 1);
+        this.setState({ selectedPreworkLevels });
+      }
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedAges !== this.state.selectedAges
+    || prevState.selectedInstruments !== this.state.selectedInstruments
+    || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
+      console.error('get filtered list now');
+      this.getFilteredGamesList();
+    }
+  }
+
   render() {
     const {
       gamesList,
@@ -71,6 +149,7 @@ class Games extends React.Component {
       selectedAges,
       selectedInstruments,
       selectedPreworkLevels,
+      selectedValue,
     } = this.state;
 
     const buildGames = () => gamesList.map((game) => (
@@ -78,15 +157,15 @@ class Games extends React.Component {
     ));
 
     const buildAgeFilters = () => agesList.map((age) => (
-      <AgeFilterItem key={age.id} ageFilter={age} selectedAges={selectedAges} />
+      <AgeFilterItem key={age.id} ageFilter={age} onClick={this.changeAgeFilter} />
     ));
 
     const buildInstrumentFilters = () => instrumentsList.map((instrument) => (
-      <InstrumentFilterItem key={instrument.id} instrumentFilter={instrument} />
+      <InstrumentFilterItem key={instrument.id} instrumentFilter={instrument} onClick={this.changeInstrumentFilter} />
     ));
 
     const buildPreworkLevelsFilters = () => preworkLevelsList.map((level) => (
-      <PreworkLevelFilterItem key={level.id} preworkLevelFilter={level} />
+      <PreworkLevelFilterItem key={level.id} preworkLevelFilter={level} onClick={this.changePreworkLevelFilter} />
     ));
 
     return (
@@ -97,8 +176,13 @@ class Games extends React.Component {
               <div className="col-md-6">
                 <h3>Filter</h3>
               </div>
+              <div className="row">
               <div className="col-md-6">
-                <button type="button" className="mainButtons">Clear All</button>
+                <button type="button" className="mainButtons" onClick={this.getFilteredGamesList}>Apply</button>
+              </div>
+              <div className="col-md-6">
+                <button type="button" className="mainButtons" onClick={this.getGames}>Clear</button>
+              </div>
               </div>
             </div>
             <div>
