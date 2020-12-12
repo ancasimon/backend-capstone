@@ -95,6 +95,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedAges.splice(index, 1);
         this.setState({ selectedAges });
+        this.getFilteredGamesList();
       }
     }
   }
@@ -108,6 +109,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedInstruments.splice(index, 1);
         this.setState({ selectedInstruments });
+        this.getFilteredGamesList();
       }
     }
   }
@@ -121,6 +123,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedPreworkLevels.splice(index, 1);
         this.setState({ selectedPreworkLevels });
+        this.getFilteredGamesList();
       }
     }
   }
