@@ -172,13 +172,8 @@ class Games extends React.Component {
               <div className="col-md-6">
                 <h3>Filter</h3>
               </div>
-              <div className="row">
-              <div className="col-md-6">
-                <button type="button" className="mainButtons" onClick={this.getFilteredGamesList}>Apply</button>
-              </div>
-              <div className="col-md-6">
-                <button type="button" className="mainButtons" onClick={this.buildGamesPage}>Clear</button>
-              </div>
+              <div className="col-md-6 buttonDiv">
+                <button type="button" className="mainButtons p-2" onClick={this.buildGamesPage}>Clear</button>
               </div>
             </div>
             <div>
