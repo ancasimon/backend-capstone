@@ -18,7 +18,7 @@ class AgeFilterItem extends React.Component {
       <div className="AgeFilterItem">
         <div className="form-check">
           <input
-            className="form-check-input"
+            className="form-check-input filterCheckbox"
             type="checkbox"
             value={ageFilter.id}
             id={ageFilter.name}

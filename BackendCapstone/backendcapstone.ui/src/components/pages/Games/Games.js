@@ -29,11 +29,20 @@ class Games extends React.Component {
   }
 
   componentDidMount() {
+    this.buildGamesPage();
+  }
+
+  buildGamesPage = () => {
     this.getGames();
     this.getAges();
     this.getInstruments();
     this.getPreworkLevels();
+    // this.clearCheckboxes();
   }
+
+  // clearCheckboxes = () => {
+  //   { $('.filterCheckbox').prop('checked', false); }
+  // }
 
   getGames = () => {
     gamesData.getAllActiveGames()
@@ -181,7 +190,7 @@ class Games extends React.Component {
                 <button type="button" className="mainButtons" onClick={this.getFilteredGamesList}>Apply</button>
               </div>
               <div className="col-md-6">
-                <button type="button" className="mainButtons" onClick={this.getGames}>Clear</button>
+                <button type="button" className="mainButtons" onClick={this.buildGamesPage}>Clear</button>
               </div>
               </div>
             </div>
