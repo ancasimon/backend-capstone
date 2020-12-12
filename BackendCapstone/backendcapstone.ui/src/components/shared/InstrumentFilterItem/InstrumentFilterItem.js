@@ -18,7 +18,7 @@ class InstrumentFilterItem extends React.Component {
       <div className="InstrumentFilterItem">
         <div className="form-check">
           <input
-            className="form-check-input"
+            className="form-check-input filterCheckbox"
             type="checkbox"
             value={instrumentFilter.id}
             id={instrumentFilter.name}

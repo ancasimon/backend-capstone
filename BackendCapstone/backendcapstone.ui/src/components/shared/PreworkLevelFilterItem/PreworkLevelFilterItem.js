@@ -18,7 +18,7 @@ class PreworkLevelFilterItem extends React.Component {
       <div className="PreworkLevelFilterItem">
         <div className="form-check">
           <input
-            className="form-check-input"
+            className="form-check-input filterCheckbox"
             type="checkbox"
             value={preworkLevelFilter.id}
             id={preworkLevelFilter.name}

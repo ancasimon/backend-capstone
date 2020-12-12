@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import $ from 'jquery';
 
 import AgeFilterItem from '../../shared/AgeFilterItem/AgeFilterItem';
 import GameItem from '../../shared/GameItem/GameItem';
@@ -37,12 +38,12 @@ class Games extends React.Component {
     this.getAges();
     this.getInstruments();
     this.getPreworkLevels();
-    // this.clearCheckboxes();
+    this.clearCheckboxes();
   }
 
-  // clearCheckboxes = () => {
-  //   { $('.filterCheckbox').prop('checked', false); }
-  // }
+  clearCheckboxes = () => {
+    { $('.filterCheckbox').prop('checked', false); }
+  }
 
   getGames = () => {
     gamesData.getAllActiveGames()
@@ -80,26 +81,6 @@ class Games extends React.Component {
       });
   }
 
-  // selectAge = (id) => {
-  //   this.setState({ selectedAges: [...this.state.selectedAges, id] });
-  // }
-
-  // unselectAge = (id) => {
-  //   const { selectedAges } = this.state;
-  //   const index = this.state.selectedAges.indexOf(id);
-  //   if (index > -1) {
-  //     this.state.selectedAges.splice(index, 1);
-  //     this.setState({ selectedAges });
-  //   }
-  // }
-
-  // changeSelectFilter = (e) => {
-  //   if (e.target.checked === true) {
-  //     this.selectAge(e.target.value);
-  //   } else if (e.target.checked === false) {
-  //     this.unselectAge(e.target.value);
-  //   }
-  // }
   changeAgeFilter = (e) => {
     const { selectedAges } = this.state;
     if (e.target.checked === true) {
@@ -157,7 +138,6 @@ class Games extends React.Component {
       selectedAges,
       selectedInstruments,
       selectedPreworkLevels,
-      selectedValue,
     } = this.state;
 
     const buildGames = () => gamesList.map((game) => (
