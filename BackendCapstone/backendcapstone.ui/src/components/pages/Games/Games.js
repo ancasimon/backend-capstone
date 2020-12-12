@@ -43,6 +43,11 @@ class Games extends React.Component {
 
   clearCheckboxes = () => {
     { $('.filterCheckbox').prop('checked', false); }
+    this.setState({
+      selectedAges: [],
+      selectedInstruments: [],
+      selectedPreworkLevels: [],
+    });
   }
 
   getGames = () => {
