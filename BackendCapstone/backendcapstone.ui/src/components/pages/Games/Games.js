@@ -52,9 +52,8 @@ class Games extends React.Component {
   }
 
   getFilteredGamesList = () => {
-    // const { selectedAges } = this.state;
-    // gamesData.getFilteredGames(selectedAges)
-    gamesData.getFilteredGames()
+    const { selectedAges, selectedInstruments, selectedPreworkLevels } = this.state;
+    gamesData.getFilteredGames(selectedAges, selectedInstruments, selectedPreworkLevels)
       .then((filteredGamesResponse) => {
         this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
       });
