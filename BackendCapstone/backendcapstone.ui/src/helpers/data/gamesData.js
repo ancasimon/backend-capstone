@@ -2,7 +2,7 @@ import axios from 'axios';
 import { baseUrl } from '../constants.json';
 
 const getAllActiveGames = () => new Promise((resolve, reject) => {
-  axios.get(`${baseUrl}/games`)
+  axios.get(`${baseUrl}/games/all`)
     .then((gamesResponse) => {
       resolve(gamesResponse.data);
     })
@@ -10,7 +10,7 @@ const getAllActiveGames = () => new Promise((resolve, reject) => {
 });
 
 const getFilteredGames = () => new Promise((resolve, reject) => {
-  axios.get(`${baseUrl}/games/filtered`)
+  axios.get(`${baseUrl}/games`)
     .then((filteredGamesResponse) => {
       resolve(filteredGamesResponse.data);
     })
