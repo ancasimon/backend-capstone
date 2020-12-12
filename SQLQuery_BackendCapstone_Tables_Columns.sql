@@ -238,6 +238,49 @@ values('Sylvan', 'McWheeler', 'sylvan.mcwheeler@gmail.com', '2020', 'password123
 insert into Users(firstName, lastName,email,dateCreated,password,IsActive,photoUrl,firebaseUid)
 values('Stephanie', 'Plum', 'stephanie.plum@gmail.com', '2020', 'password123', 1,'https://ca-times.brightspotcdn.com/dims4/default/2f4d391/2147483647/strip/true/crop/3200x4000+0+0/resize/840x1050!/quality/90/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2F80%2Fa4%2F6ee9ea8e4c1382bb213f66b19f59%2Fla-photos-handouts-la-ca-twisted-twenty-six-book-111.JPG','')
 
+UPDATE [dbo].[Users]
+   SET [PhotoUrl] = 'https://truestudios.biz/images/headshots/Free_Headshot_Columbus_7.jpg'
+ WHERE Id = 3
+ UPDATE [dbo].[Users]
+   SET [PhotoUrl] = 'https://images.squarespace-cdn.com/content/v1/530a77dee4b035db71736c02/1570812709805-UW9CYAKYVXKSTO845HHI/ke17ZwdGBToddI8pDm48kMFiMyT1nneRMhnmfuSfpxZ7gQa3H78H3Y0txjaiv_0fDoOvxcdMmMKkDsyUqMSsMWxHk725yiiHCCLfrh8O1z4YTzHvnKhyp6Da-NYroOW3ZGjoBKy3azqku80C789l0mlM0or4nqX7jrn5yWu0hA1QXedaIFqnAbw_tQShHbKg4-O_KAc44ak5jGzrnn7f3A/Connecticut+headshots+-+lawyer+headshot+-+Seshu+Badrinath.jpg'
+ WHERE Id = 1
+ UPDATE [dbo].[Users]
+   SET [PhotoUrl] = 'https://i1.wp.com/findingmyinnerbombshell.com/wp-content/uploads/2014/03/IMG_2638.jpg'
+   WHERE Id = 2
+   UPDATE [dbo].[Users]
+   SET [PhotoUrl] = 'https://thumbs.dreamstime.com/z/son-kissing-dad-cheek-383476.jpg'
+   WHERE Id = 4
+   UPDATE [dbo].[Users]
+   SET [PhotoUrl] = 'https://static1.squarespace.com/static/518081cfe4b0809658b43e0b/518086dfe4b00b4503d890ba/5952c7c3b8a79b67220ddd3d/1587514772680/bellingham-lifestyle-photographer-katheryn-moran-father-daughter-lego-73.jpg?format=1500w'
+   WHERE Id = 9
+
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'cUMl8dLyeKaPdz8Bc2rW5Ztiopc2'
+   WHERE Id = 5
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'jQ9Z76R9THNKB28rYhr7iCofFHM2'
+   WHERE Id = 6
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'Er9YmHOjInX949aKkOZ2kfwWQOu1'
+   WHERE Id = 7
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'D2NcMfu5hIaQy54h049CDebnI3v2'
+   WHERE Id = 8
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'D5RHmOIR00SEdgEo0GWqkBjedm22'
+   WHERE Id = 9
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'rjjwESZYmgPl33dZgFyKk2y4wk33'
+   WHERE Id = 10
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'dd66fmZdohgm0QqLpjjRXmmsG1m1'
+   WHERE Id = 11
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'DBmo2uOuzGanVNzY9VwHqMtYcko1'
+   WHERE Id = 12
+   UPDATE [dbo].[Users]
+   SET [FirebaseUid] = 'O41tF7qW31NbiKCjxCiH52cBD5j2'
+   WHERE Id = 13
 
 -- USER RECORD UPDATES:
 UPDATE Users

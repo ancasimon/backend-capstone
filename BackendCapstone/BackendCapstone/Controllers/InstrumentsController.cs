@@ -15,9 +15,9 @@ namespace BackendCapstone.Controllers
     {
         InstrumentRepository _instrumentRepo;
 
-        public InstrumentsController()
+        public InstrumentsController(InstrumentRepository repo)
         {
-            _instrumentRepo = new InstrumentRepository();
+            _instrumentRepo = repo;
         }
 
         [HttpGet]

@@ -5,14 +5,17 @@ using System.Threading.Tasks;
 using BackendCapstone.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
+using Microsoft.Extensions.Configuration;
 
 namespace BackendCapstone.DataAccess
 {
     public class GameInstrumentRepository
     {
-        static List<GameInstrument> gameInstruments = new List<GameInstrument>();
-
-        const string _connectionString = "Server=localhost;Database=BackendCapstone;Trusted_Connection=True";
+        readonly string _connectionString;
+        public GameInstrumentRepository(IConfiguration configuration)
+        {
+            _connectionString = configuration.GetConnectionString("BackendCapstone");
+        }
 
         public IEnumerable<GameInstrument> GetInstrumentsForSelectedGame(int gameId)
         {

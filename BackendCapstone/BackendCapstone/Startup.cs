@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
@@ -12,6 +12,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using BackendCapstone.DataAccess;
+using BackendCapstone.Models;
 
 namespace BackendCapstone
 {
@@ -28,6 +30,25 @@ namespace BackendCapstone
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            //ANCA: added this to configure what gets provided when a request is made for configuration:
+            services.AddSingleton<IConfiguration>(Configuration);
+            services.AddTransient<AgeRepository>();
+            services.AddTransient<GameAgeRepository>();
+            services.AddTransient<GameIconRepository>();
+            services.AddTransient<GameInstrumentRepository>();
+            services.AddTransient<GameRepository>();
+            services.AddTransient<GameWithMetadataRepository>();
+            services.AddTransient<InstrumentRepository>();
+            services.AddTransient<PracticePlanGameRepository>();
+            services.AddTransient<PracticePlanGameWithGameNameRepository>();
+            services.AddTransient<PracticePlanRepository>();
+            services.AddTransient<PreworkLevelRepository>();
+            services.AddTransient<UserChildRepository>();
+            services.AddTransient<UserPhotoRepository>();
+            services.AddTransient<UserRatingRepository>();
+            services.AddTransient<UserRepository>();
+            services.AddTransient<UserReviewRepository>();
 
             //adding code block below to support authentication via Firebase:
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
