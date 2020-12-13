@@ -7,7 +7,7 @@ A full-stack CRUD application built with C#, ASP .NET Core MVC, SQL database, HT
 
 ## Screenshots
 ### Games Page
-![Games Page](./src/images_backend_capstone/GamesPage.PNG)
+![Games Page](./BackendCapstone/backendcapstone.ui/src/images_backend_capstone/GamesPage.PNG)
 
 ## Tools & Technologies
 API, ASP .NET Core MVC, Axios, Bootstrap, C#, CSS, E6 Modules, Firebase (for authentication), FreeLogoDesign, Github (for version control and project management), HTML5, JavaScript, Lucidchart, moqups, React, React Router, reactstrap, Saas, SQL, SSMS
