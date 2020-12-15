@@ -25,7 +25,7 @@ namespace BackendCapstone.DataAccess
             var anyAges = selectedAges.Any();
             var anyInstruments = selectedInstruments.Any();
             var anyPreworkLevels = selectedPreworkLevels.Any();
-            //var anySearchInput = searchInput.Length;
+            ////var anySearchInput = searchInput.Length;
 
             // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend 
             // - NOT SURE THIS IS SUSTAINABLE - if I ever add the ability to add more instruments, for ex., this list would need to get updated!!

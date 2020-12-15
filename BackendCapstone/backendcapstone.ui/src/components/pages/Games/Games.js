@@ -66,10 +66,20 @@ class Games extends React.Component {
       selectedPreworkLevels,
       searchInput,
     } = this.state;
-    gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
-      .then((filteredGamesResponse) => {
-        this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
-      });
+    // if (searchInput === '' && selectedAges === [] && selectedInstruments === [] && selectedPreworkLevels === []) {
+    //   console.error('No filters!');
+    // } else {
+    //   gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
+    //     .then((filteredGamesResponse) => {
+    //       this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
+    //     });
+    // }
+    if (searchInput !== '' || selectedAges !== [] || selectedInstruments !== [] || selectedPreworkLevels !== []) {
+      gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
+        .then((filteredGamesResponse) => {
+          this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
+        });
+    }
   }
 
   getAges = () => {
@@ -141,16 +151,14 @@ class Games extends React.Component {
     }
   }
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   if (prevState.selectedAges !== this.state.selectedAges
-  //   || prevState.selectedInstruments !== this.state.selectedInstruments
-  //   || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels
-  //   // || prevState.searchInput != this.state.searchInput
-  //   ) {
-  //     console.error('get filtered list now');
-  //     this.getFilteredGamesList();
-  //   }
-  // }
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.selectedAges !== this.state.selectedAges
+    || prevState.selectedInstruments !== this.state.selectedInstruments
+    || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
+      console.error('get filtered list now');
+      this.getFilteredGamesList();
+    }
+  }
 
   render() {
     const {
@@ -193,12 +201,10 @@ class Games extends React.Component {
               </div>
             </div>
             <div className="row">
-              <div className="col-md-6 buttonDiv">
-                <form>
-                  <input type="text" placeholder="Search keywords" name="search" value={searchInput} onChange={this.changeSearchInput} />
-                </form>
+              <div className="col-md-9">
+                <input className="setWidth" type="text" placeholder="Search keywords" name="search" value={searchInput} onChange={this.changeSearchInput} />
               </div>
-              <div className="col-md-6 buttonDiv">
+              <div className="col-md-3">
                 <button type="button" className="mainButtons p-2" onClick={this.getFilteredGamesList}><i className="fas fa-search"></i></button>
               </div>
             </div>

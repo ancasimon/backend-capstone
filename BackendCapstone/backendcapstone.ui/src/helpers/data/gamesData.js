@@ -11,8 +11,10 @@ const getAllActiveGames = () => new Promise((resolve, reject) => {
 
 // Passing in filter values for selected games:
 const getFilteredGames = (searchInput, selectedAges, selectedInstruments, selectedPreworkLevels) => new Promise((resolve, reject) => {
-  // const buildAgeFilters = selectedAges.map((age))
-  axios.get(`${baseUrl}/games?searchInput=${searchInput}&${selectedAges.map((age) => `selectedAges=${age}&`)}&${selectedInstruments.map((inst) => `selectedInstruments=${inst}&`)}&${selectedPreworkLevels.map((level) => `selectedPreworkLevels=${level}&`)}`)
+  const buildAgeFilters = () => selectedAges.map((age) => `selectedAges=${age}`);
+  const buildInstrumentFilters = () => selectedInstruments.map((instrument) => `selectedInstruments=${instrument}`);
+  const buildPreworkLevelFilters = () => selectedPreworkLevels.map((preworkLevel) => `selectedPreworkLevels=${preworkLevel}`);
+  axios.get(`${baseUrl}/games?searchInput=${searchInput}&${buildAgeFilters()}&${buildInstrumentFilters()}&${buildPreworkLevelFilters()}`)
     .then((filteredGamesResponse) => {
       resolve(filteredGamesResponse.data);
       console.error('selected filters passed to backend', searchInput, selectedAges, selectedInstruments, selectedPreworkLevels);
