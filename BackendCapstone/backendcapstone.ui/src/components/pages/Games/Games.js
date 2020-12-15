@@ -27,6 +27,7 @@ class Games extends React.Component {
     selectedInstruments: [],
     selectedPreworkLevels: [],
     filteredGamesList: [],
+    searchInput: '',
   }
 
   componentDidMount() {
@@ -47,6 +48,7 @@ class Games extends React.Component {
       selectedAges: [],
       selectedInstruments: [],
       selectedPreworkLevels: [],
+      searchInput: '',
     });
   }
 
@@ -58,8 +60,13 @@ class Games extends React.Component {
   }
 
   getFilteredGamesList = () => {
-    const { selectedAges, selectedInstruments, selectedPreworkLevels } = this.state;
-    gamesData.getFilteredGames(selectedAges, selectedInstruments, selectedPreworkLevels)
+    const {
+      selectedAges,
+      selectedInstruments,
+      selectedPreworkLevels,
+      searchInput,
+    } = this.state;
+    gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
       .then((filteredGamesResponse) => {
         this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
       });
@@ -84,6 +91,12 @@ class Games extends React.Component {
       .then((preworkLevelsResponse) => {
         this.setState({ preworkLevelsList: preworkLevelsResponse });
       });
+  }
+
+  changeSearchInput = (e) => {
+    e.preventDefault();
+    this.setState({ searchInput: e.target.value });
+    console.error('searchinput in state', this.state.searchInput);
   }
 
   changeAgeFilter = (e) => {
@@ -128,14 +141,16 @@ class Games extends React.Component {
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.selectedAges !== this.state.selectedAges
-    || prevState.selectedInstruments !== this.state.selectedInstruments
-    || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
-      console.error('get filtered list now');
-      this.getFilteredGamesList();
-    }
-  }
+  // componentDidUpdate(prevProps, prevState) {
+  //   if (prevState.selectedAges !== this.state.selectedAges
+  //   || prevState.selectedInstruments !== this.state.selectedInstruments
+  //   || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels
+  //   // || prevState.searchInput != this.state.searchInput
+  //   ) {
+  //     console.error('get filtered list now');
+  //     this.getFilteredGamesList();
+  //   }
+  // }
 
   render() {
     const {
@@ -146,6 +161,7 @@ class Games extends React.Component {
       selectedAges,
       selectedInstruments,
       selectedPreworkLevels,
+      searchInput,
     } = this.state;
 
     const buildGames = () => gamesList.map((game) => (
@@ -167,13 +183,23 @@ class Games extends React.Component {
     return (
       <div className="Games container">
         <div className="row">
-          <div className="col-md-3 topMargin">
+          <div className="col-md-3">
             <div className="row">
               <div className="col-md-6">
                 <h3>Filter</h3>
               </div>
               <div className="col-md-6 buttonDiv">
                 <button type="button" className="mainButtons p-2" onClick={this.buildGamesPage}>Clear</button>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-6 buttonDiv">
+                <form>
+                  <input type="text" placeholder="Search keywords" name="search" value={searchInput} onChange={this.changeSearchInput} />
+                </form>
+              </div>
+              <div className="col-md-6 buttonDiv">
+                <button type="button" className="mainButtons p-2" onClick={this.getFilteredGamesList}><i className="fas fa-search"></i></button>
               </div>
             </div>
             <div>

@@ -33,9 +33,9 @@ namespace BackendCapstone.Controllers
 
         //new method to get all games filtered by user-selected ages, instruments, and prework levels:
         [HttpGet()]
-        public IActionResult GetFilteredGames([FromQuery] List<int> selectedAges, [FromQuery] List<int> selectedInstruments, [FromQuery] List<int> selectedPreworkLevels )
+        public IActionResult GetFilteredGames([FromQuery] string searchInput, [FromQuery] List<int> selectedAges, [FromQuery] List<int> selectedInstruments, [FromQuery] List<int> selectedPreworkLevels)
         {
-            var filteredGames = _gameWithDataRepo.GetFilteredListOfGamesWithMetadata(selectedAges, selectedInstruments, selectedPreworkLevels);
+            var filteredGames = _gameWithDataRepo.GetFilteredListOfGamesWithMetadata(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels);
 
             return Ok(filteredGames);
         }

@@ -19,12 +19,13 @@ namespace BackendCapstone.DataAccess
 
 
         //Adding a new method to get all these games but filtered based on the age, instrument and prework level filters the user selects. 
-        public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata(List<int> selectedAges, List<int> selectedInstruments, List<int> selectedPreworkLevels)
+        public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata(string searchInput, List<int> selectedAges, List<int> selectedInstruments, List<int> selectedPreworkLevels)
         {
             using var db = new SqlConnection(_connectionString);
             var anyAges = selectedAges.Any();
             var anyInstruments = selectedInstruments.Any();
             var anyPreworkLevels = selectedPreworkLevels.Any();
+            //var anySearchInput = searchInput.Length;
 
             // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend 
             // - NOT SURE THIS IS SUSTAINABLE - if I ever add the ability to add more instruments, for ex., this list would need to get updated!!
@@ -41,6 +42,10 @@ namespace BackendCapstone.DataAccess
             {
                 selectedPreworkLevels = new List<int>() { 1, 2, 3, 4 };
             }
+            //if (anySearchInput == 0)
+            //{
+            //    searchInput = "";
+            //}
 
             var sqlForFilteredListOfGames = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
                                             from Games g
@@ -58,9 +63,10 @@ namespace BackendCapstone.DataAccess
                                     AND g.PreworkLevelId In @selectedPreworkLevels
                                     AND ga.AgeId IN @selectedAges
                                     AND ginst.InstrumentId IN @selectedInstruments
+                                    AND g.Keywords like '%' + @searchInput + '%'
                                     group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.Keywords, gi.Id, gi.IconUrl, gi.Html
                                     order by g.Name";
-            var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels };
+            var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels, searchInput };
             var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames, parametersForFilters);
 
             // change the result above to a list and do a foreach loop in order to get the related ages and instruments for each game returned here:
