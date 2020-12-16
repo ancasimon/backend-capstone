@@ -66,14 +66,6 @@ class Games extends React.Component {
       selectedPreworkLevels,
       searchInput,
     } = this.state;
-    // if (searchInput === '' && selectedAges === [] && selectedInstruments === [] && selectedPreworkLevels === []) {
-    //   console.error('No filters!');
-    // } else {
-    //   gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
-    //     .then((filteredGamesResponse) => {
-    //       this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
-    //     });
-    // }
     if (searchInput !== '' || selectedAges !== [] || selectedInstruments !== [] || selectedPreworkLevels !== []) {
       gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
         .then((filteredGamesResponse) => {
@@ -155,7 +147,8 @@ class Games extends React.Component {
     if (prevState.selectedAges !== this.state.selectedAges
     || prevState.selectedInstruments !== this.state.selectedInstruments
     || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
-      console.error('get filtered list now');
+      console.error('prevstate in compdidupdate', prevState);
+      console.error('current state', this.state);
       this.getFilteredGamesList();
     }
   }
