@@ -11,10 +11,6 @@ import authData from '../../../helpers/data/authData';
 import './Login.scss';
 
 class Login extends React.Component {
-  static propTypes = {
-    authed: PropTypes.bool.isRequired,
-  }
-
   state = {
     user: {
       email: '',
@@ -49,7 +45,6 @@ class Login extends React.Component {
 
   render() {
     const { user } = this.state;
-    const { authed } = this.props;
     return (
       <div className="Login text-center" {...this.props}>
         <div id="login-form">

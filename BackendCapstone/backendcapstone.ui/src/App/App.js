@@ -11,6 +11,8 @@ import {
 
 import fbConnection from '../helpers/data/connection';
 
+import usersData from '../helpers/data/usersData';
+
 import Footer from '../components/shared/Footer/Footer';
 import GameEdit from '../components/pages/GameEdit/GameEdit';
 import GameNew from '../components/pages/GameNew/GameNew';
@@ -41,6 +43,16 @@ const PrivateRoute = ({ component: Component, authed, ...rest }) => {
 class App extends React.Component {
   state = {
     authed: false,
+    user: {},
+  }
+
+  getUser = () => {
+    usersData.getSingleUser()
+      .then((userResponse) => {
+        console.error('user resp in App', userResponse);
+        this.setState({ user: userResponse.data });
+      })
+      .catch((error) => console.error('Could not get user data.', error));
   }
 
   componentDidMount() {
@@ -51,6 +63,7 @@ class App extends React.Component {
         // save the token to the session storage
           .then((token) => sessionStorage.setItem('token', token));
         this.setState({ authed: true });
+        this.getUser();
       } else {
         this.setState({ authed: false });
       }
@@ -62,7 +75,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { authed } = this.state;
+    const { authed, user } = this.state;
 
     return (
       <div className="App">
@@ -81,7 +94,7 @@ class App extends React.Component {
                     <PrivateRoute path='/profile' component={Profile} authed={authed} />
                     <PrivateRoute path='/contributions' component={MyContributions} authed={authed} />
 
-                    <Route path='/home' component={Home} authed={authed} />
+                    <Route path='/home' render={(props) => <Home authed={authed} user={user} {...props} />}/>
                     <Route path='/login' component={Login} authed={authed} />
                     <Route path='/games/:gameid' component={SingleGameView} authed={authed} />
                     <Route path='/games' component={Games} authed={authed} />
