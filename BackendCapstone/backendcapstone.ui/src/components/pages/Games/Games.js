@@ -108,7 +108,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedAges.splice(index, 1);
         this.setState({ selectedAges });
-        this.getFilteredGamesList();
+        this.getFilteredGamesList(this.state.searchInput, this.state.selectedAges, this.state.selectedInstruments, this.state.selectedPreworkLevels);
       }
     }
   }
@@ -122,7 +122,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedInstruments.splice(index, 1);
         this.setState({ selectedInstruments });
-        this.getFilteredGamesList();
+        this.getFilteredGamesList(this.state.searchInput, this.state.selectedAges, this.state.selectedInstruments, this.state.selectedPreworkLevels);
       }
     }
   }
@@ -136,7 +136,7 @@ class Games extends React.Component {
       if (index > -1) {
         this.state.selectedPreworkLevels.splice(index, 1);
         this.setState({ selectedPreworkLevels });
-        this.getFilteredGamesList();
+        this.getFilteredGamesList(this.state.searchInput, this.state.selectedAges, this.state.selectedInstruments, this.state.selectedPreworkLevels);
       }
     }
   }
@@ -146,7 +146,6 @@ class Games extends React.Component {
     || prevState.selectedInstruments !== this.state.selectedInstruments
     || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
       console.error('prevstate in compdidupdate', prevState);
-      console.error('current state', this.state);
       this.getFilteredGamesList();
     }
   }
