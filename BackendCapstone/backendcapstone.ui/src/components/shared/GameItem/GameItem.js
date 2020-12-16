@@ -47,6 +47,7 @@ class GameItem extends React.Component {
             <div><h6><span className="label">Instruments: </span></h6>{displayInstruments()}</div>
             <h6><span className="label">Prework Level: </span>{gameItem.preworkLevelName}</h6>
             <div><h6><span className="label">Ages: </span></h6>{displayAges()}</div>
+            <div><h6><span className="label">Keywords: </span>{gameItem.keywords}</h6></div>
           </CardText>
         </CardBody>
         <CardFooter className="cardFooter">
