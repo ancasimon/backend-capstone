@@ -66,7 +66,7 @@ namespace BackendCapstone.DataAccess
                                     AND g.Keywords like '%' + @searchInput + '%'
                                     group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.Keywords, gi.Id, gi.IconUrl, gi.Html
                                     order by g.Name";
-            var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels, searchInput };
+            var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels, searchInput = (searchInput ?? "") };
             var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames, parametersForFilters);
 
             // change the result above to a list and do a foreach loop in order to get the related ages and instruments for each game returned here:
