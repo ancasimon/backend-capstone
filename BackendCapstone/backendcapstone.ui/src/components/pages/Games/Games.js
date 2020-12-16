@@ -233,7 +233,11 @@ class Games extends React.Component {
               </div>
             </div>
             <div className="d-flex flex-wrap">
-              {buildGames()}
+              {
+                this.state.filteredGamesList.length > 0
+                  ? buildGames()
+                  : <h66>No games match your search criteria. Please try again.</h66>
+              }
             </div>
           </div>
         </div>
