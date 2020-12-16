@@ -66,12 +66,10 @@ class Games extends React.Component {
       selectedPreworkLevels,
       searchInput,
     } = this.state;
-    if (searchInput !== '' || selectedAges !== [] || selectedInstruments !== [] || selectedPreworkLevels !== []) {
-      gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
-        .then((filteredGamesResponse) => {
-          this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
-        });
-    }
+    gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
+      .then((filteredGamesResponse) => {
+        this.setState({ filteredGamesList: filteredGamesResponse, gamesList: filteredGamesResponse });
+      });
   }
 
   getAges = () => {
