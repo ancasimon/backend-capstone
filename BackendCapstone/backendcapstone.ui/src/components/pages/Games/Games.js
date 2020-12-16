@@ -59,13 +59,13 @@ class Games extends React.Component {
       });
   }
 
-  getFilteredGamesList = () => {
-    const {
-      selectedAges,
-      selectedInstruments,
-      selectedPreworkLevels,
-      searchInput,
-    } = this.state;
+  getFilteredGamesList = (searchInput, selectedAges, selectedInstruments, selectedPreworkLevels) => {
+    // const {
+    //   selectedAges,
+    //   selectedInstruments,
+    //   selectedPreworkLevels,
+    //   searchInput,
+    // } = this.state;
     if (searchInput !== '' || selectedAges !== [] || selectedInstruments !== [] || selectedPreworkLevels !== []) {
       gamesData.getFilteredGames(searchInput, selectedAges, selectedInstruments, selectedPreworkLevels)
         .then((filteredGamesResponse) => {
@@ -104,12 +104,17 @@ class Games extends React.Component {
   changeAgeFilter = (e) => {
     const { selectedAges } = this.state;
     if (e.target.checked === true) {
-      this.setState({ selectedAges: [...this.state.selectedAges, e.target.value] });
+      const updatedArray = [...this.state.selectedAges, e.target.value];
+      this.setState({ selectedAges: updatedArray });
+      this.getFilteredGamesList(this.state.searchInput, this.state.selectedAges, this.state.selectedInstruments, this.state.selectedPreworkLevels);
     } else if (e.target.checked === false) {
       const index = this.state.selectedAges.indexOf(e.target.value);
       if (index > -1) {
-        this.state.selectedAges.splice(index, 1);
-        this.setState({ selectedAges });
+        const removedValues = this.state.selectedAges.splice(index, 1);
+        const newArray = this.state.selectedAges;
+        this.setState({ selectedAges: newArray });
+        console.error('removed vals', removedValues);
+        console.error('updated array', newArray);
         this.getFilteredGamesList();
       }
     }
