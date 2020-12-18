@@ -17,7 +17,7 @@ class GameContributedItem extends React.Component {
     return (
       <tbody>
         <tr>
-          <th scope="row">{game.name}</th>
+          <th scope="row"><h6>{game.name}</h6></th>
           <td className="d-none d-md-table-cell">{
           game.isActive
             ? <p>Yes!</p>

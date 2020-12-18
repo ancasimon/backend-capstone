@@ -32,18 +32,18 @@ class Profile extends React.Component {
         <h2 className="pageTitle">My Profile</h2>
         <div className="container">
           <div className="row">
-          <div className="col-md-6">
-              <img src={user.photoUrl} als="user photo" className="userPhoto"/>
-            </div>
             <div className="col-md-6">
               <h4>Hello, {user.firstName} {user.lastName}!</h4>
               <p>Active member since: {user.activeDate}</p>
               <p>User ID: {user.id}</p>
               <p>Email: {user.email}</p>
             </div>
-            <div>
-              <MyContributions />
+            <div className="col-md-6">
+              <img src={user.photoUrl} als="user photo" className="userPhoto"/>
             </div>
+          </div>
+          <div className="row">
+            <MyContributions />
           </div>
         </div>
       </div>
