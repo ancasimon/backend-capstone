@@ -18,6 +18,10 @@ import ageShape from '../../../helpers/propz/ageShape';
 import './Games.scss';
 
 class Games extends React.Component {
+  static propTypes = {
+    authed: PropTypes.bool.isRequired,
+  }
+
   state = {
     gamesList: [],
     agesList: [],
@@ -164,6 +168,7 @@ class Games extends React.Component {
       selectedPreworkLevels,
       searchInput,
     } = this.state;
+    const { authed } = this.props;
 
     const buildGames = () => gamesList.map((game) => (
       <GameItem key={game.id} gameItem={game} />
@@ -220,9 +225,13 @@ class Games extends React.Component {
                 <h2 className="pageTitle">Games</h2>
               </div>
               <div className="col-sm-3">
-                <div className="buttonDiv">
-                  <Link to='/games/new' className="mainButtons p-2">Add New Game</Link>
-                </div>
+              {
+                authed
+                  ? <div className="buttonDiv">
+                    <Link to='/games/new' className="mainButtons p-2">Add New Game</Link>
+                  </div>
+                  : ''
+              }
               </div>
             </div>
             <div className="d-flex flex-wrap">

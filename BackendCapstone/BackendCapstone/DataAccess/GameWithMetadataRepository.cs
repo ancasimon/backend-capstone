@@ -208,5 +208,23 @@ namespace BackendCapstone.DataAccess
 
             return selectedGame;
         }
+
+        // method to get all games submitted by the authenticated user:
+        public List<GameWithMetadata> GetGamesForAuthedUser(string uid)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForGamesFromAuthedUser = @"select g.Id, g.Name, g.IsActive, g.Keywords
+                                            from Games g
+                                                join Users u
+                                                    on g.SubmittedByUserId = u.Id
+                                            where u.FirebaseUid = @uid
+                                            order by g.Id desc";
+            var parameterForUid = new { uid };
+            var userContributedGames = db.Query<GameWithMetadata>(sqlForGamesFromAuthedUser, parameterForUid);
+            var gamesList = userContributedGames.ToList();
+
+            return gamesList;
+        }
     }
 }

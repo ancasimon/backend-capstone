@@ -19,7 +19,7 @@ import GameNew from '../components/pages/GameNew/GameNew';
 import Games from '../components/pages/Games/Games';
 import Home from '../components/pages/Home/Home';
 import Login from '../components/pages/Login/Login';
-import MyContributions from '../components/pages/MyContributions/MyContributions';
+import MyContributions from '../components/shared/MyContributions/MyContributions';
 import MyPracticePlans from '../components/pages/MyPracticePlans/MyPracticePlans';
 import PracticePlanNewOrEdit from '../components/pages/PracticePlanNewOrEdit/PracticePlanNewOrEdit';
 import Profile from '../components/pages/Profile/Profile';
@@ -92,12 +92,11 @@ class App extends React.Component {
                     <PrivateRoute path='/practiceplans/:practiceplanid' component={SinglePracticePlanView} authed={authed} />
                     <PrivateRoute path='/practiceplans' component={MyPracticePlans} authed={authed} />
                     <PrivateRoute path='/profile' component={Profile} authed={authed} />
-                    <PrivateRoute path='/contributions' component={MyContributions} authed={authed} />
 
                     <Route path='/home' render={(props) => <Home authed={authed} user={user} {...props} />}/>
                     <Route path='/login' component={Login} authed={authed} />
                     <Route path='/games/:gameid' component={SingleGameView} authed={authed} />
-                    <Route path='/games' component={Games} authed={authed} />
+                    <Route path='/games' render={(props) => <Games authed={authed} {...props} />} />
                     <Route path='/register' component={Register} authed={authed} />
 
                     <Redirect from="*" to='/home'></Redirect>
