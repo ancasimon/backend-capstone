@@ -13,7 +13,7 @@ class PracticePlanItem extends React.Component {
 
   render() {
     const { practicePlanItem } = this.props;
-    const singleLink = `/practiceplans/${practicePlanItem.id}`;
+    const singleLink = `/practiceplans/${practicePlanItem.planId}`;
 
     return (
       <tbody>
@@ -21,7 +21,7 @@ class PracticePlanItem extends React.Component {
           <th scope="row">{practicePlanItem.name}</th>
           <td className="d-none d-md-table-cell">{practicePlanItem.startDate}</td>
           <td className="d-none d-md-table-cell">{practicePlanItem.endDate}</td>
-          <td><Link to={singleLink} className="iconButtons"><i class="fas fa-binoculars"></i></Link></td>
+          <td><Link to={singleLink} className="iconButtons"><i className="fas fa-eye"></i></Link></td>
         </tr>
       </tbody>
     );

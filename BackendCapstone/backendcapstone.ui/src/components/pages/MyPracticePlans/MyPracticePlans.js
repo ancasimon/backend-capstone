@@ -29,7 +29,7 @@ class MyPracticePlans extends React.Component {
     const { userPracticePlans } = this.state;
 
     const buildPracticePlansGrid = () => userPracticePlans.map((item) => (
-      <PracticePlanItem key={item.id} practicePlanItem={item} />
+      <PracticePlanItem key={item.planId} practicePlanItem={item} />
     ));
 
     return (
