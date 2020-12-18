@@ -11,7 +11,7 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/games")]
     [ApiController]
-    public class GamesController : ControllerBase
+    public class GamesController : FirebaseEnabledController
     {
         GameRepository _gameRepo;
         GameWithMetadataRepository _gameWithDataRepo;
@@ -58,6 +58,15 @@ namespace BackendCapstone.Controllers
             var selectedGame = _gameWithDataRepo.GetGameByIdWithMetadata(id);
 
             return Ok(selectedGame);
+        }
+
+        // Method to get games submitted by the user who is logged in
+        [HttpGet("submittedby")]
+        public IActionResult GetGamesSubmittedByAuthedUser()
+        {
+            var userContributions = _gameWithDataRepo.GetGamesForAuthedUser(UserId);
+
+            return Ok(userContributions);
         }
     }
 }

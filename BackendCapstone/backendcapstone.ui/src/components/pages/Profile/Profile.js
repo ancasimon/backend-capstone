@@ -1,5 +1,7 @@
 import React from 'react';
 
+import MyContributions from '../../shared/MyContributions/MyContributions';
+
 import usersData from '../../../helpers/data/usersData';
 
 import './Profile.scss';
@@ -38,6 +40,9 @@ class Profile extends React.Component {
               <p>Active member since: {user.activeDate}</p>
               <p>User ID: {user.id}</p>
               <p>Email: {user.email}</p>
+            </div>
+            <div>
+              <MyContributions />
             </div>
           </div>
         </div>
