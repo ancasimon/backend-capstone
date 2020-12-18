@@ -50,7 +50,6 @@ class MyContributions extends React.Component {
                 </thead>
                 { buildGamesList() }
               </Table>
-          {/* // <Link to='/games/1'>View Single Game</Link> */}
           </div>
         );
       }

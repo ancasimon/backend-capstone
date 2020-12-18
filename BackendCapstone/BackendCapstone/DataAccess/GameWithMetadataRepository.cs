@@ -214,7 +214,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForGamesFromAuthedUser = @"select *
+            var sqlForGamesFromAuthedUser = @"select g.Id, g.Name, g.IsActive, g.Keywords
                                             from Games g
                                                 join Users u
                                                     on g.SubmittedByUserId = u.Id

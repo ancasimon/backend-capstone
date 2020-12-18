@@ -12,6 +12,7 @@ class GameContributedItem extends React.Component {
 
   render() {
     const { game } = this.props;
+    const singleGameLink = `/games/${game.id}`;
 
     return (
       <tbody>
@@ -23,7 +24,7 @@ class GameContributedItem extends React.Component {
             : <p>No, you deleted it!</p>
           }</td>
           <td className="d-none d-md-table-cell">{game.keywords}</td>
-          <td><Link className="iconButtons"><i className="fas fa-eye"></i></Link></td>
+          <td><Link className="iconButtons" to={singleGameLink}><i className="fas fa-eye"></i></Link></td>
         </tr>
       </tbody>
     );
