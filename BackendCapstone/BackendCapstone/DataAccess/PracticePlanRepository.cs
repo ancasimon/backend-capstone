@@ -22,7 +22,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForPracticePlansByUserUid = @"select pp.Id, pp.Name, FORMAT(pp.StartDate, 'd', 'en-us') as startDate, FORMAT(pp.EndDate, 'd', 'en-us') as endDate, pp.IsActive,pp.UserId
+            var sqlForPracticePlansByUserUid = @"select pp.Id as PlanId, pp.Name, FORMAT(pp.StartDate, 'd', 'en-us') as startDate, FORMAT(pp.EndDate, 'd', 'en-us') as endDate, pp.IsActive,pp.UserId as UserId
                                                 from PracticePlans pp
 	                                                join Users u
 		                                                on pp.UserId = u.Id
@@ -40,7 +40,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForSinglePlan = "select Id, Name, FORMAT(StartDate, 'd', 'en-us') as startDate, FORMAT(EndDate, 'd', 'en-us') as endDate, IsActive, UserId from PracticePlans where Id = @planId";
+            var sqlForSinglePlan = "select Id as PlanId, Name, FORMAT(StartDate, 'd', 'en-us') as startDate, FORMAT(EndDate, 'd', 'en-us') as endDate, IsActive, UserId from PracticePlans where Id = @planId";
             var parameterForPlanId = new { planId };
 
             PracticePlan selectedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlForSinglePlan, parameterForPlanId);
@@ -90,6 +90,30 @@ namespace BackendCapstone.DataAccess
             var updatedPracticePlan = db.QueryFirstOrDefault<PracticePlan>(sqlToUpdatePracticePlan, parametersForUpdatedPracticePlan);
 
             return updatedPracticePlan;
+        }
+
+        public PracticePlan InactivatePlan(int planId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToInactivatePlan = @"UPDATE [dbo].[PracticePlans]
+                                        SET [IsActive] = 0
+                                        OUTPUT INSERTED.*
+                                        WHERE Id = @planId";
+            var parametersForPlan = new { planId };
+
+            var inactivatedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlToInactivatePlan, parametersForPlan);
+
+            if (inactivatedPlan.plannedGames.Count > 0)
+            {
+                var sqlToInactivateRelatedGames = @"UPDATE PracticePlanGames
+                                                    SET IsActive = 0
+                                                    OUTPUT INSERTED.*
+                                                    WHERE PracticePlanId = @planId";
+                var inactivatedGames = db.Query<PracticePlanGame>(sqlToInactivateRelatedGames, parametersForPlan);
+            }
+
+            return inactivatedPlan;
         }
 
         public int AddPracticePlan(int id, PracticePlan newPracticePlan)

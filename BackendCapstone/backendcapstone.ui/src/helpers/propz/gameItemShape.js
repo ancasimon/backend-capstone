@@ -4,7 +4,7 @@ const gameItemShape = PropTypes.shape({
   agesForGame: PropTypes.array.isRequired,
   credit: PropTypes.string,
   dateCreated: PropTypes.string.isRequired,
-  description: PropTypes.string.isRequired,
+  description: PropTypes.string,
   gameIconId: PropTypes.number,
   gameIconHtml: PropTypes.string,
   gameIconUrl: PropTypes.string.isRequired,
