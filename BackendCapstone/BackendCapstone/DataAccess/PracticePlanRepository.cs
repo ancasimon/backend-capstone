@@ -96,12 +96,12 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
+            var parametersForPlan = new { planId };
+
             var sqlToInactivatePlan = @"UPDATE [dbo].[PracticePlans]
                                         SET [IsActive] = 0
                                         OUTPUT INSERTED.*
                                         WHERE Id = @planId";
-            var parametersForPlan = new { planId };
-
             var inactivatedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlToInactivatePlan, parametersForPlan);
 
             var sqlToFindRelatedGames = "select * from PracticePlanGames where PracticePlanId = @planId";
