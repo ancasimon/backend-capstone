@@ -104,7 +104,10 @@ namespace BackendCapstone.DataAccess
 
             var inactivatedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlToInactivatePlan, parametersForPlan);
 
-            if (inactivatedPlan.plannedGames.Count > 0)
+            var sqlToFindRelatedGames = "select * from PracticePlanGames where PracticePlanId = @planId";
+            var anyRelatedGames = db.Query<PracticePlanGame>(sqlToFindRelatedGames, parametersForPlan);
+
+            if (anyRelatedGames != null)
             {
                 var sqlToInactivateRelatedGames = @"UPDATE PracticePlanGames
                                                     SET IsActive = 0
