@@ -17,6 +17,10 @@ namespace BackendCapstone.DataAccess
             _connectionString = configuration.GetConnectionString("BackendCapstone");
         }
 
+        public GameWithMetadataRepository()
+        {
+        }
+
 
         // Moving code block from the GetFilteredList ... method below to its own method:
         public List<int> EnsureValidFilterValuesAge(List<int> selectedAges)
