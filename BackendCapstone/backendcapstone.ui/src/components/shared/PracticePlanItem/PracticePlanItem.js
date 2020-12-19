@@ -13,7 +13,7 @@ class PracticePlanItem extends React.Component {
 
   render() {
     const { practicePlanItem } = this.props;
-    const singleLink = `/practiceplans/${practicePlanItem.planId}`;
+    const singleLink = `/practiceplans/${practicePlanItem.id}`;
 
     return (
       <tbody>
