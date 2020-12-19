@@ -18,34 +18,57 @@ namespace BackendCapstone.DataAccess
         }
 
 
-        //Adding a new method to get all these games but filtered based on the age, instrument and prework level filters the user selects. 
-        public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata(string searchInput, List<int> selectedAges, List<int> selectedInstruments, List<int> selectedPreworkLevels)
-       {
-            using var db = new SqlConnection(_connectionString);
+        // Moving code block from the GetFilteredList ... method below to its own method:
+        public List<int> EnsureValidFilterValuesAge(List<int> selectedAges)
+        {
             var anyAges = selectedAges.Any();
-            var anyInstruments = selectedInstruments.Any();
-            var anyPreworkLevels = selectedPreworkLevels.Any();
-            ////var anySearchInput = searchInput.Length;
 
-            // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend 
-            // - NOT SURE THIS IS SUSTAINABLE - if I ever add the ability to add more instruments, for ex., this list would need to get updated!!
+            // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend:
             if (anyAges == false)
             {
                 selectedAges = new List<int>() { 1, 2, 3, 4, 5 };
             }
 
+            return selectedAges;
+        }
+
+        public List<int> EnsureValidFilterValuesInstrument(List<int> selectedInstruments)
+        {
+            var anyInstruments = selectedInstruments.Any();
+
+            // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend:
+
             if (anyInstruments == false)
             {
                 selectedInstruments = new List<int>() { 1, 2, 3, 4, 5, 6, 7 };
             }
+
+            return selectedInstruments;
+        }
+
+        public List<int> EnsureValidFilterValuesPreworkLevel(List<int> selectedPreworkLevels)
+        {
+            var anyPreworkLevels = selectedPreworkLevels.Any();
+
+            // updating the parameters passed in to include all values if the user didn't select any specific ones on the frontend:
             if (anyPreworkLevels == false)
             {
                 selectedPreworkLevels = new List<int>() { 1, 2, 3, 4 };
             }
-            //if (anySearchInput == 0)
-            //{
-            //    searchInput = "";
-            //}
+
+            return selectedPreworkLevels;
+        }
+
+
+        //Adding a new method to get all these games but filtered based on the age, instrument and prework level filters the user selects. 
+        public IEnumerable<GameWithMetadata> GetFilteredListOfGamesWithMetadata(string searchInput, List<int> selectedAges, List<int> selectedInstruments, List<int> selectedPreworkLevels)
+       {
+            using var db = new SqlConnection(_connectionString);
+
+            selectedAges = EnsureValidFilterValuesAge(selectedAges);
+            selectedInstruments = EnsureValidFilterValuesInstrument(selectedInstruments);
+            selectedPreworkLevels = EnsureValidFilterValuesPreworkLevel(selectedPreworkLevels);
+
 
             var sqlForFilteredListOfGames = @"select g.Id, g.Name, g.Songs, g.Description, g.IsActive, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
                                             from Games g
@@ -58,7 +81,7 @@ namespace BackendCapstone.DataAccess
                                                                     join GameAges ga
 	                                                                    on g.Id = ga.GameId
 		                                                                    join GameInstruments ginst
-		                                                                        on g.Id = ginst.GameId
+		                                                                       on g.Id = ginst.GameId
                                     where g.IsActive = 1
                                     AND g.PreworkLevelId In @selectedPreworkLevels
                                     AND ga.AgeId IN @selectedAges
