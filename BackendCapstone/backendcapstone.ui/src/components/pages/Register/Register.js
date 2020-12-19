@@ -7,11 +7,17 @@ import {
   Input,
 } from 'reactstrap';
 
+import PropTypes from 'prop-types';
+
 import authData from '../../../helpers/data/authData';
 
 import './Register.scss';
 
 class Register extends React.Component {
+  static propTypes = {
+    authed: PropTypes.bool.isRequired,
+  }
+
   state = {
     user: {
       email: '',
@@ -20,6 +26,7 @@ class Register extends React.Component {
       lastName: '',
       photoUrl: '',
     },
+    authed: this.props.authed,
   };
 
   registerClickEvent = (e) => {
@@ -27,6 +34,7 @@ class Register extends React.Component {
     e.preventDefault();
     authData.registerUser(user)
       .then(() => {
+        this.setState({ authed: true });
         this.props.history.push('/home');
       })
       .catch((error) => console.error('There was an error in registering.', error));
