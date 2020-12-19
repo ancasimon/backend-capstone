@@ -9,6 +9,14 @@ const getAllActiveGames = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getGamesContributedByAuthedUser = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/games/submittedby`)
+    .then((userContributedGamesResponse) => {
+      resolve(userContributedGamesResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
 // Passing in filter values for selected games:
 const getFilteredGames = (searchInput, selectedAges, selectedInstruments, selectedPreworkLevels) => new Promise((resolve, reject) => {
   const buildAgeFilters = () => selectedAges.map((age) => `selectedAges=${age}`);
@@ -24,4 +32,9 @@ const getFilteredGames = (searchInput, selectedAges, selectedInstruments, select
 
 const getGameById = (id) => axios.get(`${baseUrl}/games/${id}`);
 
-export default { getAllActiveGames, getGameById, getFilteredGames };
+export default {
+  getAllActiveGames,
+  getGameById,
+  getFilteredGames,
+  getGamesContributedByAuthedUser,
+};

@@ -15,9 +15,12 @@ const updatePracticePlan = (planId, updatedPracticePlan) => axios.put(`${baseUrl
 
 const createPracticePlan = (newPracticePlan) => axios.post(`${baseUrl}/practiceplans`, newPracticePlan);
 
+const inactivatePracticePlan = (planId) => axios.put(`${baseUrl}/practiceplans/delete/${planId}`);
+
 export default {
   getUserPracticePlans,
   getSinglePracticePlan,
   updatePracticePlan,
   createPracticePlan,
+  inactivatePracticePlan,
 };
