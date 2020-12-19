@@ -48,13 +48,20 @@ namespace BackendCapstone.Controllers
             return Ok(updatedPracticePlan);
         }
 
+        [HttpPut("delete/{planId}")]
+        public IActionResult InactivatePracticePlan(int planId)
+        {
+            var inactivatedPlan = _practicePlanRepo.InactivatePlan(planId);
+            return Ok(inactivatedPlan);
+        }
+
         [HttpPost]
         public IActionResult AddPracticePlan(PracticePlan newPracticePlan)
         {
             var currentUserId = _userRepo.GetUserIdByUid(UserId);
             var newPracticePlanObject = _practicePlanRepo.AddPracticePlan(currentUserId, newPracticePlan);
 
-            return Created($"/api/practiceplans/{newPracticePlan.Id}", newPracticePlanObject);
+            return Created($"/api/practiceplans/{newPracticePlan.PlanId}", newPracticePlanObject);
         }
 
     }

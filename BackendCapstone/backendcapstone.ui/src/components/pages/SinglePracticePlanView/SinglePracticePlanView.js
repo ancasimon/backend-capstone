@@ -38,15 +38,7 @@ class SinglePracticePlanView extends React.Component {
 
   inactivatePracticePlan = (e) => {
     const { practiceplanid } = this.props.match.params;
-    const { selectedPracticePlan } = this.state;
-    const updatedObject = {
-      isActive: false,
-      name: selectedPracticePlan.name,
-      startDate: selectedPracticePlan.startDate,
-      endDate: selectedPracticePlan.endDate,
-      userId: selectedPracticePlan.userId,
-    };
-    practicePlansData.updatePracticePlan(practiceplanid, updatedObject)
+    practicePlansData.inactivatePracticePlan(practiceplanid)
       .then(() => {
         this.props.history.push('/practiceplans');
       })
