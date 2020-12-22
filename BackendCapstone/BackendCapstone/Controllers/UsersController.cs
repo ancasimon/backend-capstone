@@ -30,6 +30,15 @@ namespace BackendCapstone.Controllers
             return Ok(allActiveUsers);
         }
 
+        [HttpGet("email/{email}")]
+        [AllowAnonymous]
+        public IActionResult CheckIfEmailIsValid(string email)
+        {
+            var existingEmail = _userRepo.CheckUserEmail(email);
+
+            return Ok(existingEmail);
+        }
+
         [HttpGet("{uid}")]
         public IActionResult GetUserIdByUid(string uid)
         {

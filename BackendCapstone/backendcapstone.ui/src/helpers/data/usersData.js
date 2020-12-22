@@ -3,4 +3,6 @@ import { baseUrl } from '../constants.json';
 
 const getSingleUser = () => axios.get(`${baseUrl}/users/user`);
 
-export default { getSingleUser };
+const checkUserEmail = (email) => axios.get(`${baseUrl}/users/email/${email}`);
+
+export default { getSingleUser, checkUserEmail };
