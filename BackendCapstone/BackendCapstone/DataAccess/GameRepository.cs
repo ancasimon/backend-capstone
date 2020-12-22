@@ -43,5 +43,18 @@ namespace BackendCapstone.DataAccess
             return selectedGame;
         }
 
+        public List<Game> GetLatestGames()
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sqlForLatestGames = @"select top 5 *
+                                      from Games
+                                      where IsActive = 1
+                                      order by Id desc";
+            var latestGames = db.Query<Game>(sqlForLatestGames);
+            List<Game> latestGamesList = latestGames.ToList();
+
+            return latestGamesList;
+        }
+
     }
 }

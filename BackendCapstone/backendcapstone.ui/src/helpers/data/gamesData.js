@@ -9,6 +9,14 @@ const getAllActiveGames = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getLatestGames = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/games/latest`)
+    .then((latestGamesResponse) => {
+      resolve(latestGamesResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
 const getGamesContributedByAuthedUser = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/games/submittedby`)
     .then((userContributedGamesResponse) => {
@@ -37,4 +45,5 @@ export default {
   getGameById,
   getFilteredGames,
   getGamesContributedByAuthedUser,
+  getLatestGames,
 };
