@@ -43,10 +43,6 @@ class Register extends React.Component {
     Swal.fire('Please enter a valid email address.');
   }
 
-  validateEmail = () => {
-    const userEmail = this.state.user.email;
-  }
-
   validateUser = (e) => {
     e.preventDefault();
     if (this.state.user.firstName == ''
@@ -56,7 +52,42 @@ class Register extends React.Component {
       this.validationAlertDataEntered();
       return;
     }
-    this.checkIfUserEmailExists(e);
+    this.validateEmail(e);
+  }
+
+  validateEmail = (e) => {
+    e.preventDefault();
+    const userEmail = this.state.user.email;
+    const indexPositionOfAt = userEmail.indexOf('@');
+    console.error('@ index', indexPositionOfAt);
+    if (indexPositionOfAt == -1) {
+      this.validationAlertValidEmail();
+    } else {
+      const userName = userEmail.substring(0, indexPositionOfAt);
+      const domainName = userEmail.substring(indexPositionOfAt + 1);
+      const indexPositionOfDot = domainName.indexOf('.');
+      console.error('. index', indexPositionOfDot);
+
+      if (indexPositionOfDot == -1) {
+        this.validationAlertValidEmail();
+      } else {
+        const dotComString = domainName.substring(indexPositionOfDot + 1);
+
+        const containsMoreThanOneAt = domainName.includes('@');
+        console.error('more than 1 @', containsMoreThanOneAt);
+
+        if (indexPositionOfDot != -1
+          && indexPositionOfDot != -1
+          && containsMoreThanOneAt == false
+          && userName.length > 0
+          && domainName.length > 0
+          && dotComString.length > 0) {
+          this.checkIfUserEmailExists(e);
+        } else {
+          this.validationAlertValidEmail();
+        }
+      }
+    }
   }
 
   checkIfUserEmailExists = (e) => {
@@ -77,7 +108,9 @@ class Register extends React.Component {
     e.preventDefault();
     authData.registerUser(user)
       .then(() => {
-        this.setState({ authed: true });
+        this.setState({
+          authed: true,
+        });
         this.props.history.push('/home');
       })
       .catch((error) => console.error('There was an error in registering.', error));
@@ -126,7 +159,7 @@ class Register extends React.Component {
               name="firstName"
               id="firstName"
               placeholder="Enter your first name."
-              value={user.firstName}
+              value={this.state.user.firstName}
               onChange={this.firstNameChange}
             />
           </FormGroup>
@@ -137,7 +170,7 @@ class Register extends React.Component {
               name="lastName"
               id="lastName"
               placeholder="Enter your last name."
-              value={user.lastName}
+              value={this.state.user.lastName}
               onChange={this.lastNameChange}
             />
           </FormGroup>
@@ -148,7 +181,7 @@ class Register extends React.Component {
               name="photoUrl"
               id="photoUrl"
               placeholder="Please add a link to your photo."
-              value={user.photoUrl}
+              value={this.state.user.photoUrl}
               onChange={this.photoUrlChange}
             />
           </FormGroup>
@@ -159,7 +192,7 @@ class Register extends React.Component {
               name="email"
               id="email"
               placeholder="Enter you email address."
-              value={user.email}
+              value={this.state.user.email}
               onChange={this.emailChange}
             />
           </FormGroup>
@@ -170,7 +203,7 @@ class Register extends React.Component {
               name="password"
               id="password"
               placeholder="Choose a password."
-              value={user.password}
+              value={this.state.user.password}
               onChange={this.passwordChange}
             />
           </FormGroup>
