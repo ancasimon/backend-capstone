@@ -1,4 +1,5 @@
 import React from 'react';
+import Swal from 'sweetalert2';
 import {
   Button,
   Form,
@@ -28,6 +29,23 @@ class Register extends React.Component {
     },
     authed: this.props.authed,
   };
+
+  validationAlert = () => {
+    Swal.fire('You must enter your first and last name, email, and password.');
+  }
+
+  validateUser = (e) => {
+    e.preventDefault();
+    if (this.state.user.firstName == ''
+    || this.state.user.lastName == ''
+    || this.state.user.email == ''
+    || this.state.user.password == '') {
+      this.validationAlert();
+      console.error('running validation');
+      return;
+    }
+    this.registerClickEvent(e);
+  }
 
   registerClickEvent = (e) => {
     const { user } = this.state;
@@ -131,7 +149,7 @@ class Register extends React.Component {
               onChange={this.passwordChange}
             />
           </FormGroup>
-      <Button type="submit" onClick={this.registerClickEvent}>Submit</Button>
+      <Button type="submit" onClick={this.validateUser}>Submit</Button>
     </Form>
       </div>
     );
