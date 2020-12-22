@@ -11,6 +11,7 @@ import {
 import PropTypes from 'prop-types';
 
 import authData from '../../../helpers/data/authData';
+import usersData from '../../../helpers/data/usersData';
 
 import './Register.scss';
 
@@ -30,8 +31,12 @@ class Register extends React.Component {
     authed: this.props.authed,
   };
 
-  validationAlert = () => {
+  validationAlertDataEntered = () => {
     Swal.fire('You must enter your first and last name, email, and password.');
+  }
+
+  validationAlertExistingUser = () => {
+    Swal.fire('A user has already registered with this email. Please log in, or choose a new email address.');
   }
 
   validateUser = (e) => {
@@ -40,11 +45,23 @@ class Register extends React.Component {
     || this.state.user.lastName == ''
     || this.state.user.email == ''
     || this.state.user.password == '') {
-      this.validationAlert();
-      console.error('running validation');
+      this.validationAlertDataEntered();
       return;
     }
-    this.registerClickEvent(e);
+    this.checkIfUserEmailExists(e);
+  }
+
+  checkIfUserEmailExists = (e) => {
+    e.preventDefault();
+    const userEmail = this.state.user.email;
+    usersData.checkUserEmail(userEmail)
+      .then((emailResponse) => {
+        if (emailResponse.data === true) {
+          this.validationAlertExistingUser();
+        } else {
+          this.registerClickEvent(e);
+        }
+      });
   }
 
   registerClickEvent = (e) => {
