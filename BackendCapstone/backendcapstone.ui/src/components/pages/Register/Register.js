@@ -39,6 +39,14 @@ class Register extends React.Component {
     Swal.fire('A user has already registered with this email. Please log in, or choose a new email address.');
   }
 
+  validationAlertValidEmail = () => {
+    Swal.fire('Please enter a valid email address.');
+  }
+
+  validateEmail = () => {
+    const userEmail = this.state.user.email;
+  }
+
   validateUser = (e) => {
     e.preventDefault();
     if (this.state.user.firstName == ''
