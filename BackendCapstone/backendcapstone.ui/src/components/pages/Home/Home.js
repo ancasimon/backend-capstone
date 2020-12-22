@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import authData from '../../../helpers/data/authData';
@@ -23,9 +24,9 @@ class Home extends React.Component {
           authed ? <h2 className="pageTitle">Welcome to Unlimited, {user.firstName}!</h2> : <h2 className="pageTitle">Welcome to Unlimited!</h2>
         }
         <p>We're glad you're here!</p>
-        <h6>Go ahead, check out our database of fun games for the young musicians in your family.</h6>
+        <h6>Go ahead, check out our <Link to='/games'>database of fun games</Link> for the young musicians in your family.</h6>
         <h6>
-          Register with us and you can take your practice planning to a next level - and will you be glad you did!
+          <Link to='/register'>Register</Link> with us and you can take your practice planning to a next level - and will you be glad you did!
         </h6>
       </div>
     );
