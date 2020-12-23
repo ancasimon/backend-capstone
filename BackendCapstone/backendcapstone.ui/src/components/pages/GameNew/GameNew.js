@@ -151,15 +151,15 @@ class GameNew extends React.Component {
       credit: gameCredit,
       website: gameWebsite,
     };
-    gameInstruments.forEach((item) => {
+    this.state.gameInstruments.forEach((item) => {
       const newGameInstrumentObject = {
-        instrumentId: item.id,
+        instrumentId: item,
       };
       console.error('new inst', newGameInstrumentObject);
     });
     gameAges.forEach((item) => {
       const newGameAgeObject = {
-        ageId: item.id,
+        ageId: item,
       };
       console.error('new age', newGameAgeObject);
     });
