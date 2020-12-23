@@ -68,5 +68,21 @@ namespace BackendCapstone.Controllers
 
             return Ok(userContributions);
         }
+
+        [HttpGet("latest")]
+        public IActionResult GetLatestGames()
+        {
+            var latestGames = _gameRepo.GetLatestGames();
+
+            return Ok(latestGames);
+        }
+
+        [HttpGet("popular")]
+        public IActionResult GetMostPopularGames()
+        {
+            var mostPopularGames = _gameRepo.GetMostPopularGames();
+
+            return Ok(mostPopularGames);
+        }
     }
 }
