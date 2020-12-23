@@ -73,5 +73,60 @@ namespace BackendCapstone.DataAccess
             return mostPopularGamesList;
         }
 
+        public Game AddNewGame(int userId, Game newGame)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForNewGame = @"INSERT INTO [dbo].[Games]
+                                                   ([Name]
+                                                   ,[IsActive]
+                                                   ,[Songs]
+                                                   ,[Description]
+                                                   ,[PreworkLevelId]
+                                                   ,[Prework]
+                                                   ,[Instructions]
+                                                   ,[Credit]
+                                                   ,[WebsiteUrl]
+                                                   ,[SubmittedByUserId]
+                                                   ,[DateCreated]
+                                                   ,[GameIconId]
+                                                   ,[PhotoUrl]
+                                                   ,[Keywords])
+                                             OUTPUT INSERTED.Id
+                                             VALUES
+                                                   (@name
+                                                   ,1
+                                                   ,@songs
+                                                   ,@description
+                                                   ,@preworkLevelId
+                                                   ,@prework
+                                                   ,@instructions
+                                                   ,@credit
+                                                   ,@websiteUrl
+                                                   ,@submittedByUserId
+                                                   ,GETDATE()
+                                                   ,@gameIconId
+                                                   ,@photoUrl
+                                                   ,@keywords)";
+            var parametersForGame = new {
+                name = newGame.Name, 
+                songs = newGame.Songs,
+                description = newGame.Description,
+                preworkLevelId = newGame.PreworkLevelId,
+                prework = newGame.Prework,
+                instructions = newGame.Instructions,
+                credit = newGame.Credit,
+                websiteUrl = newGame.WebsiteUrl,
+                submittedByUserId = userId,
+                gameIconId = newGame.GameIconId,
+                photoUrl = newGame.PhotoUrl,
+                keywords = newGame.Keywords,
+                };
+
+            var newGameId = db.ExecuteScalar<int>(sqlForNewGame, parametersForGame);
+
+            return newGameId;
+        }
+
     }
 }
