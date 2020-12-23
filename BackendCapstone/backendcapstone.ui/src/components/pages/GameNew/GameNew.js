@@ -20,6 +20,16 @@ class GameNew extends React.Component {
     agesList: [],
     instrumentsList: [],
     preworkLevelsList: [],
+    gameName: '',
+    gameDescription: '',
+    gameInstruments: [],
+    gameAges: [],
+    gamePreworkLevel: 1,
+    gamePrework: '',
+    gameInstructions: '',
+    gamePhoto: '',
+    gameCredit: '',
+    gameWebsite: '',
   }
 
   componentDidMount() {
@@ -28,7 +38,7 @@ class GameNew extends React.Component {
 
   buildNewGameForm = () => {
     this.getAges();
-    this. getInstruments();
+    this.getInstruments();
     this.getPreworkLevels();
   }
 
@@ -53,15 +63,136 @@ class GameNew extends React.Component {
       });
   }
 
+  // change functions for the fields on the new game form:
+  changeGameName = (e) => {
+    e.preventDefault();
+    this.setState({ gameName: e.target.value });
+  }
+
+  changeGameDescription = (e) => {
+    e.preventDefault();
+    this.setState({ gameDescription: e.target.value });
+  }
+
+  // NEED TO LOOK AT THIS _ RATHER _ ON CLICK > NEED TO ADD TO ARRAY??? SAME WITH AGES
+  selectGameInstrument = (e) => {
+    e.preventDefault();
+    console.error('e!!', e.target.options);
+    const newInstrumentId = e.target.value * 1;
+    console.error('inst id to push', newInstrumentId);
+    const newSelectedInstrumentsArray = [...this.state.gameInstruments];
+    console.error('curr sel inst before adding newest selection', newSelectedInstrumentsArray);
+    newSelectedInstrumentsArray.push(newInstrumentId);
+    this.setState({ gameInstruments: newSelectedInstrumentsArray });
+  }
+
+  selectGameAge = (e) => {
+    e.preventDefault();
+    const newAgeId = e.target.value * 1;
+    const newSelectedAgesArray = [...this.state.gameAges];
+    newSelectedAgesArray.push(newAgeId);
+    this.setState({ gameAges: newSelectedAgesArray });
+  }
+
+  changeGamePreworkLevel = (e) => {
+    e.preventDefault();
+    this.setState({ gamePreworkLevel: e.target.value * 1 });
+  }
+
+  changeGamePrework = (e) => {
+    e.preventDefault();
+    this.setState({ gamePrework: e.target.value });
+  }
+
+  changeGameInstructions = (e) => {
+    e.preventDefault();
+    this.setState({ gameInstructions: e.target.value });
+  }
+
+  changeGamePhoto = (e) => {
+    e.preventDefault();
+    this.setState({ gamePhoto: e.target.value });
+  }
+
+  changeGameCredit = (e) => {
+    e.preventDefault();
+    this.setState({ gameCredit: e.target.value });
+  }
+
+  changeGameWebsite = (e) => {
+    e.preventDefault();
+    this.setState({ gameWebsite: e.target.value });
+  }
+
+  saveNewGame = () => {
+    const {
+      gameName,
+      gameDescription,
+      gameInstruments,
+      gameAges,
+      gamePreworkLevel,
+      gamePrework,
+      gameInstructions,
+      gamePhoto,
+      gameCredit,
+      gameWebsite,
+    } = this.state;
+    const newGameObject = {
+      name: gameName,
+      description: gameDescription,
+      preworkLevel: gamePreworkLevel,
+      prework: gamePrework,
+      instructions: gameInstructions,
+      photoUrl: gamePhoto,
+      credit: gameCredit,
+      website: gameWebsite,
+    };
+    gameInstruments.forEach((item) => {
+      const newGameInstrumentObject = {
+        instrumentId: item.id,
+      };
+      console.error('new inst', newGameInstrumentObject);
+    });
+    gameAges.forEach((item) => {
+      const newGameAgeObject = {
+        ageId: item.id,
+      };
+      console.error('new age', newGameAgeObject);
+    });
+    console.error('new game', newGameObject);
+  }
+
   render() {
-    const { agesList, instrumentsList, preworkLevelsList } = this.state;
+    const {
+      agesList,
+      instrumentsList,
+      preworkLevelsList,
+      gameName,
+      gameDescription,
+      gameInstruments,
+      gameAges,
+      gamePreworkLevel,
+      gamePrework,
+      gameInstructions,
+      gamePhoto,
+      gameCredit,
+      gameWebsite,
+    } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
-      <option>{age.name}</option>
+      <option
+        key={age.id}
+        value={age.id}
+        onChange={this.selectGameAge}
+      >{age.name}</option>
     ));
 
     const buildInstrumentsList = () => instrumentsList.map((instrument) => (
-      <option key={instrument.id} value={instrument.id}>{instrument.name}</option>
+      <option
+        key={instrument.id}
+        value={instrument.id}
+        onClick={this.selectGameInstrument}
+      >{instrument.name}</option>
     ));
 
     const buildPreworkLevelsList = () => preworkLevelsList.map((level) => (
@@ -75,19 +206,37 @@ class GameNew extends React.Component {
           <FormGroup row>
             <Label for="gameName" sm={2}>Game Name</Label>
             <Col sm={10}>
-              <Input type="input" name="name" id="gameName" placeholder="Enter a name for the game." />
+              <Input
+                type="input"
+                name="name"
+                id="gameName"
+                placeholder="Enter a name for the game."
+                value={gameName}
+                onChange={this.changeGameName}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gameDescription" sm={2}>Description</Label>
             <Col sm={10}>
-              <Input type="textarea" name="description" id="gameDescription" />
+              <Input
+                type="textarea"
+                name="description"
+                id="gameDescription"
+                value={gameDescription}
+                onChange={this.changeGameDescription}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gameInstruments" sm={2}>Select instruments:</Label>
             <Col sm={10}>
-              <Input type="select" name="instruments" id="gameInstruments" multiple>
+              <Input
+                type="select"
+                name="instruments"
+                id="gameInstruments"
+                multiple
+              >
                 {buildInstrumentsList()}
               </Input>
             </Col>
@@ -103,7 +252,13 @@ class GameNew extends React.Component {
           <FormGroup row>
             <Label for="gamePreworkLevel" sm={2}>Select the prework level:</Label>
             <Col sm={10}>
-              <Input type="select" name="preworkLevel" id="gamePreworkLevel">
+              <Input
+                type="select"
+                name="preworkLevel"
+                id="gamePreworkLevel"
+                value={gamePreworkLevel}
+                onChange={this.changeGamePreworkLevel}
+              >
                 {buildPreworkLevelsList()}
               </Input>
             </Col>
@@ -111,36 +266,66 @@ class GameNew extends React.Component {
           <FormGroup row>
             <Label for="gamePrework" sm={2}>Prework Steps</Label>
             <Col sm={10}>
-              <Input type="textarea" name="prework" id="gamePrework" />
+              <Input
+                type="textarea"
+                name="prework"
+                id="gamePrework"
+                value={gamePrework}
+                onChange={this.changeGamePrework}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gameInstructions" sm={2}>Game Instructions</Label>
             <Col sm={10}>
-              <Input type="textarea" name="instructions" id="gameInstructions" />
+              <Input
+                type="textarea"
+                name="instructions"
+                id="gameInstructions"
+                value={gameInstructions}
+                onChange={this.changeGameInstructions}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gamePhoto" sm={2}>Photo URL</Label>
             <Col sm={10}>
-              <Input type="input" name="photo" id="gamePhoto" />
+              <Input
+                type="input"
+                name="photo"
+                id="gamePhoto"
+                value={gamePhoto}
+                onChange={this.changeGamePhoto}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gameCredit" sm={2}>Credit</Label>
             <Col sm={10}>
-              <Input type="input" name="credit" id="gameCredit" />
+              <Input
+                type="input"
+                name="credit"
+                id="gameCredit"
+                value={gameCredit}
+                onChange={this.changeGameCredit}
+              />
             </Col>
           </FormGroup>
           <FormGroup row>
             <Label for="gameWebsite" sm={2}>Game Website</Label>
             <Col sm={10}>
-              <Input type="input" name="website" id="gameWebsite" />
+              <Input
+                type="input"
+                name="website"
+                id="gameWebsite"
+                value={gameWebsite}
+                onChange={this.changeGameWebsite}
+              />
             </Col>
           </FormGroup>
           <FormGroup check row>
             <Col>
-              <Button>Submit</Button>
+              <Button onClick={this.saveNewGame}>Submit</Button>
             </Col>
           </FormGroup>
         </Form>
