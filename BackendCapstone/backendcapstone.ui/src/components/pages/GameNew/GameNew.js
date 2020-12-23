@@ -22,8 +22,8 @@ class GameNew extends React.Component {
     preworkLevelsList: [],
     gameName: '',
     gameDescription: '',
-    gameInstruments: [],
-    gameAges: [],
+    gameInstruments: [1],
+    gameAges: [5],
     gamePreworkLevel: 1,
     gamePrework: '',
     gameInstructions: '',
@@ -74,24 +74,28 @@ class GameNew extends React.Component {
     this.setState({ gameDescription: e.target.value });
   }
 
-  // NEED TO LOOK AT THIS _ RATHER _ ON CLICK > NEED TO ADD TO ARRAY??? SAME WITH AGES
-  selectGameInstrument = (e) => {
-    e.preventDefault();
-    console.error('e!!', e.target.options);
-    const newInstrumentId = e.target.value * 1;
-    console.error('inst id to push', newInstrumentId);
-    const newSelectedInstrumentsArray = [...this.state.gameInstruments];
-    console.error('curr sel inst before adding newest selection', newSelectedInstrumentsArray);
-    newSelectedInstrumentsArray.push(newInstrumentId);
-    this.setState({ gameInstruments: newSelectedInstrumentsArray });
+  changeInstruments = (event) => {
+    const opts = [];
+    let opt;
+    for (let i = 0, len = event.target.options.length; i < len; i += 1) {
+      opt = event.target.options[i];
+      if (opt.selected) {
+        opts.push(opt.value * 1);
+      }
+    }
+    this.setState({ gameInstruments: opts });
   }
 
-  selectGameAge = (e) => {
-    e.preventDefault();
-    const newAgeId = e.target.value * 1;
-    const newSelectedAgesArray = [...this.state.gameAges];
-    newSelectedAgesArray.push(newAgeId);
-    this.setState({ gameAges: newSelectedAgesArray });
+  changeAges = (event) => {
+    const opts = [];
+    let opt;
+    for (let i = 0, len = event.target.options.length; i < len; i += 1) {
+      opt = event.target.options[i];
+      if (opt.selected) {
+        opts.push(opt.value * 1);
+      }
+    }
+    this.setState({ gameAges: opts });
   }
 
   changeGamePreworkLevel = (e) => {
@@ -183,7 +187,6 @@ class GameNew extends React.Component {
       <option
         key={age.id}
         value={age.id}
-        onChange={this.selectGameAge}
       >{age.name}</option>
     ));
 
@@ -191,7 +194,6 @@ class GameNew extends React.Component {
       <option
         key={instrument.id}
         value={instrument.id}
-        onClick={this.selectGameInstrument}
       >{instrument.name}</option>
     ));
 
@@ -236,6 +238,8 @@ class GameNew extends React.Component {
                 name="instruments"
                 id="gameInstruments"
                 multiple
+                value={this.state.gameInstruments}
+                onChange={(event) => { this.changeInstruments(event); }}
               >
                 {buildInstrumentsList()}
               </Input>
@@ -244,7 +248,14 @@ class GameNew extends React.Component {
           <FormGroup row>
             <Label for="gameAges" sm={2}>Select student ages:</Label>
             <Col sm={10}>
-              <Input type="select" name="ages" id="gameAges" multiple>
+              <Input
+                type="select"
+                name="ages"
+                id="gameAges"
+                multiple
+                value={this.state.gameAges}
+                onChange={this.changeAges}
+              >
                 {buildAgesList()}
               </Input>
             </Col>
