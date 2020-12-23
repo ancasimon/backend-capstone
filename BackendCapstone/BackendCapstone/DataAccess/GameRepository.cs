@@ -59,7 +59,7 @@ namespace BackendCapstone.DataAccess
         public List<Game> GetMostPopularGames()
         {
             using var db = new SqlConnection(_connectionString);
-            var sqlForPopularGames = @"select top 5 ppg.GameId, g.Name, COUNT(ppg.Id) as Count
+            var sqlForPopularGames = @"select top 5 ppg.GameId as Id, g.Name, COUNT(ppg.Id) as Count
                                         from PracticePlanGames ppg
 	                                        join Games g
 	                                        on g.Id = ppg.GameId

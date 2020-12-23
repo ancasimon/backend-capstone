@@ -47,11 +47,11 @@ class Home extends React.Component {
     const { latestGames, mostPopularGames } = this.state;
 
     const buildLatestGames = () => latestGames.map((game) => (
-      <p>{game.name}</p>
+      <Link to={`/games/${game.id}`} gameId={game.id}>{game.name}<br /></Link>
     ));
 
     const buildMostPopularGames = () => mostPopularGames.map((game) => (
-      <p>{game.name}</p>
+      <Link to={`/games/${game.id}`} gameId={game.id}>{game.name}<br /></Link>
     ));
 
     return (
