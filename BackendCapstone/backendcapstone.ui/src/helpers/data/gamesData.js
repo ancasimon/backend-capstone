@@ -17,6 +17,14 @@ const getLatestGames = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getMostPopularGames = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/games/popular`)
+    .then((mostPopularGamesResponse) => {
+      resolve(mostPopularGamesResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
 const getGamesContributedByAuthedUser = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/games/submittedby`)
     .then((userContributedGamesResponse) => {
@@ -46,4 +54,5 @@ export default {
   getFilteredGames,
   getGamesContributedByAuthedUser,
   getLatestGames,
+  getMostPopularGames,
 };

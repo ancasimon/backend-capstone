@@ -18,6 +18,7 @@ class Home extends React.Component {
 
   state = {
     latestGames: [],
+    mostPopularGames: [],
   }
 
   getLatestGames = () => {
@@ -28,15 +29,28 @@ class Home extends React.Component {
       .catch((error) => console.error('Could not get latest games.', error));
   }
 
+  getMostPopularGames = () => {
+    gamesData.getMostPopularGames()
+      .then((mostPopularGamesResponse) => {
+        this.setState({ mostPopularGames: mostPopularGamesResponse });
+      })
+      .catch((error) => console.error('Could not get most mopoular games.', error));
+  }
+
   componentDidMount() {
     this.getLatestGames();
+    this.getMostPopularGames();
   }
 
   render() {
     const { authed, user } = this.props;
-    const { latestGames } = this.state;
+    const { latestGames, mostPopularGames } = this.state;
 
     const buildLatestGames = () => latestGames.map((game) => (
+      <p>{game.name}</p>
+    ));
+
+    const buildMostPopularGames = () => mostPopularGames.map((game) => (
       <p>{game.name}</p>
     ));
 
@@ -50,9 +64,17 @@ class Home extends React.Component {
         <h6>
           <Link to='/register'>Register</Link> with us and you can take your practice planning to a next level - and will you be glad you did!
         </h6>
-        <div>
-          <h3>Our Latest games</h3>
-          {buildLatestGames()}
+        <div className="container stats">
+          <div className="row d-flex flex-wrap">
+            <div className="col-md-6">
+              <h3>Latest Games</h3>
+              {buildLatestGames()}
+            </div>
+            <div className="col-md-6">
+              <h3>Most Popular Games</h3>
+              {buildMostPopularGames()}
+            </div>
+          </div>
         </div>
       </div>
     );

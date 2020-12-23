@@ -56,5 +56,22 @@ namespace BackendCapstone.DataAccess
             return latestGamesList;
         }
 
+        public List<Game> GetMostPopularGames()
+        {
+            using var db = new SqlConnection(_connectionString);
+            var sqlForPopularGames = @"select top 5 ppg.GameId, g.Name, COUNT(ppg.Id) as Count
+                                        from PracticePlanGames ppg
+	                                        join Games g
+	                                        on g.Id = ppg.GameId
+                                        where ppg.IsActive = 1 
+                                        AND g.IsActive = 1
+                                        group by ppg.GameId, g.Name
+                                        order by Count desc";
+            var mostPopularGames = db.Query<Game>(sqlForPopularGames);
+            List<Game> mostPopularGamesList = mostPopularGames.ToList();
+
+            return mostPopularGamesList;
+        }
+
     }
 }
