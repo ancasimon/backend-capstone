@@ -48,7 +48,7 @@ const getFilteredGames = (searchInput, selectedAges, selectedInstruments, select
 
 const getGameById = (id) => axios.get(`${baseUrl}/games/${id}`);
 
-const addGame = (newGame) => axios.post(`${baseUrl}/games`, newGame);
+const addGame = (newGame, gameInstruments, gameAges) => axios.post(`${baseUrl}/games`, newGame, gameInstruments, gameAges);
 
 export default {
   getAllActiveGames,
