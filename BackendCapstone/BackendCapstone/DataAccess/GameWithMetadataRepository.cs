@@ -202,6 +202,12 @@ namespace BackendCapstone.DataAccess
             instrumentsList = instrumentsForGame.ToList();
             selectedGame.InstrumentsForGame = instrumentsList;
 
+            // to allow users to delete a game, we need to make sure there are no practice plan games using it first:
+            var sqlForPracticePlanGamesForSelectedGame = @"select * from PracticePlanGames
+                                                           where GameId = @id";
+            var associatedPracticePlanGames = db.Query<PracticePlanGame>(sqlForPracticePlanGamesForSelectedGame, parameterForGameId);
+            selectedGame.HasAssociatedPracticePlanGames = associatedPracticePlanGames.Any();
+
             return selectedGame;
         }
 
