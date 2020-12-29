@@ -174,5 +174,53 @@ namespace BackendCapstone.DataAccess
             return newGameId;
         }
 
+        public void RemoveGame(int gameId, int currentUserId)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var parameterForGameToDelete = new { gameId };
+
+            var selectedGameToDelete = GetGameById(gameId);
+
+            if (selectedGameToDelete.SubmittedByUserId == currentUserId)
+            {
+                // first, delete related gameInstrument records!
+                var sqlForInstrumentsForSelectedGame = @"select *
+                                                     from GameInstruments gi
+                                                    where gi.GameId = @gameId";
+
+                var instrumentsForGame = db.Query<GameInstrument>(sqlForInstrumentsForSelectedGame, parameterForGameToDelete);
+                if (instrumentsForGame != null)
+                {
+                    var sqlToReallyDeleteGameInstrumentRecords = @"DELETE
+                                          FROM [dbo].[GameInstruments]
+                                          WHERE GameId = @gameId";
+                    db.Execute(sqlToReallyDeleteGameInstrumentRecords, parameterForGameToDelete);
+                }
+
+                // next, delete related gameAge records:
+                var sqlForAgesForSelectedGame = @"select * 
+                                              from GameAges ga
+                                              where ga.GameId = @gameId";
+
+                var agesForGame = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterForGameToDelete);
+                if (agesForGame != null)
+                {
+                    var sqlToReallyDeleteGameAgeRecords = @"DELETE
+                                          FROM [dbo].[GameAges]
+                                          WHERE GameId = @gameId";
+                    db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
+                }
+
+                var sqlToReallyDeleteGame = @"DELETE
+                                          FROM [dbo].[Games]
+                                          WHERE Id = @gameId";
+
+                // last, delete the actual game record itself:
+                db.Execute(sqlToReallyDeleteGame, parameterForGameToDelete);
+            }
+
+        }
+
     }
 }

@@ -95,7 +95,7 @@ class App extends React.Component {
 
                     <Route path='/home' render={(props) => <Home authed={authed} user={user} {...props} />}/>
                     <Route path='/login' component={Login} authed={authed} />
-                    <Route path='/games/:gameid' component={SingleGameView} authed={authed} />
+                    <Route path='/games/:gameid' render={(props) => <SingleGameView authed={authed} user={user} {...props} />} />
                     <Route path='/games' render={(props) => <Games authed={authed} {...props} />} />
                     <Route path='/register' render={(props) => <Register authed={authed} {...props} />} />
 

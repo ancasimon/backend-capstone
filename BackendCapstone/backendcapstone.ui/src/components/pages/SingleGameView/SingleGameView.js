@@ -6,9 +6,15 @@ import InstrumentItem from '../../shared/InstrumentItem/InstrumentItem';
 
 import gamesData from '../../../helpers/data/gamesData';
 
+import userShape from '../../../helpers/propz/userShape';
+
 import './SingleGameView.scss';
 
 class SingleGameView extends React.Component {
+  static propTypes = {
+    user: userShape.userShape,
+  }
+
   state = {
     selectedGame: {},
     selectedGameId: this.props.match.params.gameid,
@@ -36,8 +42,16 @@ class SingleGameView extends React.Component {
     document.documentElement.scrollTop = 0;
   }
 
+  deleteGame = () => {
+    const { selectedGameId } = this.state;
+    gamesData.deleteGame(selectedGameId)
+      .then(() => this.props.history.push('/games'))
+      .catch((error) => console.error('Could not delete this game.', error));
+  };
+
   render() {
     const { selectedGame, instrumentsForGame, agesForGame } = this.state;
+    const { user } = this.props;
 
     const displayInstruments = () => instrumentsForGame.map((instrument) => (
       <InstrumentItem key={instrument.id} instrument={instrument} />
@@ -57,6 +71,15 @@ class SingleGameView extends React.Component {
             <div className="col-md-3 buttonDiv">
               <Link to='/games' className="mainButtons p-2">Back</Link>
             </div>
+          </div>
+          <div className="row p-3">
+            {
+            (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
+              ? <div className="col-md-6">
+              <button className="mainButtons p-2" onClick={this.deleteGame}>Delete</button>
+            </div>
+              : ''
+            }
           </div>
         </div>
 

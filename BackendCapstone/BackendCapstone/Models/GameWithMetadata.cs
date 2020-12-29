@@ -35,6 +35,8 @@ namespace BackendCapstone.Models
         public List<Age> AgesForGame { get; set; } = new List<Age>();
         public List<Instrument> InstrumentsForGame { get; set; } = new List<Instrument>();
         public string UserPhotoUrl { get; set; }
+        // adding the bool below to use to check if user can delete game:
+        public bool HasAssociatedPracticePlanGames { get; set; }
 
     }
 }
