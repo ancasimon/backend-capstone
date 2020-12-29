@@ -74,7 +74,7 @@ class SingleGameView extends React.Component {
           </div>
           <div className="row p-3">
             {
-            (user.id === selectedGame.submittedByUserId && selectedGame.HasAssociatedPracticePlanGames === false)
+            (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
               ? <div className="col-md-6">
               <button className="mainButtons p-2" onClick={this.deleteGame}>Delete</button>
             </div>
