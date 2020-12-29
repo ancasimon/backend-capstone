@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BackendCapstone.Models;
 using BackendCapstone.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendCapstone.Controllers
 {
@@ -80,6 +81,7 @@ namespace BackendCapstone.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public IActionResult PostNewGame(Game gameToAdd)
         {
             var currentUserId = _userRepo.GetUserIdByUid(UserId);
