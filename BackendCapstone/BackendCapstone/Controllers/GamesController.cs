@@ -15,11 +15,13 @@ namespace BackendCapstone.Controllers
     {
         GameRepository _gameRepo;
         GameWithMetadataRepository _gameWithDataRepo;
+        UserRepository _userRepo;
 
-        public GamesController(GameRepository repo1, GameWithMetadataRepository repo2)
+        public GamesController(GameRepository repo1, GameWithMetadataRepository repo2, UserRepository userRepo)
         {
             _gameRepo = repo1;
             _gameWithDataRepo = repo2;
+            _userRepo = userRepo;
         }
 
         // Changed method below to call the method for the game with metadata instead of the regular game record:
@@ -39,14 +41,6 @@ namespace BackendCapstone.Controllers
 
             return Ok(filteredGames);
         }
-
-        //[HttpGet()]
-        //public IActionResult GetFilteredGames()
-        //{
-        //    var filteredGames = _gameWithDataRepo.GetFilteredListOfGamesWithMetadata();
-
-        //    return Ok(filteredGames);
-        //}
 
 
         // Changed method below to call the method for the game with metadata instead of the regular game record:
@@ -83,6 +77,15 @@ namespace BackendCapstone.Controllers
             var mostPopularGames = _gameRepo.GetMostPopularGames();
 
             return Ok(mostPopularGames);
+        }
+
+        [HttpPost]
+        public IActionResult PostNewGame(Game gameToAdd)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+            var newGameId = _gameRepo.AddNewGame(currentUserId, gameToAdd);
+
+            return Ok(newGameId);
         }
     }
 }

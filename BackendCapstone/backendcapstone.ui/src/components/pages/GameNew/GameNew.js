@@ -12,6 +12,7 @@ import {
 
 import agesData from '../../../helpers/data/agesData';
 import gameIconsData from '../../../helpers/data/gameIconsData';
+import gamesData from '../../../helpers/data/gamesData';
 import instrumentsData from '../../../helpers/data/instrumentsData';
 import preworkLevelsData from '../../../helpers/data/preworkLevelsData';
 
@@ -33,7 +34,7 @@ class GameNew extends React.Component {
     gamePhoto: '',
     gameCredit: '',
     gameWebsite: '',
-    gameIcon: 0,
+    gameIcon: 42,
     gameKeywords: '',
     gameSongs: '',
   }
@@ -176,7 +177,7 @@ class GameNew extends React.Component {
     const newGameObject = {
       name: gameName,
       description: gameDescription,
-      preworkLevel: gamePreworkLevel,
+      preworkLevelId: gamePreworkLevel,
       prework: gamePrework,
       instructions: gameInstructions,
       photoUrl: gamePhoto,
@@ -199,6 +200,11 @@ class GameNew extends React.Component {
       console.error('new age', newGameAgeObject);
     });
     console.error('new game', newGameObject);
+    gamesData.addGame(newGameObject)
+      .then((newGameResponse) => {
+        console.error('new game just created', newGameResponse);
+      })
+      .catch((error) => console.error('Could not create the new game.', error));
   }
 
   render() {

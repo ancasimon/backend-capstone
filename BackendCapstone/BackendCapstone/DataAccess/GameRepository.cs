@@ -73,7 +73,7 @@ namespace BackendCapstone.DataAccess
             return mostPopularGamesList;
         }
 
-        public Game AddNewGame(int userId, Game newGame)
+        public int AddNewGame(int userId, Game newGame)
         {
             using var db = new SqlConnection(_connectionString);
 
