@@ -36,6 +36,13 @@ class SingleGameView extends React.Component {
     document.documentElement.scrollTop = 0;
   }
 
+  deleteGame = () => {
+    const { selectedGameId } = this.state;
+    gamesData.deleteGame(selectedGameId)
+      .then(() => this.props.history.push('/games'))
+      .catch((error) => console.error('Could not delete this game.', error));
+  };
+
   render() {
     const { selectedGame, instrumentsForGame, agesForGame } = this.state;
 
@@ -56,6 +63,11 @@ class SingleGameView extends React.Component {
             </div>
             <div className="col-md-3 buttonDiv">
               <Link to='/games' className="mainButtons p-2">Back</Link>
+            </div>
+          </div>
+          <div className="row p-3">
+            <div className="col-md-6">
+              <button className="mainButtons p-2" onClick={this.deleteGame}>Delete</button>
             </div>
           </div>
         </div>

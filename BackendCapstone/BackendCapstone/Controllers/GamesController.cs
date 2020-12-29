@@ -89,5 +89,19 @@ namespace BackendCapstone.Controllers
 
             return Ok(newGameId);
         }
+
+        [HttpDelete("{gameId}")]
+        [Authorize]
+        public IActionResult DeleteGame(int gameId)
+        {
+            if (_gameRepo.GetGameById(gameId) == null)
+            {
+                return NotFound();
+            }
+
+            _gameRepo.RemoveGame(gameId);
+
+            return Ok();
+        }
     }
 }
