@@ -20,7 +20,7 @@ namespace BackendCapstone.DataAccess
         public IEnumerable<GameIcon> GetAllGameIcons()
         {
             using var db = new SqlConnection(_connectionString);
-            var sqlForAllGameIcons = "select * from GameIcons";
+            var sqlForAllGameIcons = "select * from GameIcons order by Name";
 
             var allGameIcons = db.Query<GameIcon>(sqlForAllGameIcons);
 
