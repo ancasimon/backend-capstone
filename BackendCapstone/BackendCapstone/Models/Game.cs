@@ -25,5 +25,8 @@ namespace BackendCapstone.Models
         public DateTime DateCreated { get; set; }
         public int GameIconId { get; set; }
         public string PhotoUrl { get; set; }
+        //added to support posting a new game with related gameInstrument and gameAge records simultaneously:
+        public List<int> GameInstruments { get; set; }
+        public List<int> GameAges { get; set; }
     }
 }

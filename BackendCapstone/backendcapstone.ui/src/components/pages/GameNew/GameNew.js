@@ -186,21 +186,13 @@ class GameNew extends React.Component {
       gameIconId: gameIcon,
       keyowrds: gameKeywords,
       songs: gameSongs,
+      gameInstruments,
+      gameAges,
     };
-    gameInstruments.forEach((item) => {
-      const newGameInstrumentObject = {
-        instrumentId: item,
-      };
-      console.error('new inst', newGameInstrumentObject);
-    });
-    gameAges.forEach((item) => {
-      const newGameAgeObject = {
-        ageId: item,
-      };
-      console.error('new age', newGameAgeObject);
-    });
+    console.error('gameInsList', gameInstruments);
+    console.error('gameAgeList', gameAges);
     console.error('new game', newGameObject);
-    gamesData.addGame(newGameObject, gameInstruments, gameAges)
+    gamesData.addGame(newGameObject)
       .then((newGameResponse) => {
         console.error('new game just created', newGameResponse);
       })

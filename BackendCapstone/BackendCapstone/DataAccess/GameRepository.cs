@@ -73,9 +73,10 @@ namespace BackendCapstone.DataAccess
             return mostPopularGamesList;
         }
 
-        public int AddNewGame(int userId, Game newGame, List<int> gameInstruments, List<int> gameAges)
+        public int AddNewGame(int userId, Game newGame)
         {
             using var db = new SqlConnection(_connectionString);
+
 
             var sqlForNewGame = @"INSERT INTO [dbo].[Games]
                                                    ([Name]
@@ -125,40 +126,49 @@ namespace BackendCapstone.DataAccess
 
             var newGameId = db.ExecuteScalar<int>(sqlForNewGame, parametersForGame);
 
-            foreach (var instrumentId in gameInstruments)
+            List<int> gameInstruments = new List<int>();
+            gameInstruments = newGame.GameInstruments;
+
+            List<int> gameAges = new List<int>();
+            gameAges = newGame.GameAges;
+
+            if (newGameId != null)
             {
-                var sqlToAddNewGameInstrumentRecord = @"INSERT INTO [dbo].[GameInstruments]
+                foreach (var item in gameInstruments)
+                {
+                    var sqlToAddNewGameInstrumentRecord = @"INSERT INTO [dbo].[GameInstruments]
                                                                            ([GameId]
                                                                            ,[InstrumentId])
                                                                      OUTPUT INSERTED.Id
                                                                      VALUES
                                                                            (@gameId
                                                                            ,@instrumentId)";
-                var parametersForNewGameInstrument = new
+                    var parametersForNewGameInstrument = new
+                    {
+                        gameId = newGameId,
+                        instrumentId = item,
+                    };
+
+                    var newGameInstrumentId = db.ExecuteScalar<int>(sqlToAddNewGameInstrumentRecord, parametersForNewGameInstrument);
+                }
+
+                foreach (var item in gameAges)
                 {
-                    gameId = newGameId,
-                    instrumentId,
-                };
-
-                var newGameInstrumentId = db.ExecuteScalar<int>(sqlToAddNewGameInstrumentRecord, parametersForNewGameInstrument);
-            }
-
-            foreach (var ageId in gameAges)
-            {
-                var sqlToAddNewGameAgeRecord = @"INSERT INTO [dbo].[GameAges]
+                    var sqlToAddNewGameAgeRecord = @"INSERT INTO [dbo].[GameAges]
                                                                            ([GameId]
                                                                            ,[AgeId])
                                                                      OUTPUT INSERTED.Id
                                                                      VALUES
                                                                            (@gameId
                                                                            ,@ageId)";
-                var parametersForNewGameAge = new
-                {
-                    gameId = newGameId,
-                    ageId,
-                };
+                    var parametersForNewGameAge = new
+                    {
+                        gameId = newGameId,
+                        ageId = item,
+                    };
 
-                var newGameAgeId = db.ExecuteScalar<int>(sqlToAddNewGameAgeRecord, parametersForNewGameAge);
+                    var newGameAgeId = db.ExecuteScalar<int>(sqlToAddNewGameAgeRecord, parametersForNewGameAge);
+                }
             }
 
             return newGameId;

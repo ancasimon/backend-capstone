@@ -80,10 +80,10 @@ namespace BackendCapstone.Controllers
         }
 
         [HttpPost]
-        public IActionResult PostNewGame(Game gameToAdd, [FromQuery] List<int> gameInstruments, [FromQuery] List<int> gameAges)
+        public IActionResult PostNewGame(Game gameToAdd)
         {
             var currentUserId = _userRepo.GetUserIdByUid(UserId);
-            var newGameId = _gameRepo.AddNewGame(currentUserId, gameToAdd, gameInstruments, gameAges);
+            var newGameId = _gameRepo.AddNewGame(currentUserId, gameToAdd);
 
             return Ok(newGameId);
         }
