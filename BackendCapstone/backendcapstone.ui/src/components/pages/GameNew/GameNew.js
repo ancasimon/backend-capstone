@@ -195,6 +195,7 @@ class GameNew extends React.Component {
     gamesData.addGame(newGameObject)
       .then((newGameResponse) => {
         console.error('new game just created', newGameResponse);
+        this.props.history.push(`/games/${newGameResponse.data}`);
       })
       .catch((error) => console.error('Could not create the new game.', error));
   }
