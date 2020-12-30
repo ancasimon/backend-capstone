@@ -16,10 +16,11 @@ import gamesData from '../../../helpers/data/gamesData';
 import instrumentsData from '../../../helpers/data/instrumentsData';
 import preworkLevelsData from '../../../helpers/data/preworkLevelsData';
 
-import './GameNew.scss';
+import './GameNewOrEdit.scss';
 
-class GameNew extends React.Component {
+class GameNewOrEdit extends React.Component {
   state = {
+    newGameForm: true,
     agesList: [],
     instrumentsList: [],
     preworkLevelsList: [],
@@ -37,6 +38,8 @@ class GameNew extends React.Component {
     gameIcon: 42,
     gameKeywords: '',
     gameSongs: '',
+    currentGameId: this.props.match.params.gameid * 1,
+    currentGame: {},
   }
 
   componentDidMount() {
@@ -48,6 +51,33 @@ class GameNew extends React.Component {
     this.getInstruments();
     this.getPreworkLevels();
     this.getGameIcons();
+    this.getCurrentGame();
+  }
+
+  getCurrentGame = () => {
+    const { currentGameId } = this.state;
+    if (currentGameId) {
+      this.setState({ newGameForm: false });
+      gamesData.getGameById(currentGameId)
+        .then((currentGameResponse) => {
+          this.setState({
+            gameName: currentGameResponse.data.name,
+            gameDescription: currentGameResponse.data.description,
+            gameInstruments: currentGameResponse.data.instrumentsForGame,
+            gameAges: currentGameResponse.data.agesForGame,
+            gamePreworkLevel: currentGameResponse.data.preworkLevelId,
+            gamePrework: currentGameResponse.data.prework,
+            gameInstructions: currentGameResponse.data.instructions,
+            gamePhoto: currentGameResponse.data.photoUrl,
+            gameCredit: currentGameResponse.data.credit,
+            gameWebsite: currentGameResponse.data.websiteUrl,
+            gameIcon: currentGameResponse.data.gameIconId,
+            gameKeywords: currentGameResponse.data.keyowrds,
+            gameSongs: currentGameResponse.data.songs,
+          });
+        })
+        .catch((error) => console.error('Could not get current game.', error));
+    }
   }
 
   getAges = () => {
@@ -219,6 +249,7 @@ class GameNew extends React.Component {
       gameIcon,
       gameKeywords,
       gameSongs,
+      newGameForm,
     } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
@@ -245,7 +276,10 @@ class GameNew extends React.Component {
 
     return (
       <div className="GameNew">
-        <h2 className="pageTitle">Add a New Game</h2>
+        { newGameForm
+          ? <h2 className="pageTitle">Add a New Game</h2>
+          : <h2 className="pageTitle">Update Game: {gameName}</h2>
+        }
         <Form>
           <FormGroup row>
             <Label for="gameName" sm={2}>Game Name</Label>
@@ -415,9 +449,14 @@ class GameNew extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup check row>
-            <Col>
-              <Button onClick={this.saveNewGame}>Submit</Button>
+            { newGameForm
+              ? <Col>
+              <Button onClick={this.saveNewGame}>Add New Game</Button>
             </Col>
+              : <Col>
+              <Button onClick={this.editGame}>Save Changes</Button>
+            </Col>
+            }
           </FormGroup>
         </Form>
       </div>
@@ -425,4 +464,4 @@ class GameNew extends React.Component {
   }
 }
 
-export default GameNew;
+export default GameNewOrEdit;
