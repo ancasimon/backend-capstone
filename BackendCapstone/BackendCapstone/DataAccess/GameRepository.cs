@@ -132,7 +132,7 @@ namespace BackendCapstone.DataAccess
             List<int> gameAges = new List<int>();
             gameAges = newGame.GameAges;
 
-            if (newGameId != null)
+            if (newGameId != 0)
             {
                 foreach (var item in gameInstruments)
                 {
@@ -220,6 +220,82 @@ namespace BackendCapstone.DataAccess
                 db.Execute(sqlToReallyDeleteGame, parameterForGameToDelete);
             }
 
+        }
+
+        public void UpdateGame(int gameId, Game updatedGame)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var parameterToUpdateGame = new { gameId };
+
+            var selectedGameToUpdate = GetGameById(gameId);
+
+            if (selectedGameToUpdate != null)
+            {
+                //UPDATE GAMEINSTRUMENT and GAMEAGE RECORDS!!!
+                //var sqlForInstrumentsForSelectedGame = @"select *
+                //                                     from GameInstruments gi
+                //                                    where gi.GameId = @gameId";
+
+                //var instrumentsForGame = db.Query<GameInstrument>(sqlForInstrumentsForSelectedGame, parameterForGameToDelete);
+                //if (instrumentsForGame != null)
+                //{
+                //    var sqlToReallyDeleteGameInstrumentRecords = @"DELETE
+                //                          FROM [dbo].[GameInstruments]
+                //                          WHERE GameId = @gameId";
+                //    db.Execute(sqlToReallyDeleteGameInstrumentRecords, parameterForGameToDelete);
+                //}
+
+                //// next, delete related gameAge records:
+                //var sqlForAgesForSelectedGame = @"select * 
+                //                              from GameAges ga
+                //                              where ga.GameId = @gameId";
+
+                //var agesForGame = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterForGameToDelete);
+                //if (agesForGame != null)
+                //{
+                //    var sqlToReallyDeleteGameAgeRecords = @"DELETE
+                //                          FROM [dbo].[GameAges]
+                //                          WHERE GameId = @gameId";
+                //    db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
+                //}
+
+                var sqlToUpdateGame = @"UPDATE [dbo].[Games]
+                                       SET [Name] = @name
+                                          ,[IsActive] = @isActive
+                                          ,[Songs] = @songs
+                                          ,[Description] = @description
+                                          ,[PreworkLevelId] = @preworkLevelId
+                                          ,[Prework] = @prework
+                                          ,[Instructions] = @instructions
+                                          ,[Credit] = @credit
+                                          ,[WebsiteUrl] = @websiteUrl
+                                          ,[SubmittedByUserId] = @submittedByUserId
+                                          ,[DateCreated] = @dateCreated
+                                          ,[GameIconId] = @gameIconId,
+                                          ,[PhotoUrl] = @photoUrl,
+                                          ,[Keywords] = @keywords,
+                                     WHERE GameId = @gameId";
+
+                var parametersToUpdateGame = new
+                {
+                    gameId,
+                    name = updatedGame.Name,
+                    isActive = updatedGame.IsActive,
+                    songs = updatedGame.Songs,
+                    description = updatedGame.Description,
+                    preworkLevelId = updatedGame.PreworkLevelId,
+                    prework = updatedGame.Prework,
+                    instructions = updatedGame.Instructions,
+                    credit = updatedGame.Credit,
+                    websiteUrl = updatedGame.WebsiteUrl,
+                    submittedByUserId = updatedGame.SubmittedByUserId,
+                    gameIconId = updatedGame.GameIconId,
+                    photoUrl = updatedGame.PhotoUrl,
+                    keywords = updatedGame.Keywords,
+                };
+                db.Execute(sqlToUpdateGame, parametersToUpdateGame);
+            }
         }
 
     }

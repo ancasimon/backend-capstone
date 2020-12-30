@@ -52,6 +52,8 @@ const addGame = (newGame) => axios.post(`${baseUrl}/games`, newGame);
 
 const deleteGame = (gameId) => axios.delete(`${baseUrl}/games/${gameId}`);
 
+const updateGame = (gameId, updatedGame) => axios.put(`${baseUrl}/games/${gameId}`, updatedGame);
+
 export default {
   getAllActiveGames,
   getGameById,
@@ -61,4 +63,5 @@ export default {
   getMostPopularGames,
   addGame,
   deleteGame,
+  updateGame,
 };

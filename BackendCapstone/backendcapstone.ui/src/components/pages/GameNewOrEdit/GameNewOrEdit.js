@@ -47,11 +47,11 @@ class GameNewOrEdit extends React.Component {
   }
 
   buildNewGameForm = () => {
+    this.getCurrentGame();
     this.getAges();
     this.getInstruments();
     this.getPreworkLevels();
     this.getGameIcons();
-    this.getCurrentGame();
   }
 
   getCurrentGame = () => {
@@ -63,8 +63,8 @@ class GameNewOrEdit extends React.Component {
           this.setState({
             gameName: currentGameResponse.data.name,
             gameDescription: currentGameResponse.data.description,
-            gameInstruments: currentGameResponse.data.instrumentsForGame,
-            gameAges: currentGameResponse.data.agesForGame,
+            gameInstruments: currentGameResponse.data.instrumentIdsForGame,
+            gameAges: currentGameResponse.data.ageIdsForGame,
             gamePreworkLevel: currentGameResponse.data.preworkLevelId,
             gamePrework: currentGameResponse.data.prework,
             gameInstructions: currentGameResponse.data.instructions,
@@ -146,6 +146,7 @@ class GameNewOrEdit extends React.Component {
       }
     }
     this.setState({ gameAges: opts });
+    console.error('event', event);
   }
 
   changeGameKeywords = (e) => {
@@ -228,6 +229,49 @@ class GameNewOrEdit extends React.Component {
         this.props.history.push(`/games/${newGameResponse.data}`);
       })
       .catch((error) => console.error('Could not create the new game.', error));
+  }
+
+  editGame = () => {
+    const {
+      currentGameId,
+      gameName,
+      gameDescription,
+      gameInstruments,
+      gameAges,
+      gamePreworkLevel,
+      gamePrework,
+      gameInstructions,
+      gamePhoto,
+      gameCredit,
+      gameWebsite,
+      gameIcon,
+      gameKeywords,
+      gameSongs,
+    } = this.state;
+    const updatedGameObject = {
+      name: gameName,
+      description: gameDescription,
+      preworkLevelId: gamePreworkLevel,
+      prework: gamePrework,
+      instructions: gameInstructions,
+      photoUrl: gamePhoto,
+      credit: gameCredit,
+      website: gameWebsite,
+      gameIconId: gameIcon,
+      keywords: gameKeywords,
+      songs: gameSongs,
+      gameInstruments,
+      gameAges,
+    };
+    console.error('updatedgameInsList', gameInstruments);
+    console.error('updatedgameAgeList', gameAges);
+    console.error('updated game', updatedGameObject);
+    gamesData.updateGame(currentGameId, updatedGameObject)
+      .then((updatedGameResponse) => {
+        console.error('game updated', updatedGameResponse);
+        this.props.history.push(`/games/${currentGameId}`);
+      })
+      .catch((error) => console.error('Could not save your changes to this game.', error));
   }
 
   render() {
@@ -344,7 +388,7 @@ class GameNewOrEdit extends React.Component {
                 id="gameAges"
                 multiple
                 value={this.state.gameAges}
-                onChange={this.changeAges}
+                onChange={(event) => { this.changeAges(event); }}
               >
                 {buildAgesList()}
               </Input>
