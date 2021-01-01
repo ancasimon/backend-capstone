@@ -51,7 +51,7 @@ class SingleGameView extends React.Component {
 
   deleteConfirmationMessage = () => {
     Swal.fire({
-      title: 'Are you sure?',
+      title: 'Are you sure you want to delete this game?',
       text: 'You will not be able to undo this action!',
       icon: 'warning',
       showCancelButton: true,
