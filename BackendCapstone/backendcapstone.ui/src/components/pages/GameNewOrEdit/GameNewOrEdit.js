@@ -225,7 +225,6 @@ class GameNewOrEdit extends React.Component {
     console.error('new game', newGameObject);
     gamesData.addGame(newGameObject)
       .then((newGameResponse) => {
-        console.error('new game just created', newGameResponse);
         this.props.history.push(`/games/${newGameResponse.data}`);
       })
       .catch((error) => console.error('Could not create the new game.', error));
@@ -263,12 +262,8 @@ class GameNewOrEdit extends React.Component {
       instrumentIdsForGame: gameInstruments,
       ageIdsForGame: gameAges,
     };
-    console.error('updatedgameInsList', gameInstruments);
-    console.error('updatedgameAgeList', gameAges);
-    console.error('updated game', updatedGameObject);
     gamesData.updateGame(currentGameId, updatedGameObject)
       .then((updatedGameResponse) => {
-        console.error('game updated', updatedGameResponse);
         this.props.history.push(`/games/${currentGameId}`);
       })
       .catch((error) => console.error('Could not save your changes to this game.', error));

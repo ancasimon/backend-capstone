@@ -41,7 +41,6 @@ const getFilteredGames = (searchInput, selectedAges, selectedInstruments, select
   axios.get(`${baseUrl}/games?searchInput=${searchInput}&${buildAgeFilters()}&${buildInstrumentFilters()}&${buildPreworkLevelFilters()}`)
     .then((filteredGamesResponse) => {
       resolve(filteredGamesResponse.data);
-      console.error('selected filters passed to backend', searchInput, selectedAges, selectedInstruments, selectedPreworkLevels);
     })
     .catch((error) => reject(error));
 });

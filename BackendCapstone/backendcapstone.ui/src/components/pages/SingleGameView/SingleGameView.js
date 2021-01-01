@@ -31,7 +31,6 @@ class SingleGameView extends React.Component {
           instrumentsForGame: singleGameResponse.data.instrumentsForGame,
           agesForGame: singleGameResponse.data.agesForGame,
         });
-        console.error('single game respo', singleGameResponse);
       })
       .catch((error) => console.error('Could not get this game.', error));
   }
