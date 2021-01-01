@@ -31,7 +31,6 @@ class SingleGameView extends React.Component {
           instrumentsForGame: singleGameResponse.data.instrumentsForGame,
           agesForGame: singleGameResponse.data.agesForGame,
         });
-        console.error('single game respo', singleGameResponse);
       })
       .catch((error) => console.error('Could not get this game.', error));
   }
@@ -50,7 +49,12 @@ class SingleGameView extends React.Component {
   };
 
   render() {
-    const { selectedGame, instrumentsForGame, agesForGame } = this.state;
+    const {
+      selectedGame,
+      instrumentsForGame,
+      agesForGame,
+      selectedGameId,
+    } = this.state;
     const { user } = this.props;
 
     const displayInstruments = () => instrumentsForGame.map((instrument) => (
@@ -64,7 +68,7 @@ class SingleGameView extends React.Component {
     return (
       <div className="SingleGameView">
         <div className="container">
-          <div className="row">
+          <div className="row container">
             <div className="col-md-9">
               <h2 className="pageTitle">Game Details: {selectedGame.name}</h2>
             </div>
@@ -72,10 +76,17 @@ class SingleGameView extends React.Component {
               <Link to='/games' className="mainButtons p-2">Back</Link>
             </div>
           </div>
-          <div className="row p-3">
+          <div className="row p-3 container">
+            {
+            (user.id === selectedGame.submittedByUserId)
+              ? <div className="col-md-6 container">
+              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
+            </div>
+              : ''
+            }
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
-              ? <div className="col-md-6">
+              ? <div className="col-md-6 container">
               <button className="mainButtons p-2" onClick={this.deleteGame}>Delete</button>
             </div>
               : ''

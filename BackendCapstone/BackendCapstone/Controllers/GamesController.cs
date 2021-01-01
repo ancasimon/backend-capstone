@@ -105,5 +105,21 @@ namespace BackendCapstone.Controllers
 
             return Ok();
         }
+
+        [HttpPut("{gameId}")]
+        [Authorize]
+        public IActionResult UpdateGame(int gameId, GameWithMetadata updatedGame)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+
+            if (_gameRepo.GetGameById(gameId) == null)
+            {
+                return NotFound();
+            }
+
+            _gameRepo.UpdateGame(gameId, updatedGame);
+
+            return Ok();
+        }
     }
 }

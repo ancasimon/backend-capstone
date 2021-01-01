@@ -37,6 +37,9 @@ namespace BackendCapstone.Models
         public string UserPhotoUrl { get; set; }
         // adding the bool below to use to check if user can delete game:
         public bool HasAssociatedPracticePlanGames { get; set; }
+        // new properties needed to pass the selected age and instrument IDs for the edit game form:
+        public List<int> AgeIdsForGame { get; set; }
+        public List<int> InstrumentIdsForGame { get; set; }
 
     }
 }

@@ -41,7 +41,6 @@ const getFilteredGames = (searchInput, selectedAges, selectedInstruments, select
   axios.get(`${baseUrl}/games?searchInput=${searchInput}&${buildAgeFilters()}&${buildInstrumentFilters()}&${buildPreworkLevelFilters()}`)
     .then((filteredGamesResponse) => {
       resolve(filteredGamesResponse.data);
-      console.error('selected filters passed to backend', searchInput, selectedAges, selectedInstruments, selectedPreworkLevels);
     })
     .catch((error) => reject(error));
 });
@@ -52,6 +51,8 @@ const addGame = (newGame) => axios.post(`${baseUrl}/games`, newGame);
 
 const deleteGame = (gameId) => axios.delete(`${baseUrl}/games/${gameId}`);
 
+const updateGame = (gameId, updatedGame) => axios.put(`${baseUrl}/games/${gameId}`, updatedGame);
+
 export default {
   getAllActiveGames,
   getGameById,
@@ -61,4 +62,5 @@ export default {
   getMostPopularGames,
   addGame,
   deleteGame,
+  updateGame,
 };

@@ -1,5 +1,5 @@
 {
-"baseUrl": "https://unlimited-music.azurewebsites.net/api"
+  "baseUrl": "https://localhost:44379/api"
 }
-
+  
 
