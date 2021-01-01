@@ -108,7 +108,7 @@ namespace BackendCapstone.Controllers
 
         [HttpPut("{gameId}")]
         [Authorize]
-        public IActionResult UpdateGame(int gameId, Game updatedGame)
+        public IActionResult UpdateGame(int gameId, GameWithMetadata updatedGame)
         {
             var currentUserId = _userRepo.GetUserIdByUid(UserId);
 

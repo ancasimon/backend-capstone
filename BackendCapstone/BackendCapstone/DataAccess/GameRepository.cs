@@ -222,7 +222,7 @@ namespace BackendCapstone.DataAccess
 
         }
 
-        public void UpdateGame(int gameId, Game updatedGame)
+        public void UpdateGame(int gameId, GameWithMetadata updatedGame)
         {
             using var db = new SqlConnection(_connectionString);
 
@@ -232,37 +232,9 @@ namespace BackendCapstone.DataAccess
 
             if (selectedGameToUpdate != null)
             {
-                //UPDATE GAMEINSTRUMENT and GAMEAGE RECORDS!!!
-                //var sqlForInstrumentsForSelectedGame = @"select *
-                //                                     from GameInstruments gi
-                //                                    where gi.GameId = @gameId";
-
-                //var instrumentsForGame = db.Query<GameInstrument>(sqlForInstrumentsForSelectedGame, parameterForGameToDelete);
-                //if (instrumentsForGame != null)
-                //{
-                //    var sqlToReallyDeleteGameInstrumentRecords = @"DELETE
-                //                          FROM [dbo].[GameInstruments]
-                //                          WHERE GameId = @gameId";
-                //    db.Execute(sqlToReallyDeleteGameInstrumentRecords, parameterForGameToDelete);
-                //}
-
-                //// next, delete related gameAge records:
-                //var sqlForAgesForSelectedGame = @"select * 
-                //                              from GameAges ga
-                //                              where ga.GameId = @gameId";
-
-                //var agesForGame = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterForGameToDelete);
-                //if (agesForGame != null)
-                //{
-                //    var sqlToReallyDeleteGameAgeRecords = @"DELETE
-                //                          FROM [dbo].[GameAges]
-                //                          WHERE GameId = @gameId";
-                //    db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
-                //}
-
+                // first, update the data for the game:
                 var sqlToUpdateGame = @"UPDATE [dbo].[Games]
                                        SET [Name] = @name
-                                          ,[IsActive] = @isActive
                                           ,[Songs] = @songs
                                           ,[Description] = @description
                                           ,[PreworkLevelId] = @preworkLevelId
@@ -270,18 +242,15 @@ namespace BackendCapstone.DataAccess
                                           ,[Instructions] = @instructions
                                           ,[Credit] = @credit
                                           ,[WebsiteUrl] = @websiteUrl
-                                          ,[SubmittedByUserId] = @submittedByUserId
-                                          ,[DateCreated] = @dateCreated
-                                          ,[GameIconId] = @gameIconId,
-                                          ,[PhotoUrl] = @photoUrl,
-                                          ,[Keywords] = @keywords,
-                                     WHERE GameId = @gameId";
+                                          ,[GameIconId] = @gameIconId
+                                          ,[PhotoUrl] = @photoUrl
+                                          ,[Keywords] = @keywords
+                                     WHERE Id = @gameId";
 
                 var parametersToUpdateGame = new
                 {
                     gameId,
                     name = updatedGame.Name,
-                    isActive = updatedGame.IsActive,
                     songs = updatedGame.Songs,
                     description = updatedGame.Description,
                     preworkLevelId = updatedGame.PreworkLevelId,
@@ -289,14 +258,76 @@ namespace BackendCapstone.DataAccess
                     instructions = updatedGame.Instructions,
                     credit = updatedGame.Credit,
                     websiteUrl = updatedGame.WebsiteUrl,
-                    submittedByUserId = updatedGame.SubmittedByUserId,
                     gameIconId = updatedGame.GameIconId,
                     photoUrl = updatedGame.PhotoUrl,
                     keywords = updatedGame.Keywords,
                 };
                 db.Execute(sqlToUpdateGame, parametersToUpdateGame);
-            }
-        }
 
+                // next update related gameinstrument records and gameage records if changed:
+
+                //UPDATE GAMEINSTRUMENT and GAMEAGE RECORDS!!!
+                var updatedGameInstrumentIds = updatedGame.InstrumentIdsForGame;
+                var sqlForInstrumentsForSelectedGame = @"select *
+                                                     from GameInstruments gi
+                                                    where gi.GameId = @gameId";
+
+                var currentGameInstruments = db.Query<GameInstrument>(sqlForInstrumentsForSelectedGame, parameterToUpdateGame);
+                var currentInstrumentIds = new List<int>();
+                foreach (var instrument in currentGameInstruments)
+                {
+                    var id = instrument.InstrumentId;
+                    currentInstrumentIds.Add(id);
+                }
+
+                if (updatedGameInstrumentIds != null)
+                {
+                    foreach (var instId in updatedGameInstrumentIds)
+                    {
+                        if (currentInstrumentIds.Contains(instId))
+                        {
+                            break;
+                        }
+                        if (currentInstrumentIds.IndexOf(instId) == -1)
+                        {
+                            var sqlToAddNewGameInstrumentRecord = @"INSERT INTO [dbo].[GameInstruments]
+                                                                               ([GameId]
+                                                                               ,[InstrumentId])
+                                                                         OUTPUT INSERTED.Id
+                                                                         VALUES
+                                                                               (@gameId
+                                                                               ,@instrumentId)";
+                            var parametersToAddNewGameInstrument = new { gameId, instrumentId = instId };
+                            var newGiRecord = db.ExecuteScalar<int>(sqlToAddNewGameInstrumentRecord, parametersToAddNewGameInstrument);
+                        }
+                    }
+                };
+                foreach (var instId in currentInstrumentIds)
+                {
+                    if (updatedGameInstrumentIds.IndexOf(instId) != -1)
+                    {
+                        var sqlToDeleteGameInstrumentRecord = @"DELETE FROM [dbo].[GameInstruments]
+                                                                WHERE GameId = @gameId
+                                                                AND InstrumentId = @instrumentId";
+                        var parametersToDeleteGameInstrument = new { gameId, instrumentId = instId };
+                        db.Execute(sqlToDeleteGameInstrumentRecord, parametersToDeleteGameInstrument);
+                    }
+                }
+            }
+            //// next, delete related gameAge records:
+            //var sqlForAgesForSelectedGame = @"select * 
+            //                              from GameAges ga
+            //                              where ga.GameId = @gameId";
+
+            //var agesForGame = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterForGameToDelete);
+            //if (agesForGame != null)
+            //{
+            //    var sqlToReallyDeleteGameAgeRecords = @"DELETE
+            //                          FROM [dbo].[GameAges]
+            //                          WHERE GameId = @gameId";
+            //    db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
+            //}
+
+        }
     }
 }

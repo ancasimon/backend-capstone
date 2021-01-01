@@ -260,8 +260,8 @@ class GameNewOrEdit extends React.Component {
       gameIconId: gameIcon,
       keywords: gameKeywords,
       songs: gameSongs,
-      gameInstruments,
-      gameAges,
+      instrumentIdsForGame: gameInstruments,
+      ageIdsForGame: gameAges,
     };
     console.error('updatedgameInsList', gameInstruments);
     console.error('updatedgameAgeList', gameAges);
