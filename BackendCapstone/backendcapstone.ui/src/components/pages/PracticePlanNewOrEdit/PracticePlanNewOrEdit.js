@@ -103,9 +103,8 @@ class PracticePlanNew extends React.Component {
     this.setState({ practicePlanName: e.target.value });
   }
 
-  changePracticePlanStartDate = (e) => {
-    e.preventDefault();
-    this.state((state) => ({ ...state, practicePlanStartDate: e.target.value }));
+  changePracticePlanStartDate = (date) => {
+    this.setState({ practicePlanStartDate: date });
   }
 
   changePracticePlanEndDate = (e) => {
@@ -129,7 +128,7 @@ class PracticePlanNew extends React.Component {
     } else {
       const newPracticePlan = {
         name: practicePlanName,
-        startDate: practicePlanStartDate,
+        startDate: practicePlanStartDate.toLocaleDateString('en-US'),
         endDate: practicePlanEndDate,
       };
       practicePlansData.createPracticePlan(newPracticePlan)
@@ -324,20 +323,22 @@ class PracticePlanNew extends React.Component {
                 ? <FormGroup>
                 <Label for="practicePlanStartDate">Start Date</Label>
                 <DatePicker
+                  selected={this.state.practicePlanStartDate}
                   name="practicePlanStartDate"
-                  defaultValue={new Date()}
                   id="practicePlanStartDate"
                   onChange={this.changePracticePlanStartDate}
-                  dateFormat='mm/dd/yyyy'
+                  dateFormat={'MM-dd-yyyy'}
                 />
               </FormGroup>
                 : <FormGroup>
                 <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
                 <DatePicker
+                  selected={this.state.practicePlanStartDate}
                   name="practicePlanStartDate"
                   value={practicePlanStartDate}
                   id="practicePlanStartDate"
                   onChange={this.changePracticePlanStartDate}
+                  dateFormat={'MM-dd-yyyy'}
                 />
               </FormGroup>
               }
