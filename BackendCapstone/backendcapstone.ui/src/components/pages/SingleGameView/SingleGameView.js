@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import AgeItem from '../../shared/AgeItem/AgeItem';
 import InstrumentItem from '../../shared/InstrumentItem/InstrumentItem';
@@ -48,6 +49,27 @@ class SingleGameView extends React.Component {
       .catch((error) => console.error('Could not delete this game.', error));
   };
 
+  deleteConfirmationMessage = () => {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You will not be able to undo this action!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#008900',
+      cancelButtonColor: '#960018',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your game has been deleted.',
+          'success',
+        );
+        this.deleteGame();
+      }
+    });
+  }
+
   render() {
     const {
       selectedGame,
@@ -87,7 +109,7 @@ class SingleGameView extends React.Component {
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
               ? <div className="col-md-6 container">
-              <button className="mainButtons p-2" onClick={this.deleteGame}>Delete</button>
+              <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
               : ''
             }
