@@ -267,6 +267,7 @@ namespace BackendCapstone.DataAccess
                 // next update related gameinstrument records and gameage records if changed:
 
                 //UPDATE GAMEINSTRUMENT and GAMEAGE RECORDS!!!
+                // first, check if the instrument IDs selected in the frontend for this game exist for any of the records in the gameInstruments list for this game - if they do, ignore that instrument id:
                 var updatedGameInstrumentIds = updatedGame.InstrumentIdsForGame;
                 var sqlForInstrumentsForSelectedGame = @"select *
                                                      from GameInstruments gi
@@ -288,6 +289,7 @@ namespace BackendCapstone.DataAccess
                         {
                             break;
                         }
+                        // if the instrument ID coming in from frontend does not exist in a gameInstrument record for this game, then create a new GI record:
                         if (currentInstrumentIds.IndexOf(instId) == -1)
                         {
                             var sqlToAddNewGameInstrumentRecord = @"INSERT INTO [dbo].[GameInstruments]
@@ -302,9 +304,10 @@ namespace BackendCapstone.DataAccess
                         }
                     }
                 };
+                // last, if an instrument ID that already appears in a GI record in the DB for this game but DOES NOT appear in the list of instrument IDs coming in from frontend for this updated game, then delete that GI record:
                 foreach (var instId in currentInstrumentIds)
                 {
-                    if (updatedGameInstrumentIds.IndexOf(instId) != -1)
+                    if (updatedGameInstrumentIds.IndexOf(instId) == -1)
                     {
                         var sqlToDeleteGameInstrumentRecord = @"DELETE FROM [dbo].[GameInstruments]
                                                                 WHERE GameId = @gameId
@@ -313,20 +316,59 @@ namespace BackendCapstone.DataAccess
                         db.Execute(sqlToDeleteGameInstrumentRecord, parametersToDeleteGameInstrument);
                     }
                 }
-            }
-            //// next, delete related gameAge records:
-            //var sqlForAgesForSelectedGame = @"select * 
-            //                              from GameAges ga
-            //                              where ga.GameId = @gameId";
 
-            //var agesForGame = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterForGameToDelete);
-            //if (agesForGame != null)
-            //{
-            //    var sqlToReallyDeleteGameAgeRecords = @"DELETE
-            //                          FROM [dbo].[GameAges]
-            //                          WHERE GameId = @gameId";
-            //    db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
-            //}
+                // next, do the same thing for gameAge records:
+                // first, check if the age IDs selected in the frontend for this game exist for any of the records in the gameAges list for this game - if they do, ignore that age id:
+                var updatedGameAgeIds = updatedGame.AgeIdsForGame;
+                var sqlForAgesForSelectedGame = @"select *
+                                                     from GameAges ga
+                                                    where ga.GameId = @gameId";
+
+                var currentGameAges = db.Query<GameAge>(sqlForAgesForSelectedGame, parameterToUpdateGame);
+                var currentAgeIds = new List<int>();
+                foreach (var age in currentGameAges)
+                {
+                    var id = age.AgeId;
+                    currentAgeIds.Add(id);
+                }
+
+                if (updatedGameAgeIds != null)
+                {
+                    foreach (var ageId in updatedGameAgeIds)
+                    {
+                        if (currentAgeIds.Contains(ageId))
+                        {
+                            break;
+                        }
+                        // if the age ID coming in from frontend does not exist in a gameAge record for this game, then create a new GA record:
+                        if (currentAgeIds.IndexOf(ageId) == -1)
+                        {
+                            var sqlToAddNewGameAgeRecord = @"INSERT INTO [dbo].[GameAges]
+                                                                               ([GameId]
+                                                                               ,[AgeId])
+                                                                         OUTPUT INSERTED.Id
+                                                                         VALUES
+                                                                               (@gameId
+                                                                               ,@ageId)";
+                            var parametersToAddNewGameAge = new { gameId, ageId };
+                            var newGaRecord = db.ExecuteScalar<int>(sqlToAddNewGameAgeRecord, parametersToAddNewGameAge);
+                        }
+                    }
+                };
+                // last, if an age ID that already appears in a GA record in the DB for this game but DOES NOT appear in the list of age IDs coming in from frontend for this updated game, then delete that GA record:
+                foreach (var ageId in currentAgeIds)
+                {
+                    if (updatedGameAgeIds.IndexOf(ageId) == -1)
+                    {
+                        var sqlToDeleteGameAgeRecord = @"DELETE FROM [dbo].[GameAges]
+                                                                WHERE GameId = @gameId
+                                                                AND AgeId = @ageId";
+                        var parametersToDeleteGameAge = new { gameId, ageId };
+                        db.Execute(sqlToDeleteGameAgeRecord, parametersToDeleteGameAge);
+                    }
+                }
+            }
+
 
         }
     }
