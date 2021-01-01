@@ -16,6 +16,7 @@ import {
   Table,
 } from 'reactstrap';
 import Swal from 'sweetalert2';
+import DatePicker from 'react-datepicker';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -23,6 +24,7 @@ import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
 import practicePlansData from '../../../helpers/data/practicePlansData';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import './PracticePlanNewOrEdit.scss';
 
 class PracticePlanNew extends React.Component {
@@ -30,7 +32,8 @@ class PracticePlanNew extends React.Component {
     newRecordForm: true,
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    practicePlanStartDate: new Date().toLocaleDateString('en-US'),
+    // practicePlanStartDate: new Date().toLocaleDateString('en-US'),
+    practicePlanStartDate: new Date(),
     practicePlanEndDate: new Date().toLocaleDateString('en-US'),
     practicePlanActive: false,
     gamesList: [],
@@ -102,7 +105,7 @@ class PracticePlanNew extends React.Component {
 
   changePracticePlanStartDate = (e) => {
     e.preventDefault();
-    this.setState({ practicePlanStartDate: e.target.value });
+    this.state((state) => ({ ...state, practicePlanStartDate: e.target.value }));
   }
 
   changePracticePlanEndDate = (e) => {
@@ -294,7 +297,7 @@ class PracticePlanNew extends React.Component {
                   />
               </FormGroup>
 
-              { (newRecordForm === true)
+              {/* { (newRecordForm === true)
                 ? <FormGroup>
                 <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
                 <Input
@@ -309,6 +312,28 @@ class PracticePlanNew extends React.Component {
                 <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
                 <Input
                   type="input"
+                  name="practicePlanStartDate"
+                  value={practicePlanStartDate}
+                  id="practicePlanStartDate"
+                  onChange={this.changePracticePlanStartDate}
+                />
+              </FormGroup>
+              } */}
+
+              { (newRecordForm === true)
+                ? <FormGroup>
+                <Label for="practicePlanStartDate">Start Date</Label>
+                <DatePicker
+                  name="practicePlanStartDate"
+                  defaultValue={new Date()}
+                  id="practicePlanStartDate"
+                  onChange={this.changePracticePlanStartDate}
+                  dateFormat='mm/dd/yyyy'
+                />
+              </FormGroup>
+                : <FormGroup>
+                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
+                <DatePicker
                   name="practicePlanStartDate"
                   value={practicePlanStartDate}
                   id="practicePlanStartDate"
