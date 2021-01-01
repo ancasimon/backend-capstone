@@ -15,6 +15,7 @@ import {
   ModalFooter,
   Table,
 } from 'reactstrap';
+import Swal from 'sweetalert2';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -30,7 +31,7 @@ class PracticePlanNew extends React.Component {
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
     practicePlanStartDate: new Date().toLocaleDateString('en-US'),
-    practicePlanEndDate: '',
+    practicePlanEndDate: new Date().toLocaleDateString('en-US'),
     practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
@@ -109,6 +110,10 @@ class PracticePlanNew extends React.Component {
     this.setState({ practicePlanEndDate: e.target.value });
   }
 
+  validationAlertPracticePlanName = () => {
+    Swal.fire('You must specify a NAME for this practice plan.');
+  }
+
   saveNewPracticePlan = (e) => {
     const {
       practicePlanName,
@@ -116,17 +121,21 @@ class PracticePlanNew extends React.Component {
       practicePlanEndDate,
     } = this.state;
     e.preventDefault();
-    const newPracticePlan = {
-      name: practicePlanName,
-      startDate: practicePlanStartDate,
-      endDate: practicePlanEndDate,
-    };
-    practicePlansData.createPracticePlan(newPracticePlan)
-      .then((newPracticePlanResponse) => {
-        this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
-        this.getPracticePlanDetails();
-      })
-      .catch((error) => console.error('Unable to create this practice plan.', error));
+    if (practicePlanName === '') {
+      this.validationAlertPracticePlanName();
+    } else {
+      const newPracticePlan = {
+        name: practicePlanName,
+        startDate: practicePlanStartDate,
+        endDate: practicePlanEndDate,
+      };
+      practicePlansData.createPracticePlan(newPracticePlan)
+        .then((newPracticePlanResponse) => {
+          this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
+          this.getPracticePlanDetails();
+        })
+        .catch((error) => console.error('Unable to create this practice plan.', error));
+    }
   }
 
   // functions for the edit-version of this form:
@@ -140,18 +149,22 @@ class PracticePlanNew extends React.Component {
       selectedGames,
     } = this.state;
     e.preventDefault();
-    const updatedPracticePlan = {
-      planId: practicePlanId,
-      name: practicePlanName,
-      startDate: practicePlanStartDate,
-      endDate: practicePlanEndDate,
-      isActive: practicePlanActive,
-    };
-    practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
-      .then(() => {
-        this.props.history.push(`/practiceplans/${practicePlanId}`);
-      })
-      .catch((error) => console.error('Unable to update practice plan details.', error));
+    if (practicePlanName === '') {
+      this.validationAlertPracticePlanName();
+    } else {
+      const updatedPracticePlan = {
+        planId: practicePlanId,
+        name: practicePlanName,
+        startDate: practicePlanStartDate,
+        endDate: practicePlanEndDate,
+        isActive: practicePlanActive,
+      };
+      practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
+        .then(() => {
+          this.props.history.push(`/practiceplans/${practicePlanId}`);
+        })
+        .catch((error) => console.error('Unable to update practice plan details.', error));
+    }
   }
 
   toggleGamesDropdown = () => {

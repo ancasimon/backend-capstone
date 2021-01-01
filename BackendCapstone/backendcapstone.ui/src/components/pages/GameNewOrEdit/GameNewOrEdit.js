@@ -9,6 +9,7 @@ import {
   Input,
   FormText,
 } from 'reactstrap';
+import Swal from 'sweetalert2';
 
 import agesData from '../../../helpers/data/agesData';
 import gameIconsData from '../../../helpers/data/gameIconsData';
@@ -189,6 +190,10 @@ class GameNewOrEdit extends React.Component {
     this.setState({ gameWebsite: e.target.value });
   }
 
+  validationAlert = () => {
+    Swal.fire('You must specify a NAME for this game.');
+  }
+
   saveNewGame = () => {
     const {
       gameName,
@@ -205,29 +210,30 @@ class GameNewOrEdit extends React.Component {
       gameKeywords,
       gameSongs,
     } = this.state;
-    const newGameObject = {
-      name: gameName,
-      description: gameDescription,
-      preworkLevelId: gamePreworkLevel,
-      prework: gamePrework,
-      instructions: gameInstructions,
-      photoUrl: gamePhoto,
-      credit: gameCredit,
-      websiteUrl: gameWebsite,
-      gameIconId: gameIcon,
-      keywords: gameKeywords,
-      songs: gameSongs,
-      gameInstruments,
-      gameAges,
-    };
-    console.error('gameInsList', gameInstruments);
-    console.error('gameAgeList', gameAges);
-    console.error('new game', newGameObject);
-    gamesData.addGame(newGameObject)
-      .then((newGameResponse) => {
-        this.props.history.push(`/games/${newGameResponse.data}`);
-      })
-      .catch((error) => console.error('Could not create the new game.', error));
+    if (gameName === '') {
+      this.validationAlert();
+    } else {
+      const newGameObject = {
+        name: gameName,
+        description: gameDescription,
+        preworkLevelId: gamePreworkLevel,
+        prework: gamePrework,
+        instructions: gameInstructions,
+        photoUrl: gamePhoto,
+        credit: gameCredit,
+        websiteUrl: gameWebsite,
+        gameIconId: gameIcon,
+        keywords: gameKeywords,
+        songs: gameSongs,
+        gameInstruments,
+        gameAges,
+      };
+      gamesData.addGame(newGameObject)
+        .then((newGameResponse) => {
+          this.props.history.push(`/games/${newGameResponse.data}`);
+        })
+        .catch((error) => console.error('Could not create the new game.', error));
+    }
   }
 
   editGame = () => {
@@ -247,26 +253,30 @@ class GameNewOrEdit extends React.Component {
       gameKeywords,
       gameSongs,
     } = this.state;
-    const updatedGameObject = {
-      name: gameName,
-      description: gameDescription,
-      preworkLevelId: gamePreworkLevel,
-      prework: gamePrework,
-      instructions: gameInstructions,
-      photoUrl: gamePhoto,
-      credit: gameCredit,
-      websiteUrl: gameWebsite,
-      gameIconId: gameIcon,
-      keywords: gameKeywords,
-      songs: gameSongs,
-      instrumentIdsForGame: gameInstruments,
-      ageIdsForGame: gameAges,
-    };
-    gamesData.updateGame(currentGameId, updatedGameObject)
-      .then((updatedGameResponse) => {
-        this.props.history.push(`/games/${currentGameId}`);
-      })
-      .catch((error) => console.error('Could not save your changes to this game.', error));
+    if (gameName === '') {
+      this.validationAlert();
+    } else {
+      const updatedGameObject = {
+        name: gameName,
+        description: gameDescription,
+        preworkLevelId: gamePreworkLevel,
+        prework: gamePrework,
+        instructions: gameInstructions,
+        photoUrl: gamePhoto,
+        credit: gameCredit,
+        websiteUrl: gameWebsite,
+        gameIconId: gameIcon,
+        keywords: gameKeywords,
+        songs: gameSongs,
+        instrumentIdsForGame: gameInstruments,
+        ageIdsForGame: gameAges,
+      };
+      gamesData.updateGame(currentGameId, updatedGameObject)
+        .then((updatedGameResponse) => {
+          this.props.history.push(`/games/${currentGameId}`);
+        })
+        .catch((error) => console.error('Could not save your changes to this game.', error));
+    }
   }
 
   render() {
