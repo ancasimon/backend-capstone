@@ -16,10 +16,12 @@ namespace BackendCapstone.Controllers
     public class PracticePlanGamesController : ControllerBase
     {
         PracticePlanGameRepository _practicePlanGameRepo;
+        PracticePlanGameWithGameNameRepository _practicePlanGameWithDataRepo;
 
-        public PracticePlanGamesController(PracticePlanGameRepository repo)
+        public PracticePlanGamesController(PracticePlanGameRepository repo, PracticePlanGameWithGameNameRepository practicePlanGameWithDataRepo)
         {
             _practicePlanGameRepo = repo;
+            _practicePlanGameWithDataRepo = practicePlanGameWithDataRepo;
         }
 
         [HttpGet("{id}")]
@@ -29,6 +31,14 @@ namespace BackendCapstone.Controllers
 
             return Ok(selectedPpgObject);
         }
+
+        [HttpGet("plan/{planId}")]
+        public IActionResult GetPracticePlanGamesForPracticePlanId(int planId)
+        {
+            var currentPPGames = _practicePlanGameWithDataRepo.GetPracticeGamesByPlanId(planId);
+            return Ok(currentPPGames);
+        }
+
 
         [HttpPut("{id}")]
         public IActionResult UpdatePracticePlanGameRecord(int id, PracticePlanGame ppgObject)

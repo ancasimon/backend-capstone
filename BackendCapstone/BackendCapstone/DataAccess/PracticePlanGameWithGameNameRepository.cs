@@ -18,11 +18,11 @@ namespace BackendCapstone.DataAccess
             _connectionString = configuration.GetConnectionString("BackendCapstone");
         }
 
-        public IEnumerable<PracticePlanGameWithGameName> GetPracticeGamesByPlanId(int planId)
+        public List<PracticePlanGameWithGameName> GetPracticeGamesByPlanId(int planId)
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.UserNotes
+            var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id as Id, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.UserNotes
                                                 from PracticePlans pp
 	                                                join PracticePlanGames ppg
 	                                                on pp.Id = ppg.PracticePlanId
@@ -33,7 +33,7 @@ namespace BackendCapstone.DataAccess
 
             var gamesForThisPlan = db.Query<PracticePlanGameWithGameName>(sqlForPracticeGamesByPlanId, parameterForPracticePlanId);
 
-            return gamesForThisPlan;
+            return gamesForThisPlan.ToList();
         }
 
 

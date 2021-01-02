@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import Moment from 'moment';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -11,10 +12,6 @@ import practicePlansData from '../../../helpers/data/practicePlansData';
 import './SinglePracticePlanView.scss';
 
 class SinglePracticePlanView extends React.Component {
-  static propTypes = {
-    practiceplanid: PropTypes.number.isRequired,
-  }
-
   state = {
     selectedPracticePlan: {},
     selectedGames: [],
@@ -80,7 +77,7 @@ class SinglePracticePlanView extends React.Component {
         <div className="row">
           <div className="col-md-9 text-center">
             <h2 className="pageTitle">Practice Plan Details: {selectedPracticePlan.name}</h2>
-            <h4>{selectedPracticePlan.startDate} - {selectedPracticePlan.endDate}</h4>
+            <h4>{Moment(selectedPracticePlan.startDate).format('L')} - {Moment(selectedPracticePlan.endDate).format('L')}</h4>
             <div className="row">
               <div className="col-md-6 buttonDiv text-center">
                 <Link to={`/practiceplans/edit/${practiceplanid}`} className="mainButtons p-2">Edit</Link>

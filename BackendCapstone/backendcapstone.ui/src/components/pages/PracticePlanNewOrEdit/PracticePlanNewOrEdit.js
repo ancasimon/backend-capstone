@@ -17,6 +17,7 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
+import Moment from 'moment';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -32,9 +33,8 @@ class PracticePlanNew extends React.Component {
     newRecordForm: true,
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    // practicePlanStartDate: new Date().toLocaleDateString('en-US'),
     practicePlanStartDate: new Date(),
-    practicePlanEndDate: new Date().toLocaleDateString('en-US'),
+    practicePlanEndDate: new Date(),
     practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
@@ -42,7 +42,7 @@ class PracticePlanNew extends React.Component {
     selectedGameId: 0,
     selectedGame: {},
     practiceGameName: '',
-    practiceDate: new Date().toLocaleDateString('en-US'),
+    practiceDate: new Date(),
     practiceNotes: '',
     practiceCompleted: false,
     selectedGames: [],
@@ -58,9 +58,10 @@ class PracticePlanNew extends React.Component {
   }
 
   getPracticePlanDetails = () => {
-    practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
-      .then((practicePlanIdResponse) => {
-        if (practicePlanIdResponse.status === 200) {
+    if (this.state.practicePlanId != '') {
+      practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
+        .then((practicePlanIdResponse) => {
+          // if (practicePlanIdResponse.status === 200) {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
             practicePlanName: practicePlanIdResponse.data.name,
@@ -68,9 +69,10 @@ class PracticePlanNew extends React.Component {
             practicePlanEndDate: practicePlanIdResponse.data.endDate,
             practicePlanActive: practicePlanIdResponse.data.isActive,
           });
-        }
-      })
-      .catch((error) => console.error('Could not upload practice plan data.', error));
+          // }
+        })
+        .catch((error) => console.error('Could not upload practice plan data.', error));
+    }
   }
 
   getCurrentPracticePlan = () => {
@@ -107,9 +109,8 @@ class PracticePlanNew extends React.Component {
     this.setState({ practicePlanStartDate: date });
   }
 
-  changePracticePlanEndDate = (e) => {
-    e.preventDefault();
-    this.setState({ practicePlanEndDate: e.target.value });
+  changePracticePlanEndDate = (date) => {
+    this.setState({ practicePlanEndDate: date });
   }
 
   validationAlertPracticePlanName = () => {
@@ -128,13 +129,12 @@ class PracticePlanNew extends React.Component {
     } else {
       const newPracticePlan = {
         name: practicePlanName,
-        startDate: practicePlanStartDate.toLocaleDateString('en-US'),
-        endDate: practicePlanEndDate,
+        startDate: Moment(practicePlanStartDate).format('YYYY-MM-DD'),
+        endDate: Moment(practicePlanEndDate).format('YYYY-MM-DD'),
       };
       practicePlansData.createPracticePlan(newPracticePlan)
         .then((newPracticePlanResponse) => {
           this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
-          this.getPracticePlanDetails();
         })
         .catch((error) => console.error('Unable to create this practice plan.', error));
     }
@@ -157,8 +157,8 @@ class PracticePlanNew extends React.Component {
       const updatedPracticePlan = {
         planId: practicePlanId,
         name: practicePlanName,
-        startDate: practicePlanStartDate,
-        endDate: practicePlanEndDate,
+        startDate: Moment(practicePlanStartDate).format('YYYY-MM-DD'),
+        endDate: Moment(practicePlanEndDate).format('YYYY-MM-DD'),
         isActive: practicePlanActive,
       };
       practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
@@ -199,9 +199,8 @@ class PracticePlanNew extends React.Component {
     this.setState({ practiceGameName: e.target.value });
   }
 
-  changePracticeDate = (e) => {
-    e.preventDefault();
-    this.setState({ practiceDate: e.target.value });
+  changePracticeDate = (date) => {
+    this.setState({ practiceDate: date });
   }
 
   changePracticeNotes = (e) => {
@@ -233,7 +232,7 @@ class PracticePlanNew extends React.Component {
     }
     const newPracticePlanGame = {
       name: this.state.practiceGameName,
-      practiceDate: this.state.practiceDate,
+      practiceDate: Moment(this.state.practiceDate).format('YYYY-MM-DD'),
       userNotes: practiceNotes,
       isCompleted: practiceCompleted,
       practicePlanId,
@@ -242,7 +241,11 @@ class PracticePlanNew extends React.Component {
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
         this.closeGameFormModal();
-        this.getPracticePlanDetails();
+        practicePlanGamesData.getPracticePlanGamesByPlanId(practicePlanId)
+          .then((updatedPpgListResponse) => {
+            this.setState({ selectedGames: updatedPpgListResponse });
+            console.error('updated ppg list', updatedPpgListResponse);
+          });
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }
@@ -296,29 +299,6 @@ class PracticePlanNew extends React.Component {
                   />
               </FormGroup>
 
-              {/* { (newRecordForm === true)
-                ? <FormGroup>
-                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
-                  name="practicePlanStartDate"
-                  defaultValue={new Date().toLocaleDateString('en-US')}
-                  id="practicePlanStartDate"
-                  onChange={this.changePracticePlanStartDate}
-                />
-              </FormGroup>
-                : <FormGroup>
-                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
-                  name="practicePlanStartDate"
-                  value={practicePlanStartDate}
-                  id="practicePlanStartDate"
-                  onChange={this.changePracticePlanStartDate}
-                />
-              </FormGroup>
-              } */}
-
               { (newRecordForm === true)
                 ? <FormGroup>
                 <Label for="practicePlanStartDate">Start Date</Label>
@@ -344,13 +324,14 @@ class PracticePlanNew extends React.Component {
               }
 
               <FormGroup>
-                <Label for="practicePlanEndDate">End Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
+                <Label for="practicePlanEndDate">End Date</Label>
+                <DatePicker
+                  selected={this.state.practicePlanEndDate}
                   name="practicePlanEndDate"
                   id="practicePlanEndDate"
                   value={practicePlanEndDate}
                   onChange={this.changePracticePlanEndDate}
+                  dateFormat={'MM-dd-yyyy'}
                 />
               </FormGroup>
               {
@@ -418,13 +399,14 @@ class PracticePlanNew extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="practiceDate">Practice Date (MM/DD/YYYY)</Label>
-                  <Input
-                    type="input"
+                  <Label for="practiceDate">Practice Date</Label>
+                  <DatePicker
+                    selected={practiceDate}
                     name="practiceDate"
                     value={practiceDate}
                     id="practiceDate"
                     onChange={this.changePracticeDate}
+                    format={'MM-dd-yyyy'}
                   />
                 </FormGroup>
                 <FormGroup>

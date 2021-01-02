@@ -1,6 +1,7 @@
 import React from 'react';
 import { FormGroup, Label, Input } from 'reactstrap';
 import Swal from 'sweetalert2';
+import Moment from 'moment';
 import PropTypes from 'prop-types';
 
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
@@ -30,7 +31,7 @@ class PracticePlanGameItem extends React.Component {
       isActive: false,
       practicePlanId,
       name: practicePlanGame.practiceName,
-      practiceDate: practicePlanGame.practiceDate,
+      practiceDate: Moment(practicePlanGame.practiceDate).format('L'),
       userNotes: practicePlanGame.userNotes,
       isCompleted: this.state.practicePlanGame,
     };
@@ -71,7 +72,7 @@ class PracticePlanGameItem extends React.Component {
       isActive: practicePlanGame.isActive,
       practicePlanId,
       name: practicePlanGame.practiceName,
-      practiceDate: practicePlanGame.practiceDate,
+      practiceDate: Moment(practicePlanGame.practiceDate).format('L'),
       userNotes: practicePlanGame.userNotes,
       isCompleted: e.target.checked,
     };
@@ -90,7 +91,7 @@ class PracticePlanGameItem extends React.Component {
         <tr>
           <th scope="row">{practicePlanGame.practiceName}</th>
           <td className="d-none d-md-table-cell">{practicePlanGame.gameName}</td>
-          <td>{practicePlanGame.practiceDate}</td>
+          <td>{Moment(practicePlanGame.practiceDate).format('L')}</td>
           <td className="d-none d-md-table-cell">{practicePlanGame.userNotes}</td>
           <td className="d-none d-md-table-cell">
             <FormGroup check inline>

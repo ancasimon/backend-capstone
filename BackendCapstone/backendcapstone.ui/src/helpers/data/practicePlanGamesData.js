@@ -5,4 +5,12 @@ const updatePracticePlanGame = (id, updatedPracticePlanGameRecord) => axios.put(
 
 const createNewPracticePlanGame = (newPracticePlanGameRecord) => axios.post(`${baseUrl}/practiceplangames`, newPracticePlanGameRecord);
 
-export default { updatePracticePlanGame, createNewPracticePlanGame };
+const getPracticePlanGamesByPlanId = (planId) => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/practiceplangames/plan/${planId}`)
+    .then((ppgResponse) => {
+      resolve(ppgResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
+export default { updatePracticePlanGame, createNewPracticePlanGame, getPracticePlanGamesByPlanId };

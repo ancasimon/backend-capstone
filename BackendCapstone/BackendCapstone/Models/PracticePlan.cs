@@ -10,8 +10,8 @@ namespace BackendCapstone.Models
         public int PlanId { get; set; }
         public int UserId { get; set; }
         public string Name { get; set; }
-        public string StartDate { get; set; }
-        public string EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
         public bool IsActive { get; set; }
         public List<PracticePlanGameWithGameName> plannedGames { get; set; } = new List<PracticePlanGameWithGameName>();
     }
