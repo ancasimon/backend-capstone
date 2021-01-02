@@ -22,6 +22,7 @@ import Swal from 'sweetalert2';
 
 import AgeItem from '../../shared/AgeItem/AgeItem';
 import InstrumentItem from '../../shared/InstrumentItem/InstrumentItem';
+import NewPracticePlanGameModal from '../../shared/NewPracticePlanGameModal/NewPracticePlanGameModal';
 
 import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
@@ -97,8 +98,13 @@ class SingleGameView extends React.Component {
   }
 
   // functions supporting the ability to add this game to an existing practice plan:
-  togglePracticePlansModal = () => {
-    this.setState({ practicePlansModal: !this.state.practicePlansModal });
+  togglePracticePlanssDropdown = () => {
+    this.setState({ practicePlansDropdownOpen: !this.state.practicePlansDropdownOpen });
+  }
+
+  togglePracticePlansModal = (e) => {
+    e.preventDefault();
+    this.setState({ practicePlansModal: !this.state.practicePlansModal, selectedPracticePlanId: e.target.value * 1 });
   }
 
   closePracticePlansModal = () => {
@@ -119,23 +125,23 @@ class SingleGameView extends React.Component {
     this.setState({ selectedPracticePlanId: e.target.value * 1 });
   }
 
-  savePracticePlanGame = () => {
-    const { selectedGameId, selectedGame, selectedPracticePlanId } = this.state;
-    const newPracticePlanGame = {
-      name: selectedGame.name,
-      practicePlanId: selectedPracticePlanId,
-      gameId: selectedGameId,
-      practiceDate: new Date(),
-      userNotes: '',
-      isCompleted: false,
-    };
-    practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-      .then((newPPGameResponse) => {
-        console.error('new PPG', newPPGameResponse);
-        this.props.history.push(`/practiceplans/${selectedPracticePlanId}`);
-      })
-      .catch((error) => console.error('We were not able to add this game to your practice plan.', error));
-  }
+  // savePracticePlanGame = () => {
+  //   const { selectedGameId, selectedGame, selectedPracticePlanId } = this.state;
+  //   const newPracticePlanGame = {
+  //     name: selectedGame.name,
+  //     practicePlanId: selectedPracticePlanId,
+  //     gameId: selectedGameId,
+  //     practiceDate: new Date(),
+  //     userNotes: '',
+  //     isCompleted: false,
+  //   };
+  //   practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
+  //     .then((newPPGameResponse) => {
+  //       console.error('new PPG', newPPGameResponse);
+  //       this.props.history.push(`/practiceplans/${selectedPracticePlanId}`);
+  //     })
+  //     .catch((error) => console.error('We were not able to add this game to your practice plan.', error));
+  // }
 
   render() {
     const {
@@ -145,6 +151,7 @@ class SingleGameView extends React.Component {
       selectedGameId,
       userPracticePlans,
       selectedPracticePlanId,
+      practicePlansDropdownOpen,
     } = this.state;
     const { user } = this.props;
 
@@ -156,9 +163,17 @@ class SingleGameView extends React.Component {
       <AgeItem key={age.id} age={age} />
     ));
 
-    const buildPracticePlansSelectOptions = () => userPracticePlans.map((plan) => (
-      <option key={plan.planId} value={plan.planId}>{plan.name} starting on {plan.startDate}</option>
+    const buildPracticePlansDropdownOptions = () => userPracticePlans.map((plan) => (
+      <DropdownItem key={plan.planId} value={plan.planId} plan={plan} onClick={this.togglePracticePlansModal}>{plan.name} starting on {plan.startDate}</DropdownItem>
     ));
+
+    const buildModal = () => (
+      <NewPracticePlanGameModal
+        gameId={selectedGameId}
+        practicePlanId={selectedPracticePlanId}
+        closeModal={this.closePracticePlansModal}
+      />
+    );
 
     return (
       <div className="SingleGameView">
@@ -187,7 +202,16 @@ class SingleGameView extends React.Component {
               : ''
             }
             <div className="col-md-4 container">
-              <button className="mainButtons p-2" onClick={this.togglePracticePlansModal}>Add to Practice Plan</button>
+              <FormGroup>
+                  <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
+                    <DropdownToggle caret className="mainButtons p-2">
+                      Add to Practice Plan
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {buildPracticePlansDropdownOptions()}
+                    </DropdownMenu>
+                  </Dropdown>
+                </FormGroup>
             </div>
           </div>
         </div>
@@ -241,30 +265,7 @@ class SingleGameView extends React.Component {
 
         {/* code for modal about available practice plans below: */}
         <Modal isOpen={this.state.practicePlansModal} toggle={this.togglePracticePlansModal}>
-            <ModalHeader toggle={this.togglePracticePlansModal}>Select a Practice Plan:</ModalHeader>
-            <ModalBody>
-              <div>
-              <Form>
-                <FormGroup row>
-                  <Col sm={10}>
-                    <Input
-                      type="select"
-                      name="selectedPracticePlanId"
-                      id="selectedPracticePlanId"
-                      value={this.state.selectedPracticePlanId}
-                      onChange={this.changeSelectedPracticePlanId}
-                    >
-                      {buildPracticePlansSelectOptions()}
-                    </Input>
-                  </Col>
-                </FormGroup>
-              </Form>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={this.savePracticePlanGame}>Add</Button>
-              <Button onClick={this.closePracticePlansModal}>Cancel</Button>
-            </ModalFooter>
+            {buildModal()}
           </Modal>
 
       </div>

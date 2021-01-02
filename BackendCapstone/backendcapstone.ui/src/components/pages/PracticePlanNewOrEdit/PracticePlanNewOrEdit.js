@@ -182,71 +182,6 @@ class PracticePlanNew extends React.Component {
     this.setState({ gameFormModal: false });
   }
 
-  // getGameForm = (e) => {
-  //   this.setState({ gameFormModal: true });
-  //   gamesData.getGameById(e.target.value)
-  //     .then((singleGameResponse) => {
-  //       this.setState({
-  //         selectedGame: singleGameResponse.data,
-  //         selectedGameId: singleGameResponse.data.id,
-  //         practiceGameName: singleGameResponse.data.name,
-  //       });
-  //     });
-  // };
-
-  // changePracticeGameName = (e) => {
-  //   e.preventDefault();
-  //   this.setState({ practiceGameName: e.target.value });
-  // }
-
-  // changePracticeDate = (e) => {
-  //   e.preventDefault();
-  //   this.setState({ practiceDate: e.target.value });
-  // }
-
-  // changePracticeNotes = (e) => {
-  //   e.preventDefault();
-  //   this.setState({ practiceNotes: e.target.value });
-  // }
-
-  // changePracticeCompleted = (e) => {
-  //   e.preventDefault();
-  //   this.setState({ practiceCompleted: e.target.checked });
-  // }
-
-  // savePracticePlanGame = (e) => {
-  //   e.preventDefault();
-  //   const {
-  //     practiceGameName,
-  //     practiceDate,
-  //     practiceNotes,
-  //     practiceCompleted,
-  //     selectedGameId,
-  //     practicePlanId,
-  //     selectedGame,
-  //   } = this.state;
-  //   if (practiceGameName == '') {
-  //     this.setState({ practiceGameName: selectedGame.name });
-  //   }
-  //   if (practiceDate == '') {
-  //     this.setState({ practiceDate: new Date() });
-  //   }
-  //   const newPracticePlanGame = {
-  //     name: this.state.practiceGameName,
-  //     practiceDate: this.state.practiceDate,
-  //     userNotes: practiceNotes,
-  //     isCompleted: practiceCompleted,
-  //     practicePlanId,
-  //     gameId: selectedGameId,
-  //   };
-  //   practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-  //     .then((newPpgResponse) => {
-  //       this.closeGameFormModal();
-  //       this.getPracticePlanDetails();
-  //     })
-  //     .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
-  // }
-
   render() {
     const {
       newRecordForm,
@@ -256,11 +191,6 @@ class PracticePlanNew extends React.Component {
       practicePlanEndDate,
       gamesList,
       gamesDropdownOpen,
-      gameFormModal,
-      practiceGameName,
-      practiceDate,
-      practiceNotes,
-      practiceCompleted,
       selectedGame,
       selectedGames,
       selectedGameId,
@@ -270,7 +200,7 @@ class PracticePlanNew extends React.Component {
       <NewPracticePlanGameModal
         gameId={selectedGameId}
         practicePlanId={practicePlanId}
-        closeGameFormModal={this.closeGameFormModal}
+        closeModal={this.closeGameFormModal}
         getPracticePlanDetails={this.getPracticePlanDetails}
       />
     );
@@ -390,63 +320,6 @@ class PracticePlanNew extends React.Component {
         <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
           {buildModal()}
         </Modal>
-          {/* code for modal about the game selected below:
-          <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
-          <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
-            <ModalHeader toggle={this.toggleGameFormModal}>Details for Selected Game: {this.state.selectedGame.name}</ModalHeader>
-            <ModalBody>
-              <div>
-              <Form>
-                <FormGroup>
-                  <Label for="practiceName">Practice Game Name (customize as needed)</Label>
-                  <Input
-                    type="input"
-                    name="practiceName"
-                    value={practiceGameName}
-                    id="practiceName"
-                    onChange={this.changePracticeGameName}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="practiceDate">Practice Date (MM/DD/YYYY)</Label>
-                  <Input
-                    type="input"
-                    name="practiceDate"
-                    value={practiceDate}
-                    id="practiceDate"
-                    onChange={this.changePracticeDate}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="userNotes">Notes</Label>
-                  <Input
-                    type="textarea"
-                    name="userNotes"
-                    id="userNotes"
-                    placeholder="Anything specific to remember for this practice?"
-                    value={practiceNotes}
-                    onChange={this.changePracticeNotes}
-                  />
-                </FormGroup>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      id="isCompleted"
-                      value={practiceCompleted}
-                      onChange={this.changePracticeCompleted}
-                    />{' '}
-                    Already completed this practice?
-                  </Label>
-                </FormGroup>
-              </Form>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={this.savePracticePlanGame}>Save Game</Button>
-              <Button onClick={this.closeGameFormModal}>Cancel</Button>
-            </ModalFooter>
-          </Modal> */}
       </div>
     );
   }

@@ -25,8 +25,8 @@ class NewPracticePlanGameModal extends React.Component {
   static propTypes = {
     gameId: PropTypes.number.isRequired,
     practicePlanId: PropTypes.number.isRequired,
-    closeGameFormModal: PropTypes.func.isRequired,
-    getPracticePlanDetails: PropTypes.func.isRequired,
+    closeModal: PropTypes.func.isRequired,
+    getPracticePlanDetails: PropTypes.func,
   }
 
   state = {
@@ -81,7 +81,7 @@ class NewPracticePlanGameModal extends React.Component {
       practiceCompleted,
       selectedGame,
     } = this.state;
-    const { gameId, practicePlanId } = this.props;
+    const { gameId, practicePlanId, getPracticePlanDetails } = this.props;
     if (practiceGameName == '') {
       this.setState({ practiceGameName: selectedGame.name });
     }
@@ -98,8 +98,10 @@ class NewPracticePlanGameModal extends React.Component {
     };
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
-        this.props.closeGameFormModal();
-        this.props.getPracticePlanDetails();
+        this.props.closeModal();
+        (getPracticePlanDetails != null)
+          ? this.props.getPracticePlanDetails()
+          : this.props.history.push(`/practiceplans/${practicePlanId}`);
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }
@@ -115,7 +117,6 @@ class NewPracticePlanGameModal extends React.Component {
     return (
       <div className='NewPracticePlanGameModal'>
         {/* code for modal about the game selected below: */}
-        {/* <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}> */}
           <ModalHeader toggle={this.toggleGameFormModal}>Details for Selected Game: {this.state.selectedGame.name}</ModalHeader>
           <ModalBody>
             <div>
@@ -167,9 +168,8 @@ class NewPracticePlanGameModal extends React.Component {
           </ModalBody>
           <ModalFooter>
             <Button onClick={this.savePracticePlanGame}>Save Game</Button>
-            <Button onClick={this.props.closeGameFormModal}>Cancel</Button>
+            <Button onClick={this.props.closeModal}>Cancel</Button>
           </ModalFooter>
-        {/* </Modal> */}
       </div>
     );
   }
