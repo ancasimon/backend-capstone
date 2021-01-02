@@ -16,6 +16,7 @@ import {
   Table,
 } from 'reactstrap';
 import Swal from 'sweetalert2';
+import DatePicker from 'react-datepicker';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -30,8 +31,8 @@ class PracticePlanNew extends React.Component {
     newRecordForm: true,
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    practicePlanStartDate: new Date().toLocaleDateString('en-US'),
-    practicePlanEndDate: new Date().toLocaleDateString('en-US'),
+    practicePlanStartDate: new Date(),
+    practicePlanEndDate: new Date(),
     practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
@@ -39,7 +40,7 @@ class PracticePlanNew extends React.Component {
     selectedGameId: 0,
     selectedGame: {},
     practiceGameName: '',
-    practiceDate: new Date().toLocaleDateString('en-US'),
+    practiceDate: new Date(),
     practiceNotes: '',
     practiceCompleted: false,
     selectedGames: [],
@@ -296,35 +297,38 @@ class PracticePlanNew extends React.Component {
 
               { (newRecordForm === true)
                 ? <FormGroup>
-                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
+                <Label for="practicePlanStartDate">Start Date</Label>
+                <DatePicker
+                  selected={this.state.practicePlanStartDate}
                   name="practicePlanStartDate"
-                  defaultValue={new Date().toLocaleDateString('en-US')}
+                  defaultValue={new Date()}
                   id="practicePlanStartDate"
                   onChange={this.changePracticePlanStartDate}
+                  dateFormat={MM-dd-yyyy}
                 />
               </FormGroup>
                 : <FormGroup>
-                <Label for="practicePlanStartDate">Start Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
+                <Label for="practicePlanStartDate">Start Date</Label>
+                <DatePicker
+                  selected={this.state.practicePlanStartDate}
                   name="practicePlanStartDate"
                   value={practicePlanStartDate}
                   id="practicePlanStartDate"
                   onChange={this.changePracticePlanStartDate}
+                  dateFormat={MM-dd-yyyy}
                 />
               </FormGroup>
               }
 
               <FormGroup>
-                <Label for="practicePlanEndDate">End Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
+                <Label for="practicePlanEndDate">End Date</Label>
+                <DatePicker
+                  selected={this.state.practicePlanEndDate}
                   name="practicePlanEndDate"
                   id="practicePlanEndDate"
                   value={practicePlanEndDate}
                   onChange={this.changePracticePlanEndDate}
+                  dateFormat={MM-dd-yyyy}
                 />
               </FormGroup>
               {
@@ -392,13 +396,14 @@ class PracticePlanNew extends React.Component {
                   />
                 </FormGroup>
                 <FormGroup>
-                  <Label for="practiceDate">Practice Date (MM/DD/YYYY)</Label>
-                  <Input
-                    type="input"
+                  <Label for="practiceDate">Practice Date</Label>
+                  <DatePicker
+                    selected={this.state.practiceDate}
                     name="practiceDate"
                     value={practiceDate}
                     id="practiceDate"
                     onChange={this.changePracticeDate}
+                  dateFormat={MM-dd-yyyy}
                   />
                 </FormGroup>
                 <FormGroup>
