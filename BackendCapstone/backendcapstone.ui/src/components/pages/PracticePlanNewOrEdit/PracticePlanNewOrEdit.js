@@ -17,6 +17,7 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 
+import NewPracticePlanGameModal from '../../shared/NewPracticePlanGameModal/NewPracticePlanGameModal';
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
 import gamesData from '../../../helpers/data/gamesData';
@@ -172,78 +173,79 @@ class PracticePlanNew extends React.Component {
   }
 
   // functions for the new practice plan game form on the modal:
-  toggleGameFormModal = () => {
-    this.setState({ gameFormModal: !this.state.gameFormModal });
+  toggleGameFormModal = (e) => {
+    e.preventDefault();
+    this.setState({ gameFormModal: !this.state.gameFormModal, selectedGameId: e.target.value * 1 });
   }
 
   closeGameFormModal = () => {
     this.setState({ gameFormModal: false });
   }
 
-  getGameForm = (e) => {
-    this.setState({ gameFormModal: true });
-    gamesData.getGameById(e.target.value)
-      .then((singleGameResponse) => {
-        this.setState({
-          selectedGame: singleGameResponse.data,
-          selectedGameId: singleGameResponse.data.id,
-          practiceGameName: singleGameResponse.data.name,
-        });
-      });
-  };
+  // getGameForm = (e) => {
+  //   this.setState({ gameFormModal: true });
+  //   gamesData.getGameById(e.target.value)
+  //     .then((singleGameResponse) => {
+  //       this.setState({
+  //         selectedGame: singleGameResponse.data,
+  //         selectedGameId: singleGameResponse.data.id,
+  //         practiceGameName: singleGameResponse.data.name,
+  //       });
+  //     });
+  // };
 
-  changePracticeGameName = (e) => {
-    e.preventDefault();
-    this.setState({ practiceGameName: e.target.value });
-  }
+  // changePracticeGameName = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ practiceGameName: e.target.value });
+  // }
 
-  changePracticeDate = (e) => {
-    e.preventDefault();
-    this.setState({ practiceDate: e.target.value });
-  }
+  // changePracticeDate = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ practiceDate: e.target.value });
+  // }
 
-  changePracticeNotes = (e) => {
-    e.preventDefault();
-    this.setState({ practiceNotes: e.target.value });
-  }
+  // changePracticeNotes = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ practiceNotes: e.target.value });
+  // }
 
-  changePracticeCompleted = (e) => {
-    e.preventDefault();
-    this.setState({ practiceCompleted: e.target.checked });
-  }
+  // changePracticeCompleted = (e) => {
+  //   e.preventDefault();
+  //   this.setState({ practiceCompleted: e.target.checked });
+  // }
 
-  savePracticePlanGame = (e) => {
-    e.preventDefault();
-    const {
-      practiceGameName,
-      practiceDate,
-      practiceNotes,
-      practiceCompleted,
-      selectedGameId,
-      practicePlanId,
-      selectedGame,
-    } = this.state;
-    if (practiceGameName == '') {
-      this.setState({ practiceGameName: selectedGame.name });
-    }
-    if (practiceDate == '') {
-      this.setState({ practiceDate: new Date() });
-    }
-    const newPracticePlanGame = {
-      name: this.state.practiceGameName,
-      practiceDate: this.state.practiceDate,
-      userNotes: practiceNotes,
-      isCompleted: practiceCompleted,
-      practicePlanId,
-      gameId: selectedGameId,
-    };
-    practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-      .then((newPpgResponse) => {
-        this.closeGameFormModal();
-        this.getPracticePlanDetails();
-      })
-      .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
-  }
+  // savePracticePlanGame = (e) => {
+  //   e.preventDefault();
+  //   const {
+  //     practiceGameName,
+  //     practiceDate,
+  //     practiceNotes,
+  //     practiceCompleted,
+  //     selectedGameId,
+  //     practicePlanId,
+  //     selectedGame,
+  //   } = this.state;
+  //   if (practiceGameName == '') {
+  //     this.setState({ practiceGameName: selectedGame.name });
+  //   }
+  //   if (practiceDate == '') {
+  //     this.setState({ practiceDate: new Date() });
+  //   }
+  //   const newPracticePlanGame = {
+  //     name: this.state.practiceGameName,
+  //     practiceDate: this.state.practiceDate,
+  //     userNotes: practiceNotes,
+  //     isCompleted: practiceCompleted,
+  //     practicePlanId,
+  //     gameId: selectedGameId,
+  //   };
+  //   practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
+  //     .then((newPpgResponse) => {
+  //       this.closeGameFormModal();
+  //       this.getPracticePlanDetails();
+  //     })
+  //     .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
+  // }
 
   render() {
     const {
@@ -261,10 +263,20 @@ class PracticePlanNew extends React.Component {
       practiceCompleted,
       selectedGame,
       selectedGames,
+      selectedGameId,
     } = this.state;
 
+    const buildModal = () => (
+      <NewPracticePlanGameModal
+        gameId={selectedGameId}
+        practicePlanId={practicePlanId}
+        closeGameFormModal={this.closeGameFormModal}
+        getPracticePlanDetails={this.getPracticePlanDetails}
+      />
+    );
+
     const buildGamesDropdownOptions = () => gamesList.map((game) => (
-      <DropdownItem key={game.id} value={game.id} game={game} onClick={this.getGameForm}>{game.name}</DropdownItem>
+      <DropdownItem key={game.id} value={game.id} game={game} onClick={this.toggleGameFormModal}>{game.name}</DropdownItem>
     ));
 
     const buildGamesGrid = () => selectedGames.map((item) => (
@@ -375,7 +387,11 @@ class PracticePlanNew extends React.Component {
           </div>
         </div>
 
-          {/* code for modal about the game selected below: */}
+        <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
+          {buildModal()}
+        </Modal>
+          {/* code for modal about the game selected below:
+          <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
           <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
             <ModalHeader toggle={this.toggleGameFormModal}>Details for Selected Game: {this.state.selectedGame.name}</ModalHeader>
             <ModalBody>
@@ -430,7 +446,7 @@ class PracticePlanNew extends React.Component {
               <Button onClick={this.savePracticePlanGame}>Save Game</Button>
               <Button onClick={this.closeGameFormModal}>Cancel</Button>
             </ModalFooter>
-          </Modal>
+          </Modal> */}
       </div>
     );
   }
