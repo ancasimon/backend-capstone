@@ -11,10 +11,6 @@ import practicePlansData from '../../../helpers/data/practicePlansData';
 import './SinglePracticePlanView.scss';
 
 class SinglePracticePlanView extends React.Component {
-  static propTypes = {
-    practiceplanid: PropTypes.number.isRequired,
-  }
-
   state = {
     selectedPracticePlan: {},
     selectedGames: [],
