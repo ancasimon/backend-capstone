@@ -180,6 +180,7 @@ class PracticePlanNew extends React.Component {
 
   closeGameFormModal = () => {
     this.setState({ gameFormModal: false });
+    this.getPracticePlanDetails();
   }
 
   render() {
@@ -271,10 +272,10 @@ class PracticePlanNew extends React.Component {
               </FormGroup>
               {
                 newRecordForm === true
-                  ? <Button onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
-                  : <Button onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
+                  ? <Button className="mainButtons p-2" onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
+                  : <Button className="mainButtons p-2" onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
               }
-              <Button onClick={this.cancelAction}>Cancel</Button>
+              <Button className="mainButtons p-2 ml-2" onClick={this.cancelAction}>Cancel</Button>
             </Form>
           </div>
           <div className="col-md-6">
@@ -283,7 +284,7 @@ class PracticePlanNew extends React.Component {
             newRecordForm === false
               ? <FormGroup>
                   <Dropdown isOpen={gamesDropdownOpen} toggle={this.toggleGamesDropdown}>
-                    <DropdownToggle caret>
+                    <DropdownToggle caret className="mainButtons p-2">
                       Add Game
                     </DropdownToggle>
                     <DropdownMenu>

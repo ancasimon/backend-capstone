@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import {
   Button,
   Dropdown,
@@ -19,6 +20,8 @@ import PropTypes from 'prop-types';
 
 import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
+import practicePlansData from '../../../helpers/data/practicePlansData';
+
 import './NewPracticePlanGameModal.scss';
 
 class NewPracticePlanGameModal extends React.Component {
@@ -31,6 +34,7 @@ class NewPracticePlanGameModal extends React.Component {
 
   state = {
     selectedGame: {},
+    selectedPlan: {},
     practiceGameName: '',
     practiceDate: new Date().toLocaleDateString('en-US'),
     practiceNotes: '',
@@ -48,8 +52,17 @@ class NewPracticePlanGameModal extends React.Component {
       });
   };
 
+  getPracticePlanInfo = () => {
+    const { practicePlanId } = this.props;
+    practicePlansData.getSinglePracticePlan(practicePlanId)
+      .then((ppResponse) => {
+        this.setState({ selectedPlan: ppResponse.data });
+      });
+  }
+
   componentDidMount() {
     this.getGameForm();
+    this.getPracticePlanInfo();
   }
 
   changePracticeGameName = (e) => {
@@ -99,9 +112,6 @@ class NewPracticePlanGameModal extends React.Component {
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
         this.props.closeModal();
-        (getPracticePlanDetails != null)
-          ? this.props.getPracticePlanDetails()
-          : this.props.history.push(`/practiceplans/${practicePlanId}`);
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }
@@ -112,12 +122,13 @@ class NewPracticePlanGameModal extends React.Component {
       practiceDate,
       practiceNotes,
       practiceCompleted,
+      selectedPlan,
     } = this.state;
 
     return (
       <div className='NewPracticePlanGameModal'>
         {/* code for modal about the game selected below: */}
-          <ModalHeader toggle={this.toggleGameFormModal}>Details for Selected Game: {this.state.selectedGame.name}</ModalHeader>
+          <ModalHeader toggle={this.toggleGameFormModal}>Add <span className='italics'>{this.state.selectedGame.name}</span> to Plan <span className='italics'>{selectedPlan.name}</span></ModalHeader>
           <ModalBody>
             <div>
             <Form>
@@ -167,8 +178,8 @@ class NewPracticePlanGameModal extends React.Component {
             </div>
           </ModalBody>
           <ModalFooter>
-            <Button onClick={this.savePracticePlanGame}>Save Game</Button>
-            <Button onClick={this.props.closeModal}>Cancel</Button>
+            <Button className="mainButtons p-2" onClick={this.savePracticePlanGame}>Save Game</Button>
+            <Button className="mainButtons p-2" onClick={this.props.closeModal}>Cancel</Button>
           </ModalFooter>
       </div>
     );

@@ -109,6 +109,7 @@ class SingleGameView extends React.Component {
 
   closePracticePlansModal = () => {
     this.setState({ practicePlansModal: false });
+    this.props.history.push('/practiceplans/');
   }
 
   getPracticePlans = () => {
@@ -124,24 +125,6 @@ class SingleGameView extends React.Component {
     e.preventDefault();
     this.setState({ selectedPracticePlanId: e.target.value * 1 });
   }
-
-  // savePracticePlanGame = () => {
-  //   const { selectedGameId, selectedGame, selectedPracticePlanId } = this.state;
-  //   const newPracticePlanGame = {
-  //     name: selectedGame.name,
-  //     practicePlanId: selectedPracticePlanId,
-  //     gameId: selectedGameId,
-  //     practiceDate: new Date(),
-  //     userNotes: '',
-  //     isCompleted: false,
-  //   };
-  //   practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-  //     .then((newPPGameResponse) => {
-  //       console.error('new PPG', newPPGameResponse);
-  //       this.props.history.push(`/practiceplans/${selectedPracticePlanId}`);
-  //     })
-  //     .catch((error) => console.error('We were not able to add this game to your practice plan.', error));
-  // }
 
   render() {
     const {
