@@ -1,5 +1,7 @@
 import React from 'react';
 import {
+  Col,
+  FormText,
   Button,
   Dropdown,
   DropdownToggle,
@@ -22,6 +24,8 @@ import AgeItem from '../../shared/AgeItem/AgeItem';
 import InstrumentItem from '../../shared/InstrumentItem/InstrumentItem';
 
 import gamesData from '../../../helpers/data/gamesData';
+import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
+import practicePlansData from '../../../helpers/data/practicePlansData';
 
 import userShape from '../../../helpers/propz/userShape';
 
@@ -34,13 +38,14 @@ class SingleGameView extends React.Component {
 
   state = {
     selectedGame: {},
-    selectedGameId: this.props.match.params.gameid,
+    selectedGameId: this.props.match.params.gameid * 1,
     instrumentsForGame: [],
     agesForGame: [],
     // adding the following variable for the feature to allow users to add a game to a practice plan from this page:
     practicePlansDropdownOpen: false,
     practicePlansModal: false,
     selectedPracticePlanId: 0,
+    userPracticePlans: [],
   }
 
   buildSingleGameView = () => {
@@ -58,6 +63,7 @@ class SingleGameView extends React.Component {
 
   componentDidMount() {
     this.buildSingleGameView();
+    this.getPracticePlans();
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   }
@@ -91,10 +97,6 @@ class SingleGameView extends React.Component {
   }
 
   // functions supporting the ability to add this game to an existing practice plan:
-  togglePracticePlansDropdown = () => {
-    this.setState({ practicePlansDropdownOpen: !this.state.practicePlansDropdownOpen });
-  }
-
   togglePracticePlansModal = () => {
     this.setState({ practicePlansModal: !this.state.practicePlansModal });
   }
@@ -103,8 +105,36 @@ class SingleGameView extends React.Component {
     this.setState({ practicePlansModal: false });
   }
 
-  addGameToPracticePlan = () => {
-    console.error('running add to plan');
+  getPracticePlans = () => {
+    practicePlansData.getUserPracticePlans()
+      .then((userPracticePlansList) => {
+        this.setState({ userPracticePlans: userPracticePlansList });
+        console.error('pract plans', this.state.userPracticePlans);
+      })
+      .catch((error) => console.error('Could not get your practice plans.', error));
+  }
+
+  changeSelectedPracticePlanId = (e) => {
+    e.preventDefault();
+    this.setState({ selectedPracticePlanId: e.target.value * 1 });
+  }
+
+  savePracticePlanGame = () => {
+    const { selectedGameId, selectedGame, selectedPracticePlanId } = this.state;
+    const newPracticePlanGame = {
+      name: selectedGame.name,
+      practicePlanId: selectedPracticePlanId,
+      gameId: selectedGameId,
+      practiceDate: new Date(),
+      userNotes: '',
+      isCompleted: false,
+    };
+    practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
+      .then((newPPGameResponse) => {
+        console.error('new PPG', newPPGameResponse);
+        this.props.history.push(`/practiceplans/${selectedPracticePlanId}`);
+      })
+      .catch((error) => console.error('We were not able to add this game to your practice plan.', error));
   }
 
   render() {
@@ -113,6 +143,8 @@ class SingleGameView extends React.Component {
       instrumentsForGame,
       agesForGame,
       selectedGameId,
+      userPracticePlans,
+      selectedPracticePlanId,
     } = this.state;
     const { user } = this.props;
 
@@ -122,6 +154,10 @@ class SingleGameView extends React.Component {
 
     const displayAges = () => agesForGame.map((age) => (
       <AgeItem key={age.id} age={age} />
+    ));
+
+    const buildPracticePlansSelectOptions = () => userPracticePlans.map((plan) => (
+      <option key={plan.planId} value={plan.planId}>{plan.name} starting on {plan.startDate}</option>
     ));
 
     return (
@@ -209,7 +245,19 @@ class SingleGameView extends React.Component {
             <ModalBody>
               <div>
               <Form>
-                test
+                <FormGroup row>
+                  <Col sm={10}>
+                    <Input
+                      type="select"
+                      name="selectedPracticePlanId"
+                      id="selectedPracticePlanId"
+                      value={this.state.selectedPracticePlanId}
+                      onChange={this.changeSelectedPracticePlanId}
+                    >
+                      {buildPracticePlansSelectOptions()}
+                    </Input>
+                  </Col>
+                </FormGroup>
               </Form>
               </div>
             </ModalBody>
