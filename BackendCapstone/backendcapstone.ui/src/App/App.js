@@ -14,12 +14,10 @@ import fbConnection from '../helpers/data/connection';
 import usersData from '../helpers/data/usersData';
 
 import Footer from '../components/shared/Footer/Footer';
-import GameEdit from '../components/pages/GameEdit/GameEdit';
-import GameNew from '../components/pages/GameNew/GameNew';
+import GameNewOrEdit from '../components/pages/GameNewOrEdit/GameNewOrEdit';
 import Games from '../components/pages/Games/Games';
 import Home from '../components/pages/Home/Home';
 import Login from '../components/pages/Login/Login';
-import MyContributions from '../components/shared/MyContributions/MyContributions';
 import MyPracticePlans from '../components/pages/MyPracticePlans/MyPracticePlans';
 import PracticePlanNewOrEdit from '../components/pages/PracticePlanNewOrEdit/PracticePlanNewOrEdit';
 import Profile from '../components/pages/Profile/Profile';
@@ -85,8 +83,8 @@ class App extends React.Component {
               <div className="container">
                 <div className="row">
                   <Switch authed={authed}>
-                    <PrivateRoute path='/games/edit/:gameid' component={GameEdit} authed={authed} />
-                    <PrivateRoute path='/games/new' component={GameNew} authed={authed} />
+                    <PrivateRoute path='/games/edit/:gameid' component={GameNewOrEdit} authed={authed} />
+                    <PrivateRoute path='/games/new' component={GameNewOrEdit} authed={authed} />
                     <PrivateRoute path='/practiceplans/edit/:practiceplanid' component={PracticePlanNewOrEdit} authed={authed} />
                     <PrivateRoute path='/practiceplans/new' component={PracticePlanNewOrEdit} authed={authed} />
                     <PrivateRoute path='/practiceplans/:practiceplanid' component={SinglePracticePlanView} authed={authed} />
@@ -95,7 +93,7 @@ class App extends React.Component {
 
                     <Route path='/home' render={(props) => <Home authed={authed} user={user} {...props} />}/>
                     <Route path='/login' component={Login} authed={authed} />
-                    <Route path='/games/:gameid' component={SingleGameView} authed={authed} />
+                    <Route path='/games/:gameid' render={(props) => <SingleGameView authed={authed} user={user} {...props} />} />
                     <Route path='/games' render={(props) => <Games authed={authed} {...props} />} />
                     <Route path='/register' render={(props) => <Register authed={authed} {...props} />} />
 

@@ -21,11 +21,22 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForAllUsers = "select * from Users where IsActive = 1";
+            var sqlForAllActiveUsers = "select * from Users where IsActive = 1";
 
-            var allActiveUsers = db.Query<User>(sqlForAllUsers);
+            var allActiveUsers = db.Query<User>(sqlForAllActiveUsers);
 
             return allActiveUsers;
+        }
+
+        public IEnumerable<User> GetAllUsers()
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlForAllUsers = "select * from Users";
+
+            var allUsers = db.Query<User>(sqlForAllUsers);
+
+            return allUsers;
         }
 
         public int GetUserIdByUid(string uid)
@@ -83,6 +94,22 @@ namespace BackendCapstone.DataAccess
             var newUserRecord = db.QueryFirstOrDefault<User>(sqlToAddNewUser, newUser);
 
             return newUserRecord;
+        }
+
+        public bool CheckUserEmail(string email)
+        {
+            bool existingUserEmail = false;
+            IEnumerable<User> currentUsers = GetAllUsers();
+
+            foreach(var user in currentUsers)
+            {
+                if (user.Email == email)
+                {
+                    existingUserEmail = true;
+                    break;
+                }
+            }
+            return existingUserEmail;
         }
     }
 }

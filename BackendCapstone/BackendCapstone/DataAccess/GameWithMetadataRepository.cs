@@ -195,7 +195,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForSingleGameById = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, u.FirstName as UserFirstName, u.LastName as UserLastName, u.PhotoUrl as UserPhotoUrl, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, g.PhotoUrl,g.Keywords
+            var sqlForSingleGameById = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, u.PhotoUrl as UserPhotoUrl, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, g.PhotoUrl,g.Keywords
                                         from Games g
 	                                        join PreworkLevels pl
 		                                        on g.PreworkLevelId = pl.Id
@@ -221,6 +221,19 @@ namespace BackendCapstone.DataAccess
             agesList = agesForGame.ToList();
             selectedGame.AgesForGame = agesList;
 
+            //need to also get just the IDs for the edit form > so that we can correctly display the preselected options:
+            var sqlForAgeIdsForGame = @"select a.Id
+                                    from GameAges ga
+	                                    join Games g
+		                                    on ga.GameId = g.Id
+			                                    join Ages a
+				                                    on ga.AgeId = a.Id
+                                    where GameId = @id";
+            var ageIdsForGame = db.Query<int>(sqlForAgeIdsForGame, parameterForGameId);
+            List<int> ageIdsList = new List<int>();
+            ageIdsList = ageIdsForGame.ToList();
+            selectedGame.AgeIdsForGame = ageIdsList;
+
             // and next get all the instruments for this game:
             var sqlForInstrumentsForGame = @"select i.Id, i.Name, i.IconUrl
                                             from GameInstruments gi
@@ -231,6 +244,23 @@ namespace BackendCapstone.DataAccess
             List<Instrument> instrumentsList = new List<Instrument>();
             instrumentsList = instrumentsForGame.ToList();
             selectedGame.InstrumentsForGame = instrumentsList;
+
+            //need to also get just the IDs for the edit form > so that we can correctly display the preselected options:
+            var sqlForInstrumentIdsForGame = @"select i.Id
+                                            from GameInstruments gi
+	                                            join Instruments i
+		                                            on gi.InstrumentId = i.Id
+                                            where gi.GameId = @id";
+            var instrumentIdsForGame = db.Query<int>(sqlForInstrumentIdsForGame, parameterForGameId);
+            List<int> instrumentIdsList = new List<int>();
+            instrumentIdsList = instrumentIdsForGame.ToList();
+            selectedGame.InstrumentIdsForGame = instrumentIdsList;
+
+            // to allow users to delete a game, we need to make sure there are no practice plan games using it first:
+            var sqlForPracticePlanGamesForSelectedGame = @"select * from PracticePlanGames
+                                                           where GameId = @id";
+            var associatedPracticePlanGames = db.Query<PracticePlanGame>(sqlForPracticePlanGamesForSelectedGame, parameterForGameId);
+            selectedGame.HasAssociatedPracticePlanGames = associatedPracticePlanGames.Any();
 
             return selectedGame;
         }

@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -10,10 +11,6 @@ import practicePlansData from '../../../helpers/data/practicePlansData';
 import './SinglePracticePlanView.scss';
 
 class SinglePracticePlanView extends React.Component {
-  static propTypes = {
-    practiceplanid: PropTypes.number.isRequired,
-  }
-
   state = {
     selectedPracticePlan: {},
     selectedGames: [],
@@ -45,6 +42,27 @@ class SinglePracticePlanView extends React.Component {
       .catch((error) => console.error('Unable to delete this practice plan.', error));
   }
 
+  deleteConfirmationMessagePracticePlan = () => {
+    Swal.fire({
+      title: 'Are you sure you want to delete this practice plan?',
+      text: 'You will not be able to undo this action!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#008900',
+      cancelButtonColor: '#960018',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'Your practice plan has been deleted.',
+          'success',
+        );
+        this.inactivatePracticePlan();
+      }
+    });
+  }
+
   render() {
     const { selectedPracticePlan, selectedGames } = this.state;
     const { practiceplanid } = this.props.match.params;
@@ -64,7 +82,7 @@ class SinglePracticePlanView extends React.Component {
                 <Link to={`/practiceplans/edit/${practiceplanid}`} className="mainButtons p-2">Edit</Link>
               </div>
               <div className="col-md-6 buttonDiv text-center">
-                <button className="mainButtons p-2" onClick={this.inactivatePracticePlan}>Delete</button>
+                <button className="mainButtons p-2" onClick={this.deleteConfirmationMessagePracticePlan}>Delete</button>
               </div>
             </div>
           </div>

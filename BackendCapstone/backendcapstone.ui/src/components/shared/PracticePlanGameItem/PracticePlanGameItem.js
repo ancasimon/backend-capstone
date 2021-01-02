@@ -1,5 +1,6 @@
 import React from 'react';
 import { FormGroup, Label, Input } from 'reactstrap';
+import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
 
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
@@ -38,6 +39,27 @@ class PracticePlanGameItem extends React.Component {
         this.props.refreshPage(practicePlanId);
       })
       .catch((error) => console.error('Could not delete this game from your plan.', error));
+  }
+
+  deleteConfirmationMessagePracticePlanGame = () => {
+    Swal.fire({
+      title: 'Are you sure you want to delete this game from your practice plan?',
+      text: 'You will not be able to undo this action!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#008900',
+      cancelButtonColor: '#960018',
+      confirmButtonText: 'Yes, delete it!',
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Deleted!',
+          'This game has been removed from your practice plan.',
+          'success',
+        );
+        this.inactivateRecord();
+      }
+    });
   }
 
   changePracticeCompleted = (e) => {
@@ -82,7 +104,7 @@ class PracticePlanGameItem extends React.Component {
               </Label>
             </FormGroup>
           </td>
-          <td><button className="iconButtons" onClick={this.inactivateRecord}><i class="fas fa-trash-alt"></i></button></td>
+          <td><button className="iconButtons" onClick={this.deleteConfirmationMessagePracticePlanGame}><i className="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
     );

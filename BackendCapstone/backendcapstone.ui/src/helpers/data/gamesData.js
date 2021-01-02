@@ -9,6 +9,22 @@ const getAllActiveGames = () => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
+const getLatestGames = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/games/latest`)
+    .then((latestGamesResponse) => {
+      resolve(latestGamesResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
+const getMostPopularGames = () => new Promise((resolve, reject) => {
+  axios.get(`${baseUrl}/games/popular`)
+    .then((mostPopularGamesResponse) => {
+      resolve(mostPopularGamesResponse.data);
+    })
+    .catch((error) => reject(error));
+});
+
 const getGamesContributedByAuthedUser = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/games/submittedby`)
     .then((userContributedGamesResponse) => {
@@ -25,16 +41,26 @@ const getFilteredGames = (searchInput, selectedAges, selectedInstruments, select
   axios.get(`${baseUrl}/games?searchInput=${searchInput}&${buildAgeFilters()}&${buildInstrumentFilters()}&${buildPreworkLevelFilters()}`)
     .then((filteredGamesResponse) => {
       resolve(filteredGamesResponse.data);
-      console.error('selected filters passed to backend', searchInput, selectedAges, selectedInstruments, selectedPreworkLevels);
     })
     .catch((error) => reject(error));
 });
 
 const getGameById = (id) => axios.get(`${baseUrl}/games/${id}`);
 
+const addGame = (newGame) => axios.post(`${baseUrl}/games`, newGame);
+
+const deleteGame = (gameId) => axios.delete(`${baseUrl}/games/${gameId}`);
+
+const updateGame = (gameId, updatedGame) => axios.put(`${baseUrl}/games/${gameId}`, updatedGame);
+
 export default {
   getAllActiveGames,
   getGameById,
   getFilteredGames,
   getGamesContributedByAuthedUser,
+  getLatestGames,
+  getMostPopularGames,
+  addGame,
+  deleteGame,
+  updateGame,
 };

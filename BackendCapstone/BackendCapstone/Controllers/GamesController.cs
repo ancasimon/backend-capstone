@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using BackendCapstone.Models;
 using BackendCapstone.DataAccess;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BackendCapstone.Controllers
 {
@@ -15,11 +16,13 @@ namespace BackendCapstone.Controllers
     {
         GameRepository _gameRepo;
         GameWithMetadataRepository _gameWithDataRepo;
+        UserRepository _userRepo;
 
-        public GamesController(GameRepository repo1, GameWithMetadataRepository repo2)
+        public GamesController(GameRepository repo1, GameWithMetadataRepository repo2, UserRepository userRepo)
         {
             _gameRepo = repo1;
             _gameWithDataRepo = repo2;
+            _userRepo = userRepo;
         }
 
         // Changed method below to call the method for the game with metadata instead of the regular game record:
@@ -40,14 +43,6 @@ namespace BackendCapstone.Controllers
             return Ok(filteredGames);
         }
 
-        //[HttpGet()]
-        //public IActionResult GetFilteredGames()
-        //{
-        //    var filteredGames = _gameWithDataRepo.GetFilteredListOfGamesWithMetadata();
-
-        //    return Ok(filteredGames);
-        //}
-
 
         // Changed method below to call the method for the game with metadata instead of the regular game record:
         [HttpGet("{id}")]
@@ -67,6 +62,64 @@ namespace BackendCapstone.Controllers
             var userContributions = _gameWithDataRepo.GetGamesForAuthedUser(UserId);
 
             return Ok(userContributions);
+        }
+
+        [HttpGet("latest")]
+        public IActionResult GetLatestGames()
+        {
+            var latestGames = _gameRepo.GetLatestGames();
+
+            return Ok(latestGames);
+        }
+
+        [HttpGet("popular")]
+        public IActionResult GetMostPopularGames()
+        {
+            var mostPopularGames = _gameRepo.GetMostPopularGames();
+
+            return Ok(mostPopularGames);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public IActionResult PostNewGame(Game gameToAdd)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+            var newGameId = _gameRepo.AddNewGame(currentUserId, gameToAdd);
+
+            return Ok(newGameId);
+        }
+
+        [HttpDelete("{gameId}")]
+        [Authorize]
+        public IActionResult DeleteGame(int gameId)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+
+            if (_gameRepo.GetGameById(gameId) == null)
+            {
+                return NotFound();
+            }
+
+            _gameRepo.RemoveGame(gameId, currentUserId);
+
+            return Ok();
+        }
+
+        [HttpPut("{gameId}")]
+        [Authorize]
+        public IActionResult UpdateGame(int gameId, GameWithMetadata updatedGame)
+        {
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
+
+            if (_gameRepo.GetGameById(gameId) == null)
+            {
+                return NotFound();
+            }
+
+            _gameRepo.UpdateGame(gameId, updatedGame);
+
+            return Ok();
         }
     }
 }
