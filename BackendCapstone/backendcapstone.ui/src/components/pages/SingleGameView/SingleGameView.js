@@ -18,6 +18,7 @@ import {
   Table,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 
 import AgeItem from '../../shared/AgeItem/AgeItem';
@@ -35,6 +36,7 @@ import './SingleGameView.scss';
 class SingleGameView extends React.Component {
   static propTypes = {
     user: userShape.userShape,
+    authed: PropTypes.bool.isRequired,
   }
 
   state = {
@@ -136,7 +138,7 @@ class SingleGameView extends React.Component {
       selectedPracticePlanId,
       practicePlansDropdownOpen,
     } = this.state;
-    const { user } = this.props;
+    const { user, authed } = this.props;
 
     const displayInstruments = () => instrumentsForGame.map((instrument) => (
       <InstrumentItem key={instrument.id} instrument={instrument} />
@@ -184,18 +186,22 @@ class SingleGameView extends React.Component {
             </div>
               : ''
             }
-            <div className="col-md-4 container">
-              <FormGroup>
-                  <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
-                    <DropdownToggle caret className="mainButtons p-2">
-                      Add to Practice Plan
-                    </DropdownToggle>
-                    <DropdownMenu>
-                      {buildPracticePlansDropdownOptions()}
-                    </DropdownMenu>
-                  </Dropdown>
-                </FormGroup>
-            </div>
+            {
+              (authed)
+                ? <div className="col-md-4 container">
+                <FormGroup>
+                    <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
+                      <DropdownToggle caret className="mainButtons p-2">
+                        Add to Practice Plan
+                      </DropdownToggle>
+                      <DropdownMenu>
+                        {buildPracticePlansDropdownOptions()}
+                      </DropdownMenu>
+                    </Dropdown>
+                  </FormGroup>
+              </div>
+                : ''
+            }
           </div>
         </div>
 
