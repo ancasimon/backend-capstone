@@ -1,4 +1,20 @@
 import React from 'react';
+import {
+  Button,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  Form,
+  FormGroup,
+  Label,
+  Input,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  Table,
+} from 'reactstrap';
 import { Link } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
@@ -21,6 +37,10 @@ class SingleGameView extends React.Component {
     selectedGameId: this.props.match.params.gameid,
     instrumentsForGame: [],
     agesForGame: [],
+    // adding the following variable for the feature to allow users to add a game to a practice plan from this page:
+    practicePlansDropdownOpen: false,
+    practicePlansModal: false,
+    selectedPracticePlanId: 0,
   }
 
   buildSingleGameView = () => {
@@ -70,6 +90,23 @@ class SingleGameView extends React.Component {
     });
   }
 
+  // functions supporting the ability to add this game to an existing practice plan:
+  togglePracticePlansDropdown = () => {
+    this.setState({ practicePlansDropdownOpen: !this.state.practicePlansDropdownOpen });
+  }
+
+  togglePracticePlansModal = () => {
+    this.setState({ practicePlansModal: !this.state.practicePlansModal });
+  }
+
+  closePracticePlansModal = () => {
+    this.setState({ practicePlansModal: false });
+  }
+
+  addGameToPracticePlan = () => {
+    console.error('running add to plan');
+  }
+
   render() {
     const {
       selectedGame,
@@ -101,18 +138,21 @@ class SingleGameView extends React.Component {
           <div className="row p-3 container">
             {
             (user.id === selectedGame.submittedByUserId)
-              ? <div className="col-md-6 container">
+              ? <div className="col-md-4 container">
               <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
             </div>
               : ''
             }
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
-              ? <div className="col-md-6 container">
+              ? <div className="col-md-4 container">
               <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
               : ''
             }
+            <div className="col-md-4 container">
+              <button className="mainButtons p-2" onClick={this.togglePracticePlansModal}>Add to Practice Plan</button>
+            </div>
           </div>
         </div>
 
@@ -162,6 +202,23 @@ class SingleGameView extends React.Component {
               : ''
           }
         </div>
+
+        {/* code for modal about available practice plans below: */}
+        <Modal isOpen={this.state.practicePlansModal} toggle={this.togglePracticePlansModal}>
+            <ModalHeader toggle={this.togglePracticePlansModal}>Select a Practice Plan:</ModalHeader>
+            <ModalBody>
+              <div>
+              <Form>
+                test
+              </Form>
+              </div>
+            </ModalBody>
+            <ModalFooter>
+              <Button onClick={this.savePracticePlanGame}>Add</Button>
+              <Button onClick={this.closePracticePlansModal}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+
       </div>
     );
   }
