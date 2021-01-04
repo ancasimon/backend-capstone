@@ -40,7 +40,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForSinglePlan = "select Id as PlanId, Name, FORMAT(StartDate, 'd', 'en-us') as startDate, FORMAT(EndDate, 'd', 'en-us') as endDate, IsActive, UserId from PracticePlans where Id = @planId";
+            var sqlForSinglePlan = "select Id as PlanId, Name, StartDate, EndDate, IsActive, UserId from PracticePlans where Id = @planId";
             var parameterForPlanId = new { planId };
 
             PracticePlan selectedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlForSinglePlan, parameterForPlanId);

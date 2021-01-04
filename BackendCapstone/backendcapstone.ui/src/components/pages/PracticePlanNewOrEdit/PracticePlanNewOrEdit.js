@@ -17,7 +17,8 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 import DatePicker from 'react-datepicker';
-import Moment from 'moment';
+import moment from 'moment';
+import { parseISO, format } from 'date-fns';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
@@ -65,8 +66,8 @@ class PracticePlanNew extends React.Component {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
             practicePlanName: practicePlanIdResponse.data.name,
-            practicePlanStartDate: practicePlanIdResponse.data.startDate,
-            practicePlanEndDate: practicePlanIdResponse.data.endDate,
+            practicePlanStartDate: parseISO(practicePlanIdResponse.data.startDate),
+            practicePlanEndDate: parseISO(practicePlanIdResponse.data.endDate),
             practicePlanActive: practicePlanIdResponse.data.isActive,
           });
         }
@@ -128,14 +129,15 @@ class PracticePlanNew extends React.Component {
     } else {
       const newPracticePlan = {
         name: practicePlanName,
-        startDate: Moment(practicePlanStartDate).format('L'),
-        endDate: Moment(practicePlanEndDate).format('L'),
+        startDate: practicePlanStartDate,
+        endDate: practicePlanEndDate,
       };
+      console.error('new pp created', newPracticePlan);
       practicePlansData.createPracticePlan(newPracticePlan)
         .then((newPracticePlanResponse) => {
           this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
           console.error('respo', newPracticePlanResponse);
-          // this.getPracticePlanDetails();
+          this.getPracticePlanDetails();
         })
         .catch((error) => console.error('Unable to create this practice plan.', error));
     }
@@ -158,8 +160,8 @@ class PracticePlanNew extends React.Component {
       const updatedPracticePlan = {
         planId: practicePlanId,
         name: practicePlanName,
-        startDate: Moment(practicePlanStartDate).format('L'),
-        endDate: Moment(practicePlanEndDate).format('L'),
+        startDate: practicePlanStartDate,
+        endDate: practicePlanEndDate,
         isActive: practicePlanActive,
       };
       practicePlansData.updatePracticePlan(practicePlanId, updatedPracticePlan)
@@ -233,7 +235,7 @@ class PracticePlanNew extends React.Component {
     }
     const newPracticePlanGame = {
       name: this.state.practiceGameName,
-      practiceDate: Moment(this.state.practiceDate).format('L'),
+      practiceDate: this.state.practiceDate,
       userNotes: practiceNotes,
       isCompleted: practiceCompleted,
       practicePlanId,

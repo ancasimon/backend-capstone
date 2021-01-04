@@ -2,6 +2,8 @@ import React from 'react';
 import { FormGroup, Label, Input } from 'reactstrap';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
+import { parseISO, format } from 'date-fns';
+import moment from 'moment';
 
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
 
@@ -90,7 +92,7 @@ class PracticePlanGameItem extends React.Component {
         <tr>
           <th scope="row">{practicePlanGame.practiceName}</th>
           <td className="d-none d-md-table-cell">{practicePlanGame.gameName}</td>
-          <td>{practicePlanGame.practiceDate}</td>
+          <td>{moment(practicePlanGame.practiceDate).format('L')}</td>
           <td className="d-none d-md-table-cell">{practicePlanGame.userNotes}</td>
           <td className="d-none d-md-table-cell">
             <FormGroup check inline>
