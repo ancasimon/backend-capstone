@@ -20,6 +20,7 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import { parseISO, format } from 'date-fns';
 
+import NewPracticePlanGameModal from '../../shared/NewPracticePlanGameModal/NewPracticePlanGameModal';
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
 
 import gamesData from '../../../helpers/data/gamesData';
@@ -42,10 +43,6 @@ class PracticePlanNew extends React.Component {
     gameFormModal: false,
     selectedGameId: 0,
     selectedGame: {},
-    practiceGameName: '',
-    practiceDate: new Date(),
-    practiceNotes: '',
-    practiceCompleted: false,
     selectedGames: [],
   }
 
@@ -133,10 +130,6 @@ class PracticePlanNew extends React.Component {
     Swal.fire('Start date must be before the end date.');
   }
 
-  validationAlertPracticeGameDate = () => {
-    Swal.fire('Game date must be between practice plan start and end dates.');
-  }
-
   saveNewPracticePlan = (e) => {
     const {
       practicePlanName,
@@ -146,7 +139,7 @@ class PracticePlanNew extends React.Component {
     e.preventDefault();
     if (practicePlanName === '') {
       this.validationAlertPracticePlanName();
-    } else if ((practicePlanEndDate).getTime() < practicePlanStartDate.getTime()) {
+    } else if (practicePlanEndDate.getTime() < practicePlanStartDate.getTime()) {
       this.validationAlertPracticePlanDates();
     } else {
       const newPracticePlan = {
@@ -201,82 +194,14 @@ class PracticePlanNew extends React.Component {
   }
 
   // functions for the new practice plan game form on the modal:
-  toggleGameFormModal = () => {
-    this.setState({ gameFormModal: !this.state.gameFormModal });
+  toggleGameFormModal = (e) => {
+    e.preventDefault();
+    this.setState({ gameFormModal: !this.state.gameFormModal, selectedGameId: e.target.value * 1 });
   }
 
   closeGameFormModal = () => {
     this.setState({ gameFormModal: false });
-  }
-
-  getGameForm = (e) => {
-    this.setState({ gameFormModal: true });
-    gamesData.getGameById(e.target.value)
-      .then((singleGameResponse) => {
-        this.setState({
-          selectedGame: singleGameResponse.data,
-          selectedGameId: singleGameResponse.data.id,
-          practiceGameName: singleGameResponse.data.name,
-        });
-      });
-  };
-
-  changePracticeGameName = (e) => {
-    e.preventDefault();
-    this.setState({ practiceGameName: e.target.value });
-  }
-
-  changePracticeDate = (date) => {
-    this.setState({ practiceDate: date });
-  }
-
-  changePracticeNotes = (e) => {
-    e.preventDefault();
-    this.setState({ practiceNotes: e.target.value });
-  }
-
-  changePracticeCompleted = (e) => {
-    e.preventDefault();
-    this.setState({ practiceCompleted: e.target.checked });
-  }
-
-  savePracticePlanGame = (e) => {
-    e.preventDefault();
-    const {
-      practiceGameName,
-      practiceDate,
-      practiceNotes,
-      practiceCompleted,
-      selectedGameId,
-      practicePlanId,
-      selectedGame,
-      practicePlanStartDate,
-      practicePlanEndDate,
-    } = this.state;
-    if (practiceGameName == '') {
-      this.setState({ practiceGameName: selectedGame.name });
-    }
-    if (practiceDate == '') {
-      this.setState({ practiceDate: new Date() });
-    }
-    if (practiceDate.getTime() < practicePlanStartDate.getTime() || practiceDate.getTime() > practicePlanEndDate.getTime()) {
-      this.validationAlertPracticeGameDate();
-    } else {
-      const newPracticePlanGame = {
-        name: this.state.practiceGameName,
-        practiceDate: this.state.practiceDate,
-        userNotes: practiceNotes,
-        isCompleted: practiceCompleted,
-        practicePlanId,
-        gameId: selectedGameId,
-      };
-      practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-        .then((newPpgResponse) => {
-          this.closeGameFormModal();
-          this.getPracticePlanGamesList();
-        })
-        .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
-    }
+    this.getPracticePlanDetails();
   }
 
   render() {
@@ -288,17 +213,22 @@ class PracticePlanNew extends React.Component {
       practicePlanEndDate,
       gamesList,
       gamesDropdownOpen,
-      gameFormModal,
-      practiceGameName,
-      practiceDate,
-      practiceNotes,
-      practiceCompleted,
       selectedGame,
       selectedGames,
+      selectedGameId,
     } = this.state;
 
+    const buildModal = () => (
+      <NewPracticePlanGameModal
+        gameId={selectedGameId}
+        practicePlanId={practicePlanId}
+        closeModal={this.closeGameFormModal}
+        getPracticePlanDetails={this.getPracticePlanDetails}
+      />
+    );
+
     const buildGamesDropdownOptions = () => gamesList.map((game) => (
-      <DropdownItem key={game.id} value={game.id} game={game} onClick={this.getGameForm}>{game.name}</DropdownItem>
+      <DropdownItem key={game.id} value={game.id} game={game} onClick={this.toggleGameFormModal}>{game.name}</DropdownItem>
     ));
 
     const buildGamesGrid = () => selectedGames.map((item) => (
@@ -366,10 +296,10 @@ class PracticePlanNew extends React.Component {
               </FormGroup>
               {
                 newRecordForm === true
-                  ? <Button onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
-                  : <Button onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
+                  ? <Button className="mainButtons p-2" onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
+                  : <Button className="mainButtons p-2" onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
               }
-              <Button onClick={this.cancelAction}>Cancel</Button>
+              <Button className="mainButtons p-2 ml-2" onClick={this.cancelAction}>Cancel</Button>
             </Form>
           </div>
           <div className="col-md-6">
@@ -378,7 +308,7 @@ class PracticePlanNew extends React.Component {
             newRecordForm === false
               ? <FormGroup>
                   <Dropdown isOpen={gamesDropdownOpen} toggle={this.toggleGamesDropdown}>
-                    <DropdownToggle caret>
+                    <DropdownToggle caret className="mainButtons p-2">
                       Add Game
                     </DropdownToggle>
                     <DropdownMenu>
@@ -412,63 +342,9 @@ class PracticePlanNew extends React.Component {
           </div>
         </div>
 
-          {/* code for modal about the game selected below: */}
-          <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
-            <ModalHeader toggle={this.toggleGameFormModal}>Details for Selected Game: {this.state.selectedGame.name}</ModalHeader>
-            <ModalBody>
-              <div>
-              <Form>
-                <FormGroup>
-                  <Label for="practiceGameName">Practice Game Name (customize as needed)</Label>
-                  <Input
-                    type="input"
-                    name="practiceGameName"
-                    value={practiceGameName}
-                    id="practiceGameName"
-                    onChange={this.changePracticeGameName}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="practiceDate">Practice Date</Label>
-                  <DatePicker
-                    selected={this.state.practiceDate}
-                    name="practiceDate"
-                    value={practiceDate}
-                    id="practiceDate"
-                    onChange={this.changePracticeDate}
-                  dateFormat={'MM-dd-yyyy'}
-                  />
-                </FormGroup>
-                <FormGroup>
-                  <Label for="userNotes">Notes</Label>
-                  <Input
-                    type="textarea"
-                    name="userNotes"
-                    id="userNotes"
-                    placeholder="Anything specific to remember for this practice?"
-                    value={practiceNotes}
-                    onChange={this.changePracticeNotes}
-                  />
-                </FormGroup>
-                <FormGroup check>
-                  <Label check>
-                    <Input
-                      type="checkbox"
-                      id="isCompleted"
-                      value={practiceCompleted}
-                      onChange={this.changePracticeCompleted}
-                    />{' '}
-                    Already completed this practice?
-                  </Label>
-                </FormGroup>
-              </Form>
-              </div>
-            </ModalBody>
-            <ModalFooter>
-              <Button onClick={this.savePracticePlanGame}>Save Game</Button>
-              <Button onClick={this.closeGameFormModal}>Cancel</Button>
-            </ModalFooter>
-          </Modal>
+        <Modal isOpen={this.state.gameFormModal} toggle={this.toggleGameFormModal}>
+          {buildModal()}
+        </Modal>
       </div>
     );
   }
