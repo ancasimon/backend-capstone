@@ -63,8 +63,8 @@ class PracticePlanNew extends React.Component {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
             practicePlanName: practicePlanIdResponse.data.name,
-            practicePlanStartDate: parseISO(practicePlanIdResponse.data.startDate),
-            practicePlanEndDate: parseISO(practicePlanIdResponse.data.endDate),
+            practicePlanStartDate: practicePlanIdResponse.data.startDate,
+            practicePlanEndDate: practicePlanIdResponse.data.endDate,
             practicePlanActive: practicePlanIdResponse.data.isActive,
           });
         }
