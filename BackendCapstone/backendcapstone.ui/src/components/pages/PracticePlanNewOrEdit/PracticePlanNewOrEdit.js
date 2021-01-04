@@ -129,6 +129,14 @@ class PracticePlanNew extends React.Component {
     Swal.fire('You must specify a NAME for this practice plan.');
   }
 
+  validationAlertPracticePlanDates = () => {
+    Swal.fire('Start date must be before the end date.');
+  }
+
+  validationAlertPracticeGameDate = () => {
+    Swal.fire('Game date must be between practice plan start and end dates.');
+  }
+
   saveNewPracticePlan = (e) => {
     const {
       practicePlanName,
@@ -138,6 +146,8 @@ class PracticePlanNew extends React.Component {
     e.preventDefault();
     if (practicePlanName === '') {
       this.validationAlertPracticePlanName();
+    } else if (practicePlanEndDate.getTime() < practicePlanStartDate.getTime()) {
+      this.validationAlertPracticePlanDates();
     } else {
       const newPracticePlan = {
         name: practicePlanName,
@@ -168,6 +178,8 @@ class PracticePlanNew extends React.Component {
     e.preventDefault();
     if (practicePlanName === '') {
       this.validationAlertPracticePlanName();
+    } else if (practicePlanEndDate.getTime() < practicePlanStartDate.getTime()) {
+      this.validationAlertPracticePlanDates();
     } else {
       const updatedPracticePlan = {
         planId: practicePlanId,
@@ -238,6 +250,8 @@ class PracticePlanNew extends React.Component {
       selectedGameId,
       practicePlanId,
       selectedGame,
+      practicePlanStartDate,
+      practicePlanEndDate,
     } = this.state;
     if (practiceGameName == '') {
       this.setState({ practiceGameName: selectedGame.name });
@@ -245,20 +259,24 @@ class PracticePlanNew extends React.Component {
     if (practiceDate == '') {
       this.setState({ practiceDate: new Date() });
     }
-    const newPracticePlanGame = {
-      name: this.state.practiceGameName,
-      practiceDate: this.state.practiceDate,
-      userNotes: practiceNotes,
-      isCompleted: practiceCompleted,
-      practicePlanId,
-      gameId: selectedGameId,
-    };
-    practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-      .then((newPpgResponse) => {
-        this.closeGameFormModal();
-        this.getPracticePlanGamesList();
-      })
-      .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
+    if (practiceDate.getTime() < practicePlanStartDate.getTime() || practiceDate.getTime() > practicePlanEndDate.getTime()) {
+      this.validationAlertPracticeGameDate();
+    } else {
+      const newPracticePlanGame = {
+        name: this.state.practiceGameName,
+        practiceDate: this.state.practiceDate,
+        userNotes: practiceNotes,
+        isCompleted: practiceCompleted,
+        practicePlanId,
+        gameId: selectedGameId,
+      };
+      practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
+        .then((newPpgResponse) => {
+          this.closeGameFormModal();
+          this.getPracticePlanGamesList();
+        })
+        .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
+    }
   }
 
   render() {
