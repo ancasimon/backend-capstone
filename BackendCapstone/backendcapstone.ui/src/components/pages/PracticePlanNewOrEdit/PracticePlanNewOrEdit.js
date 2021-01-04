@@ -146,7 +146,7 @@ class PracticePlanNew extends React.Component {
     e.preventDefault();
     if (practicePlanName === '') {
       this.validationAlertPracticePlanName();
-    } else if (practicePlanEndDate.getTime() < practicePlanStartDate.getTime()) {
+    } else if ((practicePlanEndDate).getTime() < practicePlanStartDate.getTime()) {
       this.validationAlertPracticePlanDates();
     } else {
       const newPracticePlan = {
