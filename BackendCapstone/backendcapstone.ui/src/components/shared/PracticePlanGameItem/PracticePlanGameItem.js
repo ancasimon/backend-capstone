@@ -106,7 +106,7 @@ class PracticePlanGameItem extends React.Component {
               </Label>
             </FormGroup>
           </td>
-          <td><button className="iconButtons" onClick={this.deleteConfirmationMessagePracticePlanGame}><i class="fas fa-trash-alt"></i></button></td>
+          <td><button className="iconButtons" onClick={this.deleteConfirmationMessagePracticePlanGame}><i className="fas fa-trash-alt"></i></button></td>
         </tr>
       </tbody>
     );

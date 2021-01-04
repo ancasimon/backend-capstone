@@ -419,12 +419,12 @@ class PracticePlanNew extends React.Component {
               <div>
               <Form>
                 <FormGroup>
-                  <Label for="practiceName">Practice Game Name (customize as needed)</Label>
+                  <Label for="practiceGameName">Practice Game Name (customize as needed)</Label>
                   <Input
                     type="input"
-                    name="practiceName"
+                    name="practiceGameName"
                     value={practiceGameName}
-                    id="practiceName"
+                    id="practiceGameName"
                     onChange={this.changePracticeGameName}
                   />
                 </FormGroup>
