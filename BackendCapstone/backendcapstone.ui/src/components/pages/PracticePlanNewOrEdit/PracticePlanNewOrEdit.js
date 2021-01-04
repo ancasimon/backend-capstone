@@ -75,6 +75,18 @@ class PracticePlanNew extends React.Component {
       .catch((error) => console.error('Could not upload practice plan data.', error));
   }
 
+  getPracticePlanGamesList = () => {
+    practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
+      .then((practicePlanIdResponse) => {
+        if (practicePlanIdResponse.status === 200) {
+          this.setState({
+            selectedGames: practicePlanIdResponse.data.plannedGames,
+          });
+        }
+      })
+      .catch((error) => console.error('Could not get the games for this practice plan.', error));
+  }
+
   getCurrentPracticePlan = () => {
     if (this.props.match.params.practiceplanid === undefined) {
       this.setState({ practicePlanId: 0, newRecordForm: true });
@@ -244,7 +256,7 @@ class PracticePlanNew extends React.Component {
     practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
       .then((newPpgResponse) => {
         this.closeGameFormModal();
-        this.getPracticePlanDetails();
+        this.getPracticePlanGamesList();
       })
       .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
   }
