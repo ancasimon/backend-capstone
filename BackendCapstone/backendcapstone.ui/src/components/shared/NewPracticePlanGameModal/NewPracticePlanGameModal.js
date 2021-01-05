@@ -41,7 +41,7 @@ class NewPracticePlanGameModal extends React.Component {
     selectedGame: {},
     selectedPlan: {},
     practiceGameName: '',
-    practiceDate: new Date(new Date().setHours(12, 0, 0, 0)),
+    practiceDate: new Date(new Date().setHours(6, 0, 0, 0)),
     practiceNotes: '',
     practiceCompleted: false,
   }
