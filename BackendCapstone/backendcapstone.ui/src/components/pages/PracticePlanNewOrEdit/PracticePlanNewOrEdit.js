@@ -35,8 +35,8 @@ class PracticePlanNew extends React.Component {
     newRecordForm: true,
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
-    practicePlanStartDate: new Date(),
-    practicePlanEndDate: new Date(),
+    practicePlanStartDate: new Date(new Date().setHours(0, 0, 0, 0)),
+    practicePlanEndDate: new Date(new Date().setHours(23, 0, 0, 0)),
     practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
@@ -63,8 +63,8 @@ class PracticePlanNew extends React.Component {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
             practicePlanName: practicePlanIdResponse.data.name,
-            practicePlanStartDate: practicePlanIdResponse.data.startDate,
-            practicePlanEndDate: practicePlanIdResponse.data.endDate,
+            practicePlanStartDate: parseISO(practicePlanIdResponse.data.startDate),
+            practicePlanEndDate: parseISO(practicePlanIdResponse.data.endDate),
             practicePlanActive: practicePlanIdResponse.data.isActive,
           });
         }
