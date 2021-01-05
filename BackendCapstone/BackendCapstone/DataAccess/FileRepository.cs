@@ -15,18 +15,17 @@ namespace BackendCapstone.DataAccess
 
         }
 
-        public int Add(UploadedFile file)
+        public UploadedFile Add(UploadedFile file)
         {
             var sql = @"Insert into Files(FileName,FileContent,FileContentType,FileLength)
+                        Output inserted.id
                         values (@FileName,@FileContent,@FileContentType,@FileLength)";
-
             int newFileId;
-
             using (var db = new SqlConnection(_connectionString))
             {
                 newFileId = db.ExecuteScalar<int>(sql, file);
             }
-            return newFileId;
+            return GetById(newFileId);
         }
 
         public UploadedFile GetById(int fileId)

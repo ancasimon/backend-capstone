@@ -10,10 +10,7 @@ import {
 
 import PropTypes from 'prop-types';
 
-import FileUpload from '../../shared/FileUpload/FileUpload';
-
 import authData from '../../../helpers/data/authData';
-import uploadFile from '../../../helpers/data/fileUpload';
 import usersData from '../../../helpers/data/usersData';
 
 import './Register.scss';
@@ -30,9 +27,7 @@ class Register extends React.Component {
       firstName: '',
       lastName: '',
       photoUrl: '',
-      file: {},
     },
-    imageFileId: 0,
     authed: this.props.authed,
   };
 
@@ -109,17 +104,9 @@ class Register extends React.Component {
   }
 
   registerClickEvent = (e) => {
-    const { user, imageFileId } = this.state;
+    const { user } = this.state;
     e.preventDefault();
-    const newUser = {
-      email: user.email,
-      password: user.password,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      imageFileId,
-    };
-    console.error('new user', newUser);
-    authData.registerUser(newUser)
+    authData.registerUser(user)
       .then(() => {
         this.setState({
           authed: true,
@@ -162,18 +149,6 @@ class Register extends React.Component {
   render() {
     const { user } = this.state;
 
-    const uploadOnClick = () => {
-      const { file } = this.state;
-      console.error('clicked to upload!');
-
-      uploadFile.uploadFile(file);
-      // .then((fileIdResponse) => {
-      //   this.setState({ imageFileId: fileIdResponse });
-      //   console.error('fileID', fileIdResponse);
-      // })
-      // .catch((error) => console.error('Unable to upload image file.', error));
-    };
-
     return (
       <div className="container">
         <h2 className="pageTitle">Register Here!</h2>
@@ -211,10 +186,6 @@ class Register extends React.Component {
               onChange={this.photoUrlChange}
             />
           </FormGroup> */}
-          <FormGroup>
-            <FileUpload onChange={(file) => this.setState({ file })} />
-            <button onClick={uploadOnClick} className="mainButtons p-2">Click Here to Upload</button>
-          </FormGroup>
           <FormGroup>
             <Label for="email">Email</Label>
             <Input

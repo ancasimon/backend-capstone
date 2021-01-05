@@ -8,7 +8,7 @@ const uploadFile = (file) => new Promise((resolve, reject) => {
 
   axios.post(`${baseUrl}/images`, form)
     .then((fileResponse) => {
-      resolve(fileResponse.data);
+      resolve(fileResponse);
       console.error('new file to upload', file);
       console.error('file uploaded response', fileResponse);
     })
