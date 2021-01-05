@@ -36,7 +36,7 @@ namespace BackendCapstone.Controllers
         public IActionResult GetSinglePracticePlanById(int planId)
         {
             var selectedPracticePlan = _practicePlanRepo.GetPracticePlanById(planId);
-            if (selectedPracticePlan == null) return NotFound("we did not find a practice plan with this ID.");
+            if (selectedPracticePlan == null) return NotFound("We did not find a practice plan with this ID.");
             return Ok(selectedPracticePlan);
         }
 

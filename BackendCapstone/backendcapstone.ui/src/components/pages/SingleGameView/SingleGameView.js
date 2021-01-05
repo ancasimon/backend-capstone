@@ -18,6 +18,7 @@ import {
   Table,
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
 
@@ -149,7 +150,7 @@ class SingleGameView extends React.Component {
     ));
 
     const buildPracticePlansDropdownOptions = () => userPracticePlans.map((plan) => (
-      <DropdownItem key={plan.planId} value={plan.planId} plan={plan} onClick={this.togglePracticePlansModal}>{plan.name} starting on {plan.startDate}</DropdownItem>
+      <DropdownItem key={plan.planId} value={plan.planId} plan={plan} onClick={this.togglePracticePlansModal}>{plan.name} starting on {moment(plan.startDate).format('L')}</DropdownItem>
     ));
 
     const buildModal = () => (
