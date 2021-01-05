@@ -36,7 +36,7 @@ class PracticePlanNew extends React.Component {
     practicePlanId: this.props.match.params.practiceplanid * 1,
     practicePlanName: '',
     practicePlanStartDate: new Date(new Date().setHours(0, 0, 0, 0)),
-    practicePlanEndDate: new Date(new Date().setHours(23, 0, 0, 0)),
+    practicePlanEndDate: new Date(new Date().setHours(10, 0, 0, 0)),
     practicePlanActive: false,
     gamesList: [],
     gamesDropdownOpen: false,
