@@ -42,6 +42,7 @@ class App extends React.Component {
   state = {
     authed: false,
     user: {},
+    file: {},
   }
 
   getUser = () => {

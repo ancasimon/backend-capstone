@@ -3,14 +3,16 @@ import axios from 'axios';
 import { baseUrl } from '../constants.json';
 
 const uploadFile = (file) => new Promise((resolve, reject) => {
-  let form = new FormData();
+  const form = new FormData();
   form.append('file', file);
 
-  axios.post(`${baseUrl}/files`, form)
-    .then(() => {
-      resolve();
+  axios.post(`${baseUrl}/images`, form)
+    .then((fileResponse) => {
+      resolve(fileResponse.data);
+      console.error('new file to upload', file);
+      console.error('file uploaded response', fileResponse);
     })
     .catch((error) => reject(error));
-})
+});
 
 export default { uploadFile };

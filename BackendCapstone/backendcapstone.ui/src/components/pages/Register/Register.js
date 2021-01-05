@@ -32,6 +32,7 @@ class Register extends React.Component {
       photoUrl: '',
       file: {},
     },
+    imageFileId: 0,
     authed: this.props.authed,
   };
 
@@ -108,9 +109,17 @@ class Register extends React.Component {
   }
 
   registerClickEvent = (e) => {
-    const { user } = this.state;
+    const { user, imageFileId } = this.state;
     e.preventDefault();
-    authData.registerUser(user)
+    const newUser = {
+      email: user.email,
+      password: user.password,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      imageFileId,
+    };
+    console.error('new user', newUser);
+    authData.registerUser(newUser)
       .then(() => {
         this.setState({
           authed: true,
@@ -152,10 +161,17 @@ class Register extends React.Component {
 
   render() {
     const { user } = this.state;
+
     const uploadOnClick = () => {
       const { file } = this.state;
+      console.error('clicked to upload!');
 
-      uploadFile(file);
+      uploadFile.uploadFile(file);
+      // .then((fileIdResponse) => {
+      //   this.setState({ imageFileId: fileIdResponse });
+      //   console.error('fileID', fileIdResponse);
+      // })
+      // .catch((error) => console.error('Unable to upload image file.', error));
     };
 
     return (
