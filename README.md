@@ -32,7 +32,7 @@ API, ASP .NET Core, Axios, Azure (for SQL database and deployment), Bootstrap, C
 1. Authenticated users can add new games to the database and edit the games they have added.
 1. Authenticated users can delete games they added to the database (as long as they have not yet been used in a practice plan).
 1. Authenticated users can view their profile, which includes a list of the awesome contributions each of them has made to this database.
-1. AUthenticated users can upload a photo for their profile. 
+1. Authenticated users can upload a photo for their profile. 
 
 ## Deployment
 This app has been deployed with Firebase for the frontend, Azure Web Services for the backend, and using an Azure SQL database. You can find it here: https://backendcapstone-bccf6.web.app/home.
