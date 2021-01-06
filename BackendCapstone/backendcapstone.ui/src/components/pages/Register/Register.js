@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {
   Button,
@@ -13,11 +14,15 @@ import PropTypes from 'prop-types';
 import authData from '../../../helpers/data/authData';
 import usersData from '../../../helpers/data/usersData';
 
+import userShape from '../../../helpers/propz/userShape';
+
 import './Register.scss';
 
 class Register extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
+    user: userShape.userShape,
+    getUser: PropTypes.func,
   }
 
   state = {
@@ -26,7 +31,6 @@ class Register extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
-      photoUrl: '',
     },
     authed: this.props.authed,
   };
@@ -107,7 +111,7 @@ class Register extends React.Component {
     const { user } = this.state;
     e.preventDefault();
     authData.registerUser(user)
-      .then(() => {
+      .then((newUserResponse) => {
         this.setState({
           authed: true,
         });
