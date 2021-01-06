@@ -1,4 +1,5 @@
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import {
   Button,
@@ -113,6 +114,11 @@ class Register extends React.Component {
         this.setState({
           authed: true,
         });
+        <Redirect
+          to={{
+            pathname: '/home',
+            state: { user },
+          }} />;
         this.props.history.push('/home');
       })
       .catch((error) => console.error('There was an error in registering.', error));
