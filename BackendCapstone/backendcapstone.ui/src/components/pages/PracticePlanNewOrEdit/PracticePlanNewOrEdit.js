@@ -58,7 +58,6 @@ class PracticePlanNew extends React.Component {
   getPracticePlanDetails = () => {
     practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
       .then((practicePlanIdResponse) => {
-        console.error('currentpprespo', practicePlanIdResponse);
         if (practicePlanIdResponse.status === 200) {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
@@ -147,11 +146,9 @@ class PracticePlanNew extends React.Component {
         startDate: practicePlanStartDate,
         endDate: practicePlanEndDate,
       };
-      console.error('new pp created', newPracticePlan);
       practicePlansData.createPracticePlan(newPracticePlan)
         .then((newPracticePlanResponse) => {
           this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
-          console.error('respo', newPracticePlanResponse);
           this.getPracticePlanDetails();
         })
         .catch((error) => console.error('Unable to create this practice plan.', error));
@@ -299,7 +296,7 @@ class PracticePlanNew extends React.Component {
                   ? <Button className="mainButtons p-2" onClick={this.saveNewPracticePlan}>Save and Add Games</Button>
                   : <Button className="mainButtons p-2" onClick={this.saveUpdatedPracticePlan}>Save Changes</Button>
               }
-              <Button className="mainButtons p-2 ml-2" onClick={this.cancelAction}>Cancel</Button>
+              <Button className="mainButtons p-2 m-2" onClick={this.cancelAction}>Cancel</Button>
             </Form>
           </div>
           <div className="col-md-6">

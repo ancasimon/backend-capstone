@@ -11,6 +11,7 @@ const userShape = PropTypes.shape({
   lastName: PropTypes.string,
   password: PropTypes.string,
   photoUrl: PropTypes.string,
+  imageFileId: PropTypes.number,
 });
 
 export default { userShape };

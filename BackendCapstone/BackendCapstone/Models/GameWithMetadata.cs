@@ -25,6 +25,7 @@ namespace BackendCapstone.Models
         public DateTime DateCreated { get; set; }
         public int GameIconId { get; set; }
         public string PhotoUrl { get; set; }
+        public int ImageFileId { get; set; }
 
         // NEWLY ADDED TO THIS MODEL ONLY:
         public string PreworkLevelName { get; set; }

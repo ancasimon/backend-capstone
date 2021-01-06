@@ -147,7 +147,6 @@ class GameNewOrEdit extends React.Component {
       }
     }
     this.setState({ gameAges: opts });
-    console.error('event', event);
   }
 
   changeGameKeywords = (e) => {
@@ -500,10 +499,10 @@ class GameNewOrEdit extends React.Component {
           <FormGroup check row>
             { newGameForm
               ? <Col>
-              <Button onClick={this.saveNewGame}>Add New Game</Button>
+              <Button onClick={this.saveNewGame} className="mainButtons p-2">Add New Game</Button>
             </Col>
               : <Col>
-              <Button onClick={this.editGame}>Save Changes</Button>
+              <Button onClick={this.editGame} className="mainButtons p-2">Save Changes</Button>
             </Col>
             }
           </FormGroup>

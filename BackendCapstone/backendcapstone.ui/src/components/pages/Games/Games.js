@@ -102,7 +102,6 @@ class Games extends React.Component {
   changeSearchInput = (e) => {
     e.preventDefault();
     this.setState({ searchInput: e.target.value });
-    console.error('searchinput in state', this.state.searchInput);
   }
 
   changeAgeFilter = (e) => {
@@ -151,8 +150,6 @@ class Games extends React.Component {
     if (prevState.selectedAges !== this.state.selectedAges
     || prevState.selectedInstruments !== this.state.selectedInstruments
     || prevState.selectedPreworkLevels !== this.state.selectedPreworkLevels) {
-      console.error('prevstate in compdidupdate', prevState);
-      console.error('current state', this.state);
       this.getFilteredGamesList();
     }
   }

@@ -17,7 +17,6 @@ class MyPracticePlans extends React.Component {
     practicePlansData.getUserPracticePlans()
       .then((userPracticePlansList) => {
         this.setState({ userPracticePlans: userPracticePlansList });
-        console.error('pract plans', this.state.userPracticePlans);
       })
       .catch((error) => console.error('Could not get your practice plans.', error));
   }

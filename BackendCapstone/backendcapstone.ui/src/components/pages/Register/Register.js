@@ -63,14 +63,12 @@ class Register extends React.Component {
     e.preventDefault();
     const userEmail = this.state.user.email;
     const indexPositionOfAt = userEmail.indexOf('@');
-    console.error('@ index', indexPositionOfAt);
     if (indexPositionOfAt == -1) {
       this.validationAlertValidEmail();
     } else {
       const userName = userEmail.substring(0, indexPositionOfAt);
       const domainName = userEmail.substring(indexPositionOfAt + 1);
       const indexPositionOfDot = domainName.indexOf('.');
-      console.error('. index', indexPositionOfDot);
 
       if (indexPositionOfDot == -1) {
         this.validationAlertValidEmail();
@@ -78,7 +76,6 @@ class Register extends React.Component {
         const dotComString = domainName.substring(indexPositionOfDot + 1);
 
         const containsMoreThanOneAt = domainName.includes('@');
-        console.error('more than 1 @', containsMoreThanOneAt);
 
         if (indexPositionOfDot != -1
           && indexPositionOfDot != -1
