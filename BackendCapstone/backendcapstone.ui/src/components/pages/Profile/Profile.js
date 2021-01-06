@@ -62,7 +62,7 @@ class Profile extends React.Component {
               <img src={`${baseUrl}/images/${user.imageFileId}`} alt="user photo" className="userPhoto"/>
               <FormGroup>
                 <FileUpload onChange={(file) => this.setState({ file })} />
-                <button onClick={uploadOnClick} className="mainButtons p-2">Click Here to Upload</button>
+                <button onClick={uploadOnClick} className="mainButtons p-2 m-2">Click Here to Upload</button>
               </FormGroup>
             </div>
           </div>
