@@ -69,7 +69,7 @@ class SinglePracticePlanView extends React.Component {
     const { practiceplanid } = this.props.match.params;
 
     const buildGamesGrid = () => selectedGames.map((item) => (
-      <PracticePlanGameItem key={item.id} practicePlanGame={item} practicePlanId={item.practicePlanId} refreshPage={this.buildSingleView} />
+      <PracticePlanGameItem key={item.id} practicePlanGame={item} gameId={item.gameId} practicePlanId={item.practicePlanId} refreshPage={this.buildSingleView} />
     ));
 
     return (

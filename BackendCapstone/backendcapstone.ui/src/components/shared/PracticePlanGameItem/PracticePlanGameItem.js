@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { FormGroup, Label, Input } from 'reactstrap';
 import Swal from 'sweetalert2';
 import PropTypes from 'prop-types';
@@ -22,6 +23,7 @@ class PracticePlanGameItem extends React.Component {
     gameId: this.props.practicePlanGame.id,
     practiceCompleted: this.props.practicePlanGame.isCompleted,
     practicePlanId: this.props.practicePlanId,
+    originalGameId: this.props.gameId,
   }
 
   inactivateRecord = (e) => {
@@ -86,12 +88,13 @@ class PracticePlanGameItem extends React.Component {
 
   render() {
     const { practicePlanGame } = this.props;
-    const { practiceCompleted } = this.state;
+    const { practiceCompleted, originalGameId } = this.state;
+    const originalGameUrl = `/games/${originalGameId}`;
     return (
       <tbody>
         <tr>
           <th scope="row">{practicePlanGame.practiceName}</th>
-          <td className="d-none d-md-table-cell">{practicePlanGame.gameName}</td>
+          <td className="d-none d-md-table-cell"><Link to={`${originalGameUrl}`}>{practicePlanGame.gameName}</Link></td>
           <td>{moment(practicePlanGame.practiceDate).format('L')}</td>
           <td className="d-none d-md-table-cell">{practicePlanGame.userNotes}</td>
           <td className="d-none d-md-table-cell">

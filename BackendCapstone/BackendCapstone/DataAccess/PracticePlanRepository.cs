@@ -46,7 +46,7 @@ namespace BackendCapstone.DataAccess
             PracticePlan selectedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlForSinglePlan, parameterForPlanId);
             if (selectedPlan != null)
             {
-                var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Name as GameName, PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
+                var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Id as GameId, g.Name as GameName, PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
                                                 from PracticePlans pp
 	                                                join PracticePlanGames ppg
 	                                                on pp.Id = ppg.PracticePlanId
