@@ -21,6 +21,7 @@ import { Link } from 'react-router-dom';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import Swal from 'sweetalert2';
+import { baseUrl } from '../../../helpers/constants.json';
 
 import AgeItem from '../../shared/AgeItem/AgeItem';
 import InstrumentItem from '../../shared/InstrumentItem/InstrumentItem';
@@ -227,7 +228,7 @@ class SingleGameView extends React.Component {
                   <h6>Submitted by: {selectedGame.userFirstName} {selectedGame.userLastName}</h6>
                 </div>
                 <div className="col-md-6">
-                  <img src={selectedGame.userPhotoUrl} alt="user photo" className="userPhotoInGame" />
+                  <img src={`${baseUrl}/images/${selectedGame.imageFileId}`} alt="user photo" className="userPhotoInGame"/>
                 </div>
               </div>
             </div>
