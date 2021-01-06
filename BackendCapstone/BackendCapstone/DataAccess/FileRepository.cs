@@ -15,16 +15,21 @@ namespace BackendCapstone.DataAccess
 
         }
 
-        public UploadedFile Add(UploadedFile file)
+        public UploadedFile Add(UploadedFile file, int userId)
         {
+            using var db = new SqlConnection(_connectionString);
+
             var sql = @"Insert into Files(FileName,FileContent,FileContentType,FileLength)
                         Output inserted.id
                         values (@FileName,@FileContent,@FileContentType,@FileLength)";
-            int newFileId;
-            using (var db = new SqlConnection(_connectionString))
-            {
-                newFileId = db.ExecuteScalar<int>(sql, file);
-            }
+            
+            int newFileId = db.ExecuteScalar<int>(sql, file);
+            var sqlToUpdateUserRecord = @"Update Users
+                                          Set ImageFileId = @imageFileId
+                                          Where Id = @userId";
+            var parametersToUpdateUserRecord = new { imageFileId = newFileId, userId };
+            db.Execute(sqlToUpdateUserRecord, parametersToUpdateUserRecord);
+            
             return GetById(newFileId);
         }
 
@@ -34,7 +39,7 @@ namespace BackendCapstone.DataAccess
 
             using (var db = new SqlConnection(_connectionString))
             {
-                return db.QueryFirst<UploadedFile>(sql, new { fileId = fileId });
+                return db.QueryFirstOrDefault<UploadedFile>(sql, new { fileId = fileId });
             }
 
         }

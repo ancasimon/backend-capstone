@@ -11,13 +11,15 @@ namespace BackendCapstone.Controllers
 {
     [Route("api/images")]
     [ApiController]
-    public class ImagesController : ControllerBase
+    public class ImagesController : FirebaseEnabledController
     {
         readonly FileRepository _repo;
+        UserRepository _userRepo;
 
-        public ImagesController(FileRepository repo)
+        public ImagesController(FileRepository repo, UserRepository userRepo)
         {
             _repo = repo;
+            _userRepo = userRepo;
         }
 
         [HttpPost]
@@ -25,8 +27,9 @@ namespace BackendCapstone.Controllers
         {
             var fileUploadHelper = new FileUploadHelper();
             var file = fileUploadHelper.GetFileUploadContent(Request.ContentType, Request.Body);
+            var currentUserId = _userRepo.GetUserIdByUid(UserId);
 
-            _repo.Add(file);
+            _repo.Add(file, currentUserId);
 
             return Ok();
         }

@@ -45,8 +45,7 @@ class Profile extends React.Component {
 
       uploadFile.uploadFile(file)
         .then((fileIdResponse) => {
-          this.setState({ imageFileId: fileIdResponse });
-          console.error('fileID', fileIdResponse);
+          this.getUser();
         })
         .catch((error) => console.error('Unable to upload image file.', error));
     };
