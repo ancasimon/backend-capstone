@@ -48,7 +48,6 @@ class App extends React.Component {
   getUser = () => {
     usersData.getSingleUser()
       .then((userResponse) => {
-        console.error('user resp in App', userResponse);
         this.setState({ user: userResponse.data });
       })
       .catch((error) => console.error('Could not get user data.', error));

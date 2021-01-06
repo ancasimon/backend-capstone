@@ -147,7 +147,6 @@ class GameNewOrEdit extends React.Component {
       }
     }
     this.setState({ gameAges: opts });
-    console.error('event', event);
   }
 
   changeGameKeywords = (e) => {

@@ -58,7 +58,6 @@ class PracticePlanNew extends React.Component {
   getPracticePlanDetails = () => {
     practicePlansData.getSinglePracticePlan(this.state.practicePlanId)
       .then((practicePlanIdResponse) => {
-        console.error('currentpprespo', practicePlanIdResponse);
         if (practicePlanIdResponse.status === 200) {
           this.setState({
             selectedGames: practicePlanIdResponse.data.plannedGames,
@@ -147,11 +146,9 @@ class PracticePlanNew extends React.Component {
         startDate: practicePlanStartDate,
         endDate: practicePlanEndDate,
       };
-      console.error('new pp created', newPracticePlan);
       practicePlansData.createPracticePlan(newPracticePlan)
         .then((newPracticePlanResponse) => {
           this.setState({ practicePlanId: newPracticePlanResponse.data, newRecordForm: false });
-          console.error('respo', newPracticePlanResponse);
           this.getPracticePlanDetails();
         })
         .catch((error) => console.error('Unable to create this practice plan.', error));

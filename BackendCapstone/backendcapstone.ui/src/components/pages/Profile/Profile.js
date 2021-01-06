@@ -26,7 +26,6 @@ class Profile extends React.Component {
     usersData.getSingleUser()
       .then((singleUserResponse) => {
         this.setState({ user: singleUserResponse.data });
-        console.error('singleUserResp', singleUserResponse);
       })
       .catch((error) => console.error('Unable to get user data.', error));
   }
