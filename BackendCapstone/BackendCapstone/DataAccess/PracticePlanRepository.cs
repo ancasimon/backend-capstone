@@ -141,5 +141,29 @@ namespace BackendCapstone.DataAccess
 
             return newId;
         }
+
+        // added a new method that returns the new object created:
+        public PracticePlan AddPracticePlanAndReturnFullObject(int id, PracticePlan newPracticePlan)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToAddNewPracticePlan = @"INSERT INTO [dbo].[PracticePlans]
+                                                       ([Name]
+                                                       ,[UserId]
+                                                       ,[StartDate]
+                                                       ,[EndDate]
+                                                       ,[IsActive])
+                                                 OUTPUT INSERTED.Id
+                                                 VALUES
+                                                       (@name
+                                                       ,@userId
+                                                       ,@startDate
+                                                       ,@endDate
+                                                       ,1)";
+            var parametersForNewPracticePlan = new { name = newPracticePlan.Name, userId = id, startDate = newPracticePlan.StartDate, endDate = newPracticePlan.EndDate };
+            var newPracticePlanObject = db.QueryFirstOrDefault<PracticePlan>(sqlToAddNewPracticePlan, parametersForNewPracticePlan);
+
+            return newPracticePlanObject;
+        }
     }
 }
