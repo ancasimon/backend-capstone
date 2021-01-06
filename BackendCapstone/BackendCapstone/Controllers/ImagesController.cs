@@ -40,6 +40,10 @@ namespace BackendCapstone.Controllers
         {
             var uploadedFile = _repo.GetById(id);
 
+            if (uploadedFile == null)
+            {
+                return NotFound();
+            }
             return File(uploadedFile.FileContent, uploadedFile.FileContentType);
         }
     }

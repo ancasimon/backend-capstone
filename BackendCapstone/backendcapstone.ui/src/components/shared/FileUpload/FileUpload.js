@@ -9,7 +9,7 @@ class FileUpload extends React.Component {
     return (
       <div className="FileUpload">
         <label htmlFor="file">Upload a Photo:</label>
-        <input name="file" type="file" accept=".jpg,.png,.gif" onChange={this.fileChanged} />
+        <input name="file" type="file" accept=".jpg,.png, .gif" onChange={this.fileChanged} />
       </div>
     );
   }

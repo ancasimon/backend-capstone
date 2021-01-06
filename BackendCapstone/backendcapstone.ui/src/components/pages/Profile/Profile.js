@@ -20,7 +20,6 @@ class Profile extends React.Component {
   state = {
     user: {},
     file: {},
-    imageFileId: 0,
   }
 
   getUser = () => {
@@ -41,8 +40,6 @@ class Profile extends React.Component {
 
     const uploadOnClick = () => {
       const { file } = this.state;
-      console.error('clicked to upload!');
-
       uploadFile.uploadFile(file)
         .then((fileIdResponse) => {
           this.getUser();
@@ -62,7 +59,6 @@ class Profile extends React.Component {
               <p>Email: {user.email}</p>
             </div>
             <div className="col-md-6">
-              {/* <img src={user.photoUrl} als="user photo" className="userPhoto"/> */}
               <img src={`${baseUrl}/images/${user.imageFileId}`} alt="user photo" className="userPhoto"/>
               <FormGroup>
                 <FileUpload onChange={(file) => this.setState({ file })} />
