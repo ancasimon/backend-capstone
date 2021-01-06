@@ -169,21 +169,21 @@ class SingleGameView extends React.Component {
               <h2 className="pageTitle">Game Details: {selectedGame.name}</h2>
             </div>
             <div className="col-md-3 buttonDiv">
-              <Link to='/games' className="mainButtons p-2">Back</Link>
+              <Link to='/games' className="mainButtons p-2 m-2">Back</Link>
             </div>
           </div>
           <div className="row p-3 container">
             {
             (user.id === selectedGame.submittedByUserId)
               ? <div className="col-md-4 container">
-              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
+              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2 m-2">Edit</Link>
             </div>
               : ''
             }
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
               ? <div className="col-md-4 container">
-              <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
+              <button className="mainButtons p-2 m-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
               : ''
             }
@@ -242,16 +242,22 @@ class SingleGameView extends React.Component {
             </div>
           </div>
           {
-            selectedGame.credit != ''
-              ? <div className="row">
-              <div className="col credit">
-                <h6>Credit: {selectedGame.credit}</h6>
-                <a href={selectedGame.websiteUrl} target="_blank"><h6>Click here to visit the website!</h6></a>
-              </div>
+            selectedGame.credit != '' || selectedGame.websiteUrl != null
+              ? <div className="credit">
+                {
+                selectedGame.credit != ''
+                  ? <h6>Credit: {selectedGame.credit}</h6>
+                  : ''
+                }
+                {
+              selectedGame.websiteUrl != null
+                ? <a href={selectedGame.websiteUrl} target="_blank"><h6>Click here to visit the website!</h6></a>
+                : ''
+                }
             </div>
               : ''
           }
-        </div>
+      </div>
 
         {/* code for modal about available practice plans below: */}
         <Modal isOpen={this.state.practicePlansModal} toggle={this.togglePracticePlansModal}>
