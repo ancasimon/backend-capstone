@@ -49,6 +49,7 @@ namespace BackendCapstone
             services.AddTransient<UserRatingRepository>();
             services.AddTransient<UserRepository>();
             services.AddTransient<UserReviewRepository>();
+            services.AddTransient<FileRepository>();
 
             //adding code block below to support authentication via Firebase:
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

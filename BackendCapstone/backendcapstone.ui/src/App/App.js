@@ -42,6 +42,7 @@ class App extends React.Component {
   state = {
     authed: false,
     user: {},
+    file: {},
   }
 
   getUser = () => {
@@ -59,9 +60,11 @@ class App extends React.Component {
         // get token from firebase
         user.getIdToken()
         // save the token to the session storage
-          .then((token) => sessionStorage.setItem('token', token));
-        this.setState({ authed: true });
-        this.getUser();
+          .then((token) => {
+            sessionStorage.setItem('token', token);
+            this.getUser();
+            this.setState({ authed: true });
+          });
       } else {
         this.setState({ authed: false });
       }

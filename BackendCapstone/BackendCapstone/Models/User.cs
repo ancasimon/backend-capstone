@@ -17,5 +17,6 @@ namespace BackendCapstone.Models
         public DateTime DateCreated { get; set; }
         public bool IsActive { get; set; }
         public string ActiveDate { get; set; }
+        public int ImageFileId { get; set; }
     }
 }
