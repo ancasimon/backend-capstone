@@ -10,6 +10,7 @@ import {
 import FileUpload from '../../shared/FileUpload/FileUpload';
 import MyContributions from '../../shared/MyContributions/MyContributions';
 
+import { baseUrl } from '../../../helpers/constants.json';
 import uploadFile from '../../../helpers/data/fileUpload';
 import usersData from '../../../helpers/data/usersData';
 
@@ -62,7 +63,8 @@ class Profile extends React.Component {
               <p>Email: {user.email}</p>
             </div>
             <div className="col-md-6">
-              <img src={user.photoUrl} als="user photo" className="userPhoto"/>
+              {/* <img src={user.photoUrl} als="user photo" className="userPhoto"/> */}
+              <img src={`${baseUrl}/images/${user.imageFileId}`} alt="user photo" className="userPhoto"/>
               <FormGroup>
                 <FileUpload onChange={(file) => this.setState({ file })} />
                 <button onClick={uploadOnClick} className="mainButtons p-2">Click Here to Upload</button>

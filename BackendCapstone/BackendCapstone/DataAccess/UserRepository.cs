@@ -56,7 +56,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForUserRecordByUid = @"  select u.Id, u.FirstName, u.LastName, u.Email, u.PhotoUrl, (select format (u.DateCreated, 'MMM dd yyyy')) as ActiveDate
+            var sqlForUserRecordByUid = @"  select u.Id, u.FirstName, u.LastName, u.Email, u.PhotoUrl, u.ImageFileId, (select format (u.DateCreated, 'MMM dd yyyy')) as ActiveDate
                                           from Users u
                                           where FirebaseUid = @uid";
 
