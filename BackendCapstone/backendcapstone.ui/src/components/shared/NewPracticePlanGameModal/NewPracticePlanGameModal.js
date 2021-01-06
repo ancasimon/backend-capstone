@@ -16,12 +16,17 @@ import {
   ModalFooter,
   Table,
 } from 'reactstrap';
+import Swal from 'sweetalert2';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import { parseISO, format } from 'date-fns';
 import PropTypes from 'prop-types';
 
 import gamesData from '../../../helpers/data/gamesData';
 import practicePlanGamesData from '../../../helpers/data/practicePlanGamesData';
 import practicePlansData from '../../../helpers/data/practicePlansData';
 
+import 'react-datepicker/dist/react-datepicker.css';
 import './NewPracticePlanGameModal.scss';
 
 class NewPracticePlanGameModal extends React.Component {
@@ -36,7 +41,7 @@ class NewPracticePlanGameModal extends React.Component {
     selectedGame: {},
     selectedPlan: {},
     practiceGameName: '',
-    practiceDate: new Date().toLocaleDateString('en-US'),
+    practiceDate: new Date(new Date().setHours(6, 0, 0, 0)),
     practiceNotes: '',
     practiceCompleted: false,
   }
@@ -70,9 +75,8 @@ class NewPracticePlanGameModal extends React.Component {
     this.setState({ practiceGameName: e.target.value });
   }
 
-  changePracticeDate = (e) => {
-    e.preventDefault();
-    this.setState({ practiceDate: e.target.value });
+  changePracticeDate = (date) => {
+    this.setState({ practiceDate: date });
   }
 
   changePracticeNotes = (e) => {
@@ -85,6 +89,10 @@ class NewPracticePlanGameModal extends React.Component {
     this.setState({ practiceCompleted: e.target.checked });
   }
 
+  validationAlertPracticeGameDate = () => {
+    Swal.fire('Game date must be between practice plan start and end dates.');
+  }
+
   savePracticePlanGame = (e) => {
     e.preventDefault();
     const {
@@ -93,27 +101,34 @@ class NewPracticePlanGameModal extends React.Component {
       practiceNotes,
       practiceCompleted,
       selectedGame,
+      selectedPlan,
     } = this.state;
     const { gameId, practicePlanId, getPracticePlanDetails } = this.props;
+    const planStartDate = selectedPlan.startDate;
+    const planEndDate = selectedPlan.endDate;
     if (practiceGameName == '') {
       this.setState({ practiceGameName: selectedGame.name });
     }
     if (practiceDate == '') {
       this.setState({ practiceDate: new Date() });
     }
-    const newPracticePlanGame = {
-      name: this.state.practiceGameName,
-      practiceDate: this.state.practiceDate,
-      userNotes: practiceNotes,
-      isCompleted: practiceCompleted,
-      practicePlanId,
-      gameId,
-    };
-    practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
-      .then((newPpgResponse) => {
-        this.props.closeModal();
-      })
-      .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
+    if (practiceDate.getTime() < parseISO(planStartDate).getTime() || practiceDate.getTime() > parseISO(planEndDate).getTime()) {
+      this.validationAlertPracticeGameDate();
+    } else {
+      const newPracticePlanGame = {
+        name: this.state.practiceGameName,
+        practiceDate: this.state.practiceDate,
+        userNotes: practiceNotes,
+        isCompleted: practiceCompleted,
+        practicePlanId,
+        gameId,
+      };
+      practicePlanGamesData.createNewPracticePlanGame(newPracticePlanGame)
+        .then((newPpgResponse) => {
+          this.props.closeModal();
+        })
+        .catch((error) => console.error('Could not add the game selected to your practice plan.', error));
+    }
   }
 
   render() {
@@ -128,7 +143,7 @@ class NewPracticePlanGameModal extends React.Component {
     return (
       <div className='NewPracticePlanGameModal'>
         {/* code for modal about the game selected below: */}
-          <ModalHeader toggle={this.toggleGameFormModal}>Add <span className='italics'>{this.state.selectedGame.name}</span> to Plan <span className='italics'>{selectedPlan.name}</span></ModalHeader>
+          <ModalHeader toggle={this.toggleGameFormModal}>Add <span className='italics'>{this.state.selectedGame.name}</span> to Plan <span className='italics'>{selectedPlan.name} ({moment(selectedPlan.startDate).format('L')} - {moment(selectedPlan.endDate).format('L')})</span></ModalHeader>
           <ModalBody>
             <div>
             <Form>
@@ -143,13 +158,14 @@ class NewPracticePlanGameModal extends React.Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label for="practiceDate">Practice Date (MM/DD/YYYY)</Label>
-                <Input
-                  type="input"
+                <Label for="practiceDate">Practice Date</Label>
+                <DatePicker
+                  selected={this.state.practiceDate}
                   name="practiceDate"
                   value={practiceDate}
                   id="practiceDate"
                   onChange={this.changePracticeDate}
+                  dateFormat={'MM-dd-yyyy'}
                 />
               </FormGroup>
               <FormGroup>

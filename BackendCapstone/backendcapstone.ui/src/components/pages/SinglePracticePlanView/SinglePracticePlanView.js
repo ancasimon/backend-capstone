@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Table } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import Swal from 'sweetalert2';
 
 import PracticePlanGameItem from '../../shared/PracticePlanGameItem/PracticePlanGameItem';
@@ -76,7 +77,7 @@ class SinglePracticePlanView extends React.Component {
         <div className="row">
           <div className="col-md-9 text-center">
             <h2 className="pageTitle">Practice Plan Details: {selectedPracticePlan.name}</h2>
-            <h4>{selectedPracticePlan.startDate} - {selectedPracticePlan.endDate}</h4>
+            <h4>{moment(selectedPracticePlan.startDate).format('L')} - {moment(selectedPracticePlan.endDate).format('L')}</h4>
             <div className="row">
               <div className="col-md-6 buttonDiv text-center">
                 <Link to={`/practiceplans/edit/${practiceplanid}`} className="mainButtons p-2">Edit</Link>

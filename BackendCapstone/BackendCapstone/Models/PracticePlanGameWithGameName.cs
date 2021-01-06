@@ -10,7 +10,7 @@ namespace BackendCapstone.Models
         public int Id { get; set; }
         public int PracticePlanId { get; set; }
         public string PracticeName { get; set; }
-        public string PracticeDate { get; set; }
+        public DateTime PracticeDate { get; set; }
         public string UserNotes { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsActive { get; set; }

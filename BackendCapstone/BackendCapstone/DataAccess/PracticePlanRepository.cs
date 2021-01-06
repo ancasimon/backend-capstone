@@ -22,7 +22,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForPracticePlansByUserUid = @"select pp.Id as PlanId, pp.Name, FORMAT(pp.StartDate, 'd', 'en-us') as startDate, FORMAT(pp.EndDate, 'd', 'en-us') as endDate, pp.IsActive,pp.UserId as UserId
+            var sqlForPracticePlansByUserUid = @"select pp.Id as PlanId, pp.Name, StartDate, pp.EndDate, pp.IsActive,pp.UserId as UserId
                                                 from PracticePlans pp
 	                                                join Users u
 		                                                on pp.UserId = u.Id
@@ -40,13 +40,13 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForSinglePlan = "select Id as PlanId, Name, FORMAT(StartDate, 'd', 'en-us') as startDate, FORMAT(EndDate, 'd', 'en-us') as endDate, IsActive, UserId from PracticePlans where Id = @planId";
+            var sqlForSinglePlan = "select Id as PlanId, Name, StartDate, EndDate, IsActive, UserId from PracticePlans where Id = @planId";
             var parameterForPlanId = new { planId };
 
             PracticePlan selectedPlan = db.QueryFirstOrDefault<PracticePlan>(sqlForSinglePlan, parameterForPlanId);
             if (selectedPlan != null)
             {
-                var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
+                var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, ppg.Id, pp.Id as PracticePlanId, g.Name as GameName, PracticeDate, ppg.IsCompleted, ppg.IsActive, ppg.UserNotes
                                                 from PracticePlans pp
 	                                                join PracticePlanGames ppg
 	                                                on pp.Id = ppg.PracticePlanId

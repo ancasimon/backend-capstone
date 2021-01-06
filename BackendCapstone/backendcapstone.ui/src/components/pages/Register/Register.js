@@ -148,6 +148,7 @@ class Register extends React.Component {
 
   render() {
     const { user } = this.state;
+
     return (
       <div className="container">
         <h2 className="pageTitle">Register Here!</h2>
@@ -174,7 +175,7 @@ class Register extends React.Component {
               onChange={this.lastNameChange}
             />
           </FormGroup>
-          <FormGroup>
+          {/* <FormGroup>
             <Label for="photoUrl">Photo</Label>
             <Input
               type="input"
@@ -184,7 +185,7 @@ class Register extends React.Component {
               value={this.state.user.photoUrl}
               onChange={this.photoUrlChange}
             />
-          </FormGroup>
+          </FormGroup> */}
           <FormGroup>
             <Label for="email">Email</Label>
             <Input
@@ -207,7 +208,7 @@ class Register extends React.Component {
               onChange={this.passwordChange}
             />
           </FormGroup>
-      <Button type="submit" onClick={this.validateUser}>Submit</Button>
+      <Button type="submit" className="mainButtons p-2" onClick={this.validateUser}>Submit</Button>
     </Form>
       </div>
     );

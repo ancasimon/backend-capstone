@@ -22,7 +22,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, g.Name as GameName, FORMAT(ppg.PracticeDate, 'd', 'en-us') as PracticeDate, ppg.IsCompleted, ppg.UserNotes
+            var sqlForPracticeGamesByPlanId = @"select ppg.Name as PracticeName, g.Name as GameName, PracticeDate, ppg.IsCompleted, ppg.UserNotes
                                                 from PracticePlans pp
 	                                                join PracticePlanGames ppg
 	                                                on pp.Id = ppg.PracticePlanId
