@@ -25,15 +25,16 @@ const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(us
       lastName: user.lastName,
       photoUrl: user.photoUrl,
     };
-
+    let newUser = {};
     // get token from firebase
     cred.user.getIdToken()
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token))
       // save the user to the the api
       .then(() => {
-        axios.post(`${baseUrl}/users`, userInfo);
+        newUser = axios.post(`${baseUrl}/users`, userInfo);
       });
+    return newUser;
   });
 
 // sub out whatever auth method firebase provides that you want to use.

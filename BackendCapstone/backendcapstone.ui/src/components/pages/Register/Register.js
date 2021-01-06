@@ -13,11 +13,14 @@ import PropTypes from 'prop-types';
 import authData from '../../../helpers/data/authData';
 import usersData from '../../../helpers/data/usersData';
 
+import userShape from '../../../helpers/propz/userShape';
+
 import './Register.scss';
 
 class Register extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
+    user: userShape.userShape,
   }
 
   state = {
@@ -26,7 +29,6 @@ class Register extends React.Component {
       password: '',
       firstName: '',
       lastName: '',
-      photoUrl: '',
     },
     authed: this.props.authed,
   };
@@ -107,7 +109,7 @@ class Register extends React.Component {
     const { user } = this.state;
     e.preventDefault();
     authData.registerUser(user)
-      .then(() => {
+      .then((newUserResponse) => {
         this.setState({
           authed: true,
         });
