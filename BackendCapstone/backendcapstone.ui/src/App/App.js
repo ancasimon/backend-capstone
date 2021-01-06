@@ -96,7 +96,7 @@ class App extends React.Component {
                     <Route path='/login' component={Login} authed={authed} />
                     <Route path='/games/:gameid' render={(props) => <SingleGameView authed={authed} user={user} {...props} />} />
                     <Route path='/games' render={(props) => <Games authed={authed} {...props} />} />
-                    <Route path='/register' render={(props) => <Register authed={authed} user={user} {...props} />} />
+                    <Route path='/register' render={(props) => <Register authed={authed} user={user} getUser={this.getUser} {...props} />} />
 
                     <Redirect from="*" to='/home'></Redirect>
                   </Switch>

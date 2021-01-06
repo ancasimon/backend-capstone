@@ -22,6 +22,7 @@ class Register extends React.Component {
   static propTypes = {
     authed: PropTypes.bool.isRequired,
     user: userShape.userShape,
+    getUser: PropTypes.func,
   }
 
   state = {
@@ -114,11 +115,6 @@ class Register extends React.Component {
         this.setState({
           authed: true,
         });
-        <Redirect
-          to={{
-            pathname: '/home',
-            state: { user },
-          }} />;
         this.props.history.push('/home');
       })
       .catch((error) => console.error('There was an error in registering.', error));
