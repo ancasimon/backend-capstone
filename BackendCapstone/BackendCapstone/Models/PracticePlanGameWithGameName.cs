@@ -15,5 +15,6 @@ namespace BackendCapstone.Models
         public bool IsCompleted { get; set; }
         public bool IsActive { get; set; }
         public string GameName { get; set; }
+        public int GameId { get; set; }
     }
 }
