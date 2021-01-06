@@ -25,9 +25,8 @@ const registerUser = (user) => firebase.auth().createUserWithEmailAndPassword(us
       lastName: user.lastName,
       photoUrl: user.photoUrl,
     };
-
     // get token from firebase
-    cred.user.getIdToken()
+    return cred.user.getIdToken()
       // save the token to the session storage
       .then((token) => sessionStorage.setItem('token', token))
       // save the user to the the api

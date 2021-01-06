@@ -12,3 +12,6 @@ from Files
 -- Add a new column in the Users table to track the ID of the file the user uploaded so we can associate with their user ID and display it:
  ALTER TABLE Users
  Add ImageFileId int null
+
+ select *
+ from Users
