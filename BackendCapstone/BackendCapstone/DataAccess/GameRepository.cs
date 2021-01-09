@@ -215,6 +215,22 @@ namespace BackendCapstone.DataAccess
                     db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
                 }
 
+                // also delete related file record for photo file:
+                var sqlForRelatedFileId = @"select f.Id
+                                            from Files f
+                                            join Games g
+                                            on f.Id = g.GamePhotoId
+                                            where g.Id = @gameId";
+                var selectedFileId = db.QueryFirst<int>(sqlForRelatedFileId, parameterForGameToDelete);
+                if (selectedFileId != null)
+                {
+                    var sqlToDeleteFile = @"Delete
+                                            from Files
+                                            where Id = @selectedFileId";
+                    var parameterToDeleteFile = new { selectedFileId };
+                    db.Execute(sqlToDeleteFile, parameterToDeleteFile);
+                }
+
                 var sqlToReallyDeleteGame = @"DELETE
                                           FROM [dbo].[Games]
                                           WHERE Id = @gameId";
