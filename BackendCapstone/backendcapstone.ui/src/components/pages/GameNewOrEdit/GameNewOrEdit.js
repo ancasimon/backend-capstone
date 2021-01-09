@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   Col,
   Button,
@@ -10,6 +11,13 @@ import {
   FormText,
 } from 'reactstrap';
 import Swal from 'sweetalert2';
+import {
+  faBell,
+  faClock,
+  faGem,
+  faMoneyBillAlt,
+  faStar,
+} from '@fortawesome/free-regular-svg-icons';
 
 import FileUpload from '../../shared/FileUpload/FileUpload';
 
@@ -339,7 +347,13 @@ class GameNewOrEdit extends React.Component {
     ));
 
     const buildGameIconsList = () => gameIcons.map((icon) => (
-      <option key={icon.id} value={icon.id}>{icon.name}</option>
+      // <option key={icon.id} value={icon.id}>{icon.name}</option>
+      <option key={icon.id} value={icon.id}>
+        <Fragment>
+          <FontAwesomeIcon icon={faBell.toString()} />
+        </Fragment>
+        {console.error('icon object', icon.html.toString()) }
+      </option>
     ));
 
     const uploadPhotoOnClick = (e) => {
