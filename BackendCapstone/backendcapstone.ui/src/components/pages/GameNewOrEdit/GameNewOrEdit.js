@@ -499,11 +499,15 @@ class GameNewOrEdit extends React.Component {
           <FormGroup row>
             <FileUpload fileUploaded={fileUploaded} onChange={(file) => this.setState({ file })} />
             <button onClick={uploadPhotoOnClick} className="mainButtons p-2">Click Here to Upload</button>
+          </FormGroup>
+          <FormGroup row>
+          <div>
             {
               (this.state.gamePhotoId !== 0)
                 ? <div><p>Selected Photo: </p><img src={`${baseUrl}/images/${this.state.gamePhotoId}`} alt="game photo" className="userPhoto"/></div>
                 : 'No selected photo.'
             }
+            </div>
           </FormGroup>
           <FormGroup row>
             <Label for="gameCredit" sm={2}>Credit</Label>
