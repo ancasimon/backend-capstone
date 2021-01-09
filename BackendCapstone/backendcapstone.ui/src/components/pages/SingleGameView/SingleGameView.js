@@ -51,6 +51,8 @@ class SingleGameView extends React.Component {
     practicePlansModal: false,
     selectedPracticePlanId: 0,
     userPracticePlans: [],
+    credit: '',
+    websiteUrl: '',
   }
 
   buildSingleGameView = () => {
@@ -62,6 +64,12 @@ class SingleGameView extends React.Component {
           instrumentsForGame: singleGameResponse.data.instrumentsForGame,
           agesForGame: singleGameResponse.data.agesForGame,
         });
+        if (singleGameResponse.data.credit == null) {
+          this.setState({ credit: '' });
+        } else { this.setState({ credit: singleGameResponse.data.credit }); }
+        if (singleGameResponse.data.websiteUrl == null) {
+          this.setState({ websiteUrl: '' });
+        } else { this.setState({ websiteUrl: singleGameResponse.data.websiteUrl }); }
       })
       .catch((error) => console.error('Could not get this game.', error));
   }
@@ -138,6 +146,8 @@ class SingleGameView extends React.Component {
       userPracticePlans,
       selectedPracticePlanId,
       practicePlansDropdownOpen,
+      credit,
+      websiteUrl,
     } = this.state;
     const { user, authed } = this.props;
 
@@ -246,15 +256,15 @@ class SingleGameView extends React.Component {
             </div>
           </div>
           {
-            selectedGame.credit != '' || selectedGame.websiteUrl != null
+            credit != '' || websiteUrl != ''
               ? <div className="credit">
                 {
-                selectedGame.credit != ''
+                credit != ''
                   ? <h6>Credit: {selectedGame.credit}</h6>
                   : ''
                 }
                 {
-              selectedGame.websiteUrl != null
+              websiteUrl != ''
                 ? <a href={selectedGame.websiteUrl} target="_blank"><h6>Click here to visit the website!</h6></a>
                 : ''
                 }
