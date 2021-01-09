@@ -331,10 +331,8 @@ class GameNewOrEdit extends React.Component {
     const uploadPhotoOnClick = () => {
       const { file } = this.state;
       uploadFile.uploadFile(file)
-        .then(() => {
-          console.error('uploaded file', file);
-        })
-        .catch((error) => console.error('Unable to upload file.', error));
+        .then()
+        .catch((error) => console.error('Unable to upload photo.', error));
     };
 
     return (
