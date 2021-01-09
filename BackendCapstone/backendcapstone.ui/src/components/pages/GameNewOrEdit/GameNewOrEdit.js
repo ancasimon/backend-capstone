@@ -2,6 +2,10 @@ import React, { Fragment } from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
   Col,
   Button,
   Form,
@@ -55,6 +59,7 @@ class GameNewOrEdit extends React.Component {
     currentGame: {},
     file: {},
     gamePhotoId: 0,
+    iconsDropdownOpen: false,
   }
 
   componentDidMount() {
@@ -306,6 +311,10 @@ class GameNewOrEdit extends React.Component {
     Swal.fire('Please upload the photo you have selected.');
   }
 
+  toggleIconsDropdown = () => {
+    this.setState({ iconsDropdownOpen: !this.state.iconsDropdownOpen });
+  }
+
   render() {
     const {
       agesList,
@@ -326,6 +335,7 @@ class GameNewOrEdit extends React.Component {
       gameSongs,
       newGameForm,
       fileUploaded,
+      iconsDropdownOpen,
     } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
@@ -346,14 +356,20 @@ class GameNewOrEdit extends React.Component {
       <option key={level.id} value={level.id}>{level.name}</option>
     ));
 
-    const buildGameIconsList = () => gameIcons.map((icon) => (
-      // <option key={icon.id} value={icon.id}>{icon.name}</option>
-      <option key={icon.id} value={icon.id}>
-        <Fragment>
-          <FontAwesomeIcon icon={faBell.toString()} />
-        </Fragment>
-        {console.error('icon object', icon.html.toString()) }
-      </option>
+    // const buildGameIconsList = () => gameIcons.map((icon) => (
+    //   // <option key={icon.id} value={icon.id}>{icon.name}</option>
+    //   <option key={icon.id} value={icon.id}>
+    //     <Fragment>
+    //       <FontAwesomeIcon icon={faBell.toString()} />
+    //     </Fragment>
+    //     {console.error('icon object', icon.html.toString()) }
+    //   </option>
+    // ));
+
+    const buildGameIconsList = () => gameIcons.map((item) => (
+      <Fragment>
+      <DropdownItem key={item.id} icon={item.name}><img src={item.iconUrl} />{item.name}</DropdownItem>
+      </Fragment>
     ));
 
     const uploadPhotoOnClick = (e) => {
@@ -418,6 +434,18 @@ class GameNewOrEdit extends React.Component {
               </Input>
             </Col>
           </FormGroup>
+
+          <FormGroup>
+                  <Dropdown isOpen={iconsDropdownOpen} toggle={this.toggleIconsDropdown}>
+                    <DropdownToggle caret className="mainButtons p-2">
+                      Add icon
+                    </DropdownToggle>
+                    <DropdownMenu>
+                      {buildGameIconsList()}
+                    </DropdownMenu>
+                  </Dropdown>
+                </FormGroup>
+
           <FormGroup row>
             <Label for="gameInstruments" sm={2}>Select instruments:</Label>
             <Col sm={10}>
