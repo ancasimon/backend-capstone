@@ -73,7 +73,7 @@ namespace BackendCapstone.DataAccess
             selectedInstruments = EnsureValidFilterValuesInstrument(selectedInstruments);
             selectedPreworkLevels = EnsureValidFilterValuesPreworkLevel(selectedPreworkLevels);
 
-            var sqlForFilteredListOfGames = @"select g.Id, g.Name, g.Songs, g.Description, g.IsActive, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
+            var sqlForFilteredListOfGames = @"select g.Id, g.Name, g.Songs, g.Description, g.IsActive, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.GamePhotoId, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
                                             from Games g
 	                                        join PreworkLevels pl
 		                                        on g.PreworkLevelId = pl.Id
@@ -90,7 +90,7 @@ namespace BackendCapstone.DataAccess
                                     AND ga.AgeId IN @selectedAges
                                     AND ginst.InstrumentId IN @selectedInstruments
                                     AND g.Keywords like '%' + @searchInput + '%'
-                                    group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.Keywords, gi.Id, gi.IconUrl, gi.Html
+                                    group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.GamePhotoId, g.Keywords, gi.Id, gi.IconUrl, gi.Html
                                     order by g.Name";
             var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels, searchInput = (searchInput ?? "") };
             var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames, parametersForFilters);
@@ -138,7 +138,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForAllGames = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, u.FirstName as UserFirstName, u.LastName as UserLastName,g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
+            var sqlForAllGames = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.GamePhotoId, u.FirstName as UserFirstName, u.LastName as UserLastName,g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, gi.Html as GameIconHtml, g.PhotoUrl,g.Keywords
                                         from Games g
 	                                        join PreworkLevels pl
 		                                        on g.PreworkLevelId = pl.Id
@@ -195,7 +195,7 @@ namespace BackendCapstone.DataAccess
         {
             using var db = new SqlConnection(_connectionString);
 
-            var sqlForSingleGameById = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, u.PhotoUrl as UserPhotoUrl, u.ImageFileId, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, g.PhotoUrl,g.Keywords
+            var sqlForSingleGameById = @"select g.Id, g.Name, g.Songs, g.Description, pl.Id as PreWorkLevelId, pl.Name as PreworkLevelName, pl.IconUrl as IconUrl,g.Prework,g.Instructions,g.Credit,g.WebsiteUrl, g.PhotoUrl, g.GamePhotoId, g.SubmittedByUserId, u.FirstName as UserFirstName, u.LastName as UserLastName, u.PhotoUrl as UserPhotoUrl, u.ImageFileId, g.DateCreated, gi.Id as GameIconId, gi.IconUrl as GameIconUrl, g.PhotoUrl,g.Keywords
                                         from Games g
 	                                        join PreworkLevels pl
 		                                        on g.PreworkLevelId = pl.Id

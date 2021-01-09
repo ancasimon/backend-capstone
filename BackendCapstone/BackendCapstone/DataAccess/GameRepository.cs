@@ -92,6 +92,7 @@ namespace BackendCapstone.DataAccess
                                                    ,[DateCreated]
                                                    ,[GameIconId]
                                                    ,[PhotoUrl]
+                                                   ,[GamePhotoId]
                                                    ,[Keywords])
                                              OUTPUT INSERTED.Id
                                              VALUES
@@ -108,6 +109,7 @@ namespace BackendCapstone.DataAccess
                                                    ,GETDATE()
                                                    ,@gameIconId
                                                    ,@photoUrl
+                                                   ,@gamePhotoId
                                                    ,@keywords)";
             var parametersForGame = new {
                 name = newGame.Name, 
@@ -121,6 +123,7 @@ namespace BackendCapstone.DataAccess
                 submittedByUserId = userId,
                 gameIconId = newGame.GameIconId,
                 photoUrl = newGame.PhotoUrl,
+                gamePhotoId = newGame.GamePhotoId,
                 keywords = newGame.Keywords,
                 };
 
@@ -212,6 +215,22 @@ namespace BackendCapstone.DataAccess
                     db.Execute(sqlToReallyDeleteGameAgeRecords, parameterForGameToDelete);
                 }
 
+                // also delete related file record for photo file:
+                var sqlForRelatedFileId = @"select f.Id
+                                            from Files f
+                                            join Games g
+                                            on f.Id = g.GamePhotoId
+                                            where g.Id = @gameId";
+                var selectedFileId = db.QueryFirst<int>(sqlForRelatedFileId, parameterForGameToDelete);
+                if (selectedFileId != null)
+                {
+                    var sqlToDeleteFile = @"Delete
+                                            from Files
+                                            where Id = @selectedFileId";
+                    var parameterToDeleteFile = new { selectedFileId };
+                    db.Execute(sqlToDeleteFile, parameterToDeleteFile);
+                }
+
                 var sqlToReallyDeleteGame = @"DELETE
                                           FROM [dbo].[Games]
                                           WHERE Id = @gameId";
@@ -244,6 +263,7 @@ namespace BackendCapstone.DataAccess
                                           ,[WebsiteUrl] = @websiteUrl
                                           ,[GameIconId] = @gameIconId
                                           ,[PhotoUrl] = @photoUrl
+                                          ,[GamePhotoId] = @gamePhotoId
                                           ,[Keywords] = @keywords
                                      WHERE Id = @gameId";
 
@@ -260,6 +280,7 @@ namespace BackendCapstone.DataAccess
                     websiteUrl = updatedGame.WebsiteUrl,
                     gameIconId = updatedGame.GameIconId,
                     photoUrl = updatedGame.PhotoUrl,
+                    gamePhotoId = updatedGame.GamePhotoId,
                     keywords = updatedGame.Keywords,
                 };
                 db.Execute(sqlToUpdateGame, parametersToUpdateGame);

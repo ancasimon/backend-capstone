@@ -9,8 +9,6 @@ namespace BackendCapstone.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        //public List<string> Songs { get; set; }
-        //public List<string> Keywords { get; set; }
         public string Songs { get; set; }
         public string Keywords { get; set; }
         public string Description { get; set; }
@@ -25,6 +23,7 @@ namespace BackendCapstone.Models
         public DateTime DateCreated { get; set; }
         public int GameIconId { get; set; }
         public string PhotoUrl { get; set; }
+        public int GamePhotoId { get; set; }
         public int ImageFileId { get; set; }
 
         // NEWLY ADDED TO THIS MODEL ONLY:

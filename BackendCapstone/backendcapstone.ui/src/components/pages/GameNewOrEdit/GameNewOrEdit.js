@@ -11,6 +11,11 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 
+import FileUpload from '../../shared/FileUpload/FileUpload';
+
+import { baseUrl } from '../../../helpers/constants.json';
+import uploadFile from '../../../helpers/data/fileUpload';
+
 import agesData from '../../../helpers/data/agesData';
 import gameIconsData from '../../../helpers/data/gameIconsData';
 import gamesData from '../../../helpers/data/gamesData';
@@ -33,7 +38,6 @@ class GameNewOrEdit extends React.Component {
     gamePreworkLevel: 1,
     gamePrework: '',
     gameInstructions: '',
-    gamePhoto: '',
     gameCredit: '',
     gameWebsite: '',
     gameIcon: 42,
@@ -41,6 +45,8 @@ class GameNewOrEdit extends React.Component {
     gameSongs: '',
     currentGameId: this.props.match.params.gameid * 1,
     currentGame: {},
+    file: {},
+    gamePhotoId: 0,
   }
 
   componentDidMount() {
@@ -69,12 +75,12 @@ class GameNewOrEdit extends React.Component {
             gamePreworkLevel: currentGameResponse.data.preworkLevelId,
             gamePrework: currentGameResponse.data.prework,
             gameInstructions: currentGameResponse.data.instructions,
-            gamePhoto: currentGameResponse.data.photoUrl,
             gameCredit: currentGameResponse.data.credit,
             gameWebsite: currentGameResponse.data.websiteUrl,
             gameIcon: currentGameResponse.data.gameIconId,
             gameKeywords: currentGameResponse.data.keywords,
             gameSongs: currentGameResponse.data.songs,
+            gamePhotoId: currentGameResponse.data.gamePhotoId,
           });
         })
         .catch((error) => console.error('Could not get current game.', error));
@@ -174,11 +180,6 @@ class GameNewOrEdit extends React.Component {
     this.setState({ gameInstructions: e.target.value });
   }
 
-  changeGamePhoto = (e) => {
-    e.preventDefault();
-    this.setState({ gamePhoto: e.target.value });
-  }
-
   changeGameCredit = (e) => {
     e.preventDefault();
     this.setState({ gameCredit: e.target.value });
@@ -202,15 +203,18 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
       gameKeywords,
       gameSongs,
+      gamePhotoId,
+      file,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
+    } else if (gamePhotoId === 0 && file.lastModifiedDate) {
+      this.validationPhotoSelectedButNotUploaded();
     } else {
       const newGameObject = {
         name: gameName,
@@ -218,7 +222,6 @@ class GameNewOrEdit extends React.Component {
         preworkLevelId: gamePreworkLevel,
         prework: gamePrework,
         instructions: gameInstructions,
-        photoUrl: gamePhoto,
         credit: gameCredit,
         websiteUrl: gameWebsite,
         gameIconId: gameIcon,
@@ -226,6 +229,7 @@ class GameNewOrEdit extends React.Component {
         songs: gameSongs,
         gameInstruments,
         gameAges,
+        gamePhotoId,
       };
       gamesData.addGame(newGameObject)
         .then((newGameResponse) => {
@@ -245,15 +249,19 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
       gameKeywords,
       gameSongs,
+      gamePhotoId,
+      file,
+      fileUploaded,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
+    } else if (file.lastModifiedDate) {
+      this.validationPhotoSelectedButNotUploaded();
     } else {
       const updatedGameObject = {
         name: gameName,
@@ -261,7 +269,6 @@ class GameNewOrEdit extends React.Component {
         preworkLevelId: gamePreworkLevel,
         prework: gamePrework,
         instructions: gameInstructions,
-        photoUrl: gamePhoto,
         credit: gameCredit,
         websiteUrl: gameWebsite,
         gameIconId: gameIcon,
@@ -269,6 +276,7 @@ class GameNewOrEdit extends React.Component {
         songs: gameSongs,
         instrumentIdsForGame: gameInstruments,
         ageIdsForGame: gameAges,
+        gamePhotoId,
       };
       gamesData.updateGame(currentGameId, updatedGameObject)
         .then((updatedGameResponse) => {
@@ -276,6 +284,18 @@ class GameNewOrEdit extends React.Component {
         })
         .catch((error) => console.error('Could not save your changes to this game.', error));
     }
+  }
+
+  validationNoPhotoSelected = () => {
+    Swal.fire('You must first choose a photo to upload.');
+  }
+
+  confirmationPhotoUploaded = () => {
+    Swal.fire('Your photo has been uploaded.');
+  }
+
+  validationPhotoSelectedButNotUploaded = () => {
+    Swal.fire('Please upload the photo you have selected.');
   }
 
   render() {
@@ -291,13 +311,13 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
       gameKeywords,
       gameSongs,
       newGameForm,
+      fileUploaded,
     } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
@@ -321,6 +341,22 @@ class GameNewOrEdit extends React.Component {
     const buildGameIconsList = () => gameIcons.map((icon) => (
       <option key={icon.id} value={icon.id}>{icon.name}</option>
     ));
+
+    const uploadPhotoOnClick = (e) => {
+      e.preventDefault();
+      const { file } = this.state;
+      if (file.lastModifiedDate) {
+        uploadFile.uploadPhoto(file)
+          .then((newPhotoFileResponse) => {
+            console.error('newphotofile', newPhotoFileResponse);
+            this.setState({ gamePhotoId: newPhotoFileResponse.data, file: {} });
+            this.confirmationPhotoUploaded();
+          })
+          .catch((error) => console.error('Unable to upload photo.', error));
+      } else {
+        this.validationNoPhotoSelected();
+      }
+    };
 
     return (
       <div className="GameNew">
@@ -461,16 +497,13 @@ class GameNewOrEdit extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="gamePhoto" sm={2}>Photo URL</Label>
-            <Col sm={10}>
-              <Input
-                type="input"
-                name="photo"
-                id="gamePhoto"
-                value={gamePhoto}
-                onChange={this.changeGamePhoto}
-              />
-            </Col>
+            <FileUpload fileUploaded={fileUploaded} onChange={(file) => this.setState({ file })} />
+            <button onClick={uploadPhotoOnClick} className="mainButtons p-2">Click Here to Upload</button>
+            {
+              (this.state.gamePhotoId !== 0)
+                ? <div><p>Selected Photo: </p><img src={`${baseUrl}/images/${this.state.gamePhotoId}`} alt="game photo" className="userPhoto"/></div>
+                : 'No selected photo.'
+            }
           </FormGroup>
           <FormGroup row>
             <Label for="gameCredit" sm={2}>Credit</Label>

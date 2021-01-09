@@ -6,6 +6,7 @@ import {
   Label,
   Input,
 } from 'reactstrap';
+import Swal from 'sweetalert2';
 
 import FileUpload from '../../shared/FileUpload/FileUpload';
 import MyContributions from '../../shared/MyContributions/MyContributions';
@@ -34,16 +35,29 @@ class Profile extends React.Component {
     this.getUser();
   }
 
+  validationNoFileSelected = () => {
+    Swal.fire('You must first choose a file.');
+  }
+
+  confirmationFileUploaded = () => {
+    Swal.fire('Your photo has been uploaded.');
+  }
+
   render() {
     const { user } = this.state;
 
     const uploadOnClick = () => {
       const { file } = this.state;
-      uploadFile.uploadFile(file)
-        .then((fileIdResponse) => {
-          this.getUser();
-        })
-        .catch((error) => console.error('Unable to upload image file.', error));
+      if (file.lastModifiedDate) {
+        uploadFile.uploadFile(file)
+          .then((fileIdResponse) => {
+            this.confirmationFileUploaded();
+            this.getUser();
+          })
+          .catch((error) => console.error('Unable to upload image file.', error));
+      } else {
+        this.validationNoFileSelected();
+      }
     };
 
     return (

@@ -25,6 +25,7 @@ const gameItemShape = PropTypes.shape({
   websiteUrl: PropTypes.string,
   ageIdsForGame: PropTypes.array,
   instrumentIdsForGame: PropTypes.array,
+  gamePhotoId: PropTypes.number,
 });
 
 export default { gameItemShape };

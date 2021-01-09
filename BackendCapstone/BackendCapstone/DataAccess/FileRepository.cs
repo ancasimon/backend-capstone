@@ -33,6 +33,22 @@ namespace BackendCapstone.DataAccess
             return GetById(newFileId);
         }
 
+        public int AddPhoto(UploadedFile uploadedPhoto)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToUploadNewGamePhoto = @"Insert into Files(FileName,FileContent,FileContentType,FileLength)
+                                            Output inserted.id
+                                            values (@FileName,@FileContent,@FileContentType,@FileLength)";
+            int newGamePhotoId = db.ExecuteScalar<int>(sqlToUploadNewGamePhoto, uploadedPhoto);
+
+            //var sqlToUpdateGameRecord = "Update Games Set GamePhotoId = @gamePhotoId Where Id = @gameId";
+            //var parametersToUpdateGameRecord = new { gamePhotoId = newGamePhotoId };
+            //db.Execute(sqlToUpdateGameRecord, parametersToUpdateGameRecord);
+
+            return newGamePhotoId;
+        }
+
         public UploadedFile GetById(int fileId)
         {
             var sql = @"Select * From Files Where Id = @fileId";
