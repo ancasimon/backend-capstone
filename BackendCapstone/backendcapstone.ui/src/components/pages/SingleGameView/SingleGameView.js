@@ -184,14 +184,14 @@ class SingleGameView extends React.Component {
           </div>
           <div className="row p-3 container">
             {
-            (user.id === selectedGame.submittedByUserId)
+            (authed && user.id === selectedGame.submittedByUserId)
               ? <div className="col-md-3 container m-2 mb-3">
               <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
             </div>
               : ''
             }
             {
-            (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
+            (authed && user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
               ? <div className="col-md-3 container mb-2">
               <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
