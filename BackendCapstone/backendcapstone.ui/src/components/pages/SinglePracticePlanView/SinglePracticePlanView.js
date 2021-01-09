@@ -78,7 +78,7 @@ class SinglePracticePlanView extends React.Component {
           <div className="col-md-9 text-center">
             <h2 className="pageTitle">Practice Plan Details: {selectedPracticePlan.name}</h2>
             <h4>{moment(selectedPracticePlan.startDate).format('L')} - {moment(selectedPracticePlan.endDate).format('L')}</h4>
-            <div className="row">
+            <div className="row d-flex flex-wrap mt-3">
               <div className="col-md-6 buttonDiv text-center">
                 <Link to={`/practiceplans/edit/${practiceplanid}`} className="mainButtons p-2">Edit</Link>
               </div>

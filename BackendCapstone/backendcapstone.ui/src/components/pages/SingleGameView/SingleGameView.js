@@ -175,21 +175,21 @@ class SingleGameView extends React.Component {
           <div className="row p-3 container">
             {
             (user.id === selectedGame.submittedByUserId)
-              ? <div className="col-md-4 container">
-              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2 m-2">Edit</Link>
+              ? <div className="col-md-3 container m-2 mb-3">
+              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
             </div>
               : ''
             }
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
-              ? <div className="col-md-4 container">
-              <button className="mainButtons p-2 m-2" onClick={this.deleteConfirmationMessage}>Delete</button>
+              ? <div className="col-md-3 container mb-2">
+              <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
               : ''
             }
             {
               (authed)
-                ? <div className="col-md-4 container">
+                ? <div className="col-md-3 container">
                 <FormGroup>
                     <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
                       <DropdownToggle caret className="mainButtons p-2">

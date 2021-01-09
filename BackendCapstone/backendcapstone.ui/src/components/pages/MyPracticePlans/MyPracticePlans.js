@@ -34,7 +34,7 @@ class MyPracticePlans extends React.Component {
 
     return (
       <div className="MyPracticePlans container">
-        <div className="row">
+        <div className="row d-flex flex-wrap">
           <div className="col-md-9">
             <h2 className="pageTitle">My Practice Plans</h2>
           </div>
