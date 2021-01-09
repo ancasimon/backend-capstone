@@ -48,7 +48,6 @@ class GameNewOrEdit extends React.Component {
     currentGame: {},
     file: {},
     gamePhotoId: 0,
-    fileUploaded: false,
   }
 
   componentDidMount() {
@@ -267,10 +266,11 @@ class GameNewOrEdit extends React.Component {
       gameSongs,
       gamePhotoId,
       file,
+      fileUploaded,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
-    } else if (gamePhotoId === 0 && file.lastModifiedDate) {
+    } else if (file.lastModifiedDate) {
       this.validationPhotoSelectedButNotUploaded();
     } else {
       const updatedGameObject = {
@@ -329,6 +329,7 @@ class GameNewOrEdit extends React.Component {
       gameKeywords,
       gameSongs,
       newGameForm,
+      fileUploaded,
     } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
@@ -360,7 +361,7 @@ class GameNewOrEdit extends React.Component {
         uploadFile.uploadPhoto(file)
           .then((newPhotoFileResponse) => {
             console.error('newphotofile', newPhotoFileResponse);
-            this.setState({ gamePhotoId: newPhotoFileResponse.data });
+            this.setState({ gamePhotoId: newPhotoFileResponse.data, file: {} });
             this.confirmationPhotoUploaded();
           })
           .catch((error) => console.error('Unable to upload photo.', error));
@@ -520,7 +521,7 @@ class GameNewOrEdit extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <FileUpload onChange={(file) => this.setState({ file })} />
+            <FileUpload fileUploaded={fileUploaded} onChange={(file) => this.setState({ file })} />
             <button onClick={uploadPhotoOnClick} className="mainButtons p-2">Click Here to Upload</button>
             {
               (this.state.gamePhotoId !== 0)
