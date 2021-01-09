@@ -34,6 +34,17 @@ namespace BackendCapstone.Controllers
             return Ok();
         }
 
+        [HttpPost("/games")]
+        public IActionResult UploadGamePhoto()
+        {
+            var fileUploadHelper = new FileUploadHelper();
+            var file = fileUploadHelper.GetFileUploadContent(Request.ContentType, Request.Body);
+
+            _repo.Add(file);
+
+            return Ok();
+        }
+
         //api/images/123
         [HttpGet("{id}")]
         public IActionResult GetFile(int id)

@@ -33,6 +33,31 @@ namespace BackendCapstone.DataAccess
             return GetById(newFileId);
         }
 
+        // overloading the Add method - using only one parameter:
+        public UploadedFile Add(UploadedFile uploadedPhoto)
+        {
+            using var db = new SqlConnection(_connectionString);
+
+            var sqlToUploadNewGamePhoto = @"INSERT INTO [dbo].[GamePhotos]
+                                                       ([FileName]
+                                                       ,[FileContent]
+                                                       ,[FileContentType]
+                                                       ,[FileLength])
+                                                 Output inserted.id
+                                                 VALUES
+                                                       (@fileName
+                                                       ,@fileContent
+                                                       ,@fileContentType
+                                                       ,@fileLength)";
+            int newGamePhotoId = db.ExecuteScalar<int>(sqlToUploadNewGamePhoto, uploadedPhoto);
+
+            var sqlToUpdateGameRecord = "Update Games Set GamePhotoId = @gamePhotoId Where Id = @gameId";
+            var parametersToUpdateGameRecord = new { gamePhotoId = newGamePhotoId };
+            db.Execute(sqlToUpdateGameRecord, parametersToUpdateGameRecord);
+
+            return GetById(newGamePhotoId);
+        }
+
         public UploadedFile GetById(int fileId)
         {
             var sql = @"Select * From Files Where Id = @fileId";

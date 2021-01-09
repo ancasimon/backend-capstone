@@ -11,6 +11,11 @@ import {
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 
+import FileUpload from '../../shared/FileUpload/FileUpload';
+
+import { baseUrl } from '../../../helpers/constants.json';
+import uploadFile from '../../../helpers/data/fileUpload';
+
 import agesData from '../../../helpers/data/agesData';
 import gameIconsData from '../../../helpers/data/gameIconsData';
 import gamesData from '../../../helpers/data/gamesData';
@@ -41,6 +46,7 @@ class GameNewOrEdit extends React.Component {
     gameSongs: '',
     currentGameId: this.props.match.params.gameid * 1,
     currentGame: {},
+    file: {},
   }
 
   componentDidMount() {
@@ -322,6 +328,15 @@ class GameNewOrEdit extends React.Component {
       <option key={icon.id} value={icon.id}>{icon.name}</option>
     ));
 
+    const uploadPhotoOnClick = () => {
+      const { file } = this.state;
+      uploadFile.uploadFile(file)
+        .then(() => {
+          console.error('uploaded file', file);
+        })
+        .catch((error) => console.error('Unable to upload file.', error));
+    };
+
     return (
       <div className="GameNew">
         { newGameForm
@@ -471,6 +486,10 @@ class GameNewOrEdit extends React.Component {
                 onChange={this.changeGamePhoto}
               />
             </Col>
+          </FormGroup>
+          <FormGroup row>
+            <FileUpload onChange={(file) => this.setState({ file })} />
+            <button onClick={uploadPhotoOnClick} className="mainButtons p-2">Click Here to Upload</button>
           </FormGroup>
           <FormGroup row>
             <Label for="gameCredit" sm={2}>Credit</Label>
