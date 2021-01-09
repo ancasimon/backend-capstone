@@ -38,7 +38,6 @@ class GameNewOrEdit extends React.Component {
     gamePreworkLevel: 1,
     gamePrework: '',
     gameInstructions: '',
-    gamePhoto: '',
     gameCredit: '',
     gameWebsite: '',
     gameIcon: 42,
@@ -76,7 +75,6 @@ class GameNewOrEdit extends React.Component {
             gamePreworkLevel: currentGameResponse.data.preworkLevelId,
             gamePrework: currentGameResponse.data.prework,
             gameInstructions: currentGameResponse.data.instructions,
-            gamePhoto: currentGameResponse.data.photoUrl,
             gameCredit: currentGameResponse.data.credit,
             gameWebsite: currentGameResponse.data.websiteUrl,
             gameIcon: currentGameResponse.data.gameIconId,
@@ -182,11 +180,6 @@ class GameNewOrEdit extends React.Component {
     this.setState({ gameInstructions: e.target.value });
   }
 
-  changeGamePhoto = (e) => {
-    e.preventDefault();
-    this.setState({ gamePhoto: e.target.value });
-  }
-
   changeGameCredit = (e) => {
     e.preventDefault();
     this.setState({ gameCredit: e.target.value });
@@ -210,7 +203,6 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
@@ -230,7 +222,6 @@ class GameNewOrEdit extends React.Component {
         preworkLevelId: gamePreworkLevel,
         prework: gamePrework,
         instructions: gameInstructions,
-        photoUrl: gamePhoto,
         credit: gameCredit,
         websiteUrl: gameWebsite,
         gameIconId: gameIcon,
@@ -258,7 +249,6 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
@@ -279,7 +269,6 @@ class GameNewOrEdit extends React.Component {
         preworkLevelId: gamePreworkLevel,
         prework: gamePrework,
         instructions: gameInstructions,
-        photoUrl: gamePhoto,
         credit: gameCredit,
         websiteUrl: gameWebsite,
         gameIconId: gameIcon,
@@ -322,7 +311,6 @@ class GameNewOrEdit extends React.Component {
       gamePreworkLevel,
       gamePrework,
       gameInstructions,
-      gamePhoto,
       gameCredit,
       gameWebsite,
       gameIcon,
@@ -505,18 +493,6 @@ class GameNewOrEdit extends React.Component {
                 id="gameInstructions"
                 value={gameInstructions}
                 onChange={this.changeGameInstructions}
-              />
-            </Col>
-          </FormGroup>
-          <FormGroup row>
-            <Label for="gamePhoto" sm={2}>Photo URL</Label>
-            <Col sm={10}>
-              <Input
-                type="input"
-                name="photo"
-                id="gamePhoto"
-                value={gamePhoto}
-                onChange={this.changeGamePhoto}
               />
             </Col>
           </FormGroup>

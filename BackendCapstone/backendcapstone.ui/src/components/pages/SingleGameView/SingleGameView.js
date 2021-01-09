@@ -210,7 +210,11 @@ class SingleGameView extends React.Component {
         <div className="container">
           <div className="row justify-content-around">
             <div className="col col-md-6">
-              <img src={selectedGame.photoUrl} alt="Photo of game in action" className="gameImage" />
+            {
+              (selectedGame.gamePhotoId)
+                ? <img src={`${baseUrl}/images/${selectedGame.gamePhotoId}`} alt="game photo" className="gameImage"/>
+                : ''
+            }
             </div>
             <div className="col-md-6">
             <h5>{selectedGame.description}</h5>
