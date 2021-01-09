@@ -51,6 +51,8 @@ class SingleGameView extends React.Component {
     practicePlansModal: false,
     selectedPracticePlanId: 0,
     userPracticePlans: [],
+    credit: '',
+    websiteUrl: '',
   }
 
   buildSingleGameView = () => {
@@ -62,6 +64,12 @@ class SingleGameView extends React.Component {
           instrumentsForGame: singleGameResponse.data.instrumentsForGame,
           agesForGame: singleGameResponse.data.agesForGame,
         });
+        if (singleGameResponse.data.credit == null) {
+          this.setState({ credit: '' });
+        } else { this.setState({ credit: singleGameResponse.data.credit }); }
+        if (singleGameResponse.data.websiteUrl == null) {
+          this.setState({ websiteUrl: '' });
+        } else { this.setState({ websiteUrl: singleGameResponse.data.websiteUrl }); }
       })
       .catch((error) => console.error('Could not get this game.', error));
   }
@@ -138,6 +146,8 @@ class SingleGameView extends React.Component {
       userPracticePlans,
       selectedPracticePlanId,
       practicePlansDropdownOpen,
+      credit,
+      websiteUrl,
     } = this.state;
     const { user, authed } = this.props;
 
@@ -175,21 +185,21 @@ class SingleGameView extends React.Component {
           <div className="row p-3 container">
             {
             (user.id === selectedGame.submittedByUserId)
-              ? <div className="col-md-4 container">
-              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2 m-2">Edit</Link>
+              ? <div className="col-md-3 container m-2 mb-3">
+              <Link to={`/games/edit/${selectedGameId}`} className="mainButtons p-2">Edit</Link>
             </div>
               : ''
             }
             {
             (user.id === selectedGame.submittedByUserId && selectedGame.hasAssociatedPracticePlanGames === false)
-              ? <div className="col-md-4 container">
-              <button className="mainButtons p-2 m-2" onClick={this.deleteConfirmationMessage}>Delete</button>
+              ? <div className="col-md-3 container mb-2">
+              <button className="mainButtons p-2" onClick={this.deleteConfirmationMessage}>Delete</button>
             </div>
               : ''
             }
             {
               (authed)
-                ? <div className="col-md-4 container">
+                ? <div className="col-md-3 container">
                 <FormGroup>
                     <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
                       <DropdownToggle caret className="mainButtons p-2">
@@ -246,15 +256,15 @@ class SingleGameView extends React.Component {
             </div>
           </div>
           {
-            selectedGame.credit != '' || selectedGame.websiteUrl != null
+            credit != '' || websiteUrl != ''
               ? <div className="credit">
                 {
-                selectedGame.credit != ''
+                credit != ''
                   ? <h6>Credit: {selectedGame.credit}</h6>
                   : ''
                 }
                 {
-              selectedGame.websiteUrl != null
+              websiteUrl != ''
                 ? <a href={selectedGame.websiteUrl} target="_blank"><h6>Click here to visit the website!</h6></a>
                 : ''
                 }

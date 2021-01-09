@@ -35,12 +35,16 @@ class Home extends React.Component {
         <div className="container stats">
           <div className="row d-flex flex-wrap">
             <div className="col-md-6">
-              <h3>Latest Games</h3>
-              <ChartLatestGames />
+              <h3>New Arrivals</h3>
+              <div>
+                <ChartLatestGames />
+              </div>
             </div>
             <div className="col-md-6">
-              <h3>Most Popular Games</h3>
-              <PieChartPopularGames />
+              <h3>Top 10</h3>
+              <div>
+                <PieChartPopularGames />
+              </div>
             </div>
           </div>
         </div>
