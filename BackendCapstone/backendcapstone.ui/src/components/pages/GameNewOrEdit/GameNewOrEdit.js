@@ -48,6 +48,7 @@ class GameNewOrEdit extends React.Component {
     currentGame: {},
     file: {},
     gamePhotoId: 0,
+    fileUploaded: false,
   }
 
   componentDidMount() {
@@ -217,9 +218,12 @@ class GameNewOrEdit extends React.Component {
       gameKeywords,
       gameSongs,
       gamePhotoId,
+      file,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
+    } else if (gamePhotoId === 0 && file.lastModifiedDate) {
+      this.validationPhotoSelectedButNotUploaded();
     } else {
       const newGameObject = {
         name: gameName,
@@ -262,9 +266,12 @@ class GameNewOrEdit extends React.Component {
       gameKeywords,
       gameSongs,
       gamePhotoId,
+      file,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
+    } else if (gamePhotoId === 0 && file.lastModifiedDate) {
+      this.validationPhotoSelectedButNotUploaded();
     } else {
       const updatedGameObject = {
         name: gameName,
@@ -296,6 +303,10 @@ class GameNewOrEdit extends React.Component {
 
   confirmationPhotoUploaded = () => {
     Swal.fire('Your photo has been uploaded.');
+  }
+
+  validationPhotoSelectedButNotUploaded = () => {
+    Swal.fire('Please upload the photo you have selected.');
   }
 
   render() {
@@ -351,7 +362,6 @@ class GameNewOrEdit extends React.Component {
             console.error('newphotofile', newPhotoFileResponse);
             this.setState({ gamePhotoId: newPhotoFileResponse.data });
             this.confirmationPhotoUploaded();
-            // this.buildNewGameForm();
           })
           .catch((error) => console.error('Unable to upload photo.', error));
       } else {
@@ -512,6 +522,11 @@ class GameNewOrEdit extends React.Component {
           <FormGroup row>
             <FileUpload onChange={(file) => this.setState({ file })} />
             <button onClick={uploadPhotoOnClick} className="mainButtons p-2">Click Here to Upload</button>
+            {
+              (this.state.gamePhotoId !== 0)
+                ? <div><p>Selected Photo: </p><img src={`${baseUrl}/images/${this.state.gamePhotoId}`} alt="game photo" className="userPhoto"/></div>
+                : 'No selected photo.'
+            }
           </FormGroup>
           <FormGroup row>
             <Label for="gameCredit" sm={2}>Credit</Label>
