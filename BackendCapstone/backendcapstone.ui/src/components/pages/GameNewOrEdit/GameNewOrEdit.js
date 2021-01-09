@@ -47,6 +47,7 @@ class GameNewOrEdit extends React.Component {
     currentGameId: this.props.match.params.gameid * 1,
     currentGame: {},
     file: {},
+    gamePhotoId: 0,
   }
 
   componentDidMount() {
@@ -81,6 +82,7 @@ class GameNewOrEdit extends React.Component {
             gameIcon: currentGameResponse.data.gameIconId,
             gameKeywords: currentGameResponse.data.keywords,
             gameSongs: currentGameResponse.data.songs,
+            gamePhotoId: currentGameResponse.data.gamePhotoId,
           });
         })
         .catch((error) => console.error('Could not get current game.', error));
@@ -214,6 +216,7 @@ class GameNewOrEdit extends React.Component {
       gameIcon,
       gameKeywords,
       gameSongs,
+      gamePhotoId,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
@@ -232,6 +235,7 @@ class GameNewOrEdit extends React.Component {
         songs: gameSongs,
         gameInstruments,
         gameAges,
+        gamePhotoId,
       };
       gamesData.addGame(newGameObject)
         .then((newGameResponse) => {
@@ -257,6 +261,7 @@ class GameNewOrEdit extends React.Component {
       gameIcon,
       gameKeywords,
       gameSongs,
+      gamePhotoId,
     } = this.state;
     if (gameName === '') {
       this.validationAlert();
@@ -275,6 +280,7 @@ class GameNewOrEdit extends React.Component {
         songs: gameSongs,
         instrumentIdsForGame: gameInstruments,
         ageIdsForGame: gameAges,
+        gamePhotoId,
       };
       gamesData.updateGame(currentGameId, updatedGameObject)
         .then((updatedGameResponse) => {
@@ -282,6 +288,14 @@ class GameNewOrEdit extends React.Component {
         })
         .catch((error) => console.error('Could not save your changes to this game.', error));
     }
+  }
+
+  validationNoPhotoSelected = () => {
+    Swal.fire('You must first choose a photo to upload.');
+  }
+
+  confirmationPhotoUploaded = () => {
+    Swal.fire('Your photo has been uploaded.');
   }
 
   render() {
@@ -328,11 +342,21 @@ class GameNewOrEdit extends React.Component {
       <option key={icon.id} value={icon.id}>{icon.name}</option>
     ));
 
-    const uploadPhotoOnClick = () => {
+    const uploadPhotoOnClick = (e) => {
+      e.preventDefault();
       const { file } = this.state;
-      uploadFile.uploadFile(file)
-        .then()
-        .catch((error) => console.error('Unable to upload photo.', error));
+      if (file.lastModifiedDate) {
+        uploadFile.uploadPhoto(file)
+          .then((newPhotoFileResponse) => {
+            console.error('newphotofile', newPhotoFileResponse);
+            this.setState({ gamePhotoId: newPhotoFileResponse.data });
+            this.confirmationPhotoUploaded();
+            // this.buildNewGameForm();
+          })
+          .catch((error) => console.error('Unable to upload photo.', error));
+      } else {
+        this.validationNoPhotoSelected();
+      }
     };
 
     return (

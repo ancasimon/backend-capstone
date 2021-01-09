@@ -13,4 +13,16 @@ const uploadFile = (file) => new Promise((resolve, reject) => {
     .catch((error) => reject(error));
 });
 
-export default { uploadFile };
+const uploadPhoto = (file) => new Promise((resolve, reject) => {
+  const form = new FormData();
+  form.append('file', file);
+
+  axios.post(`${baseUrl}/images/games`, form)
+    .then((fileResponse) => {
+      resolve(fileResponse);
+      console.error('filerespo in data file', fileResponse);
+    })
+    .catch((error) => reject(error));
+});
+
+export default { uploadFile, uploadPhoto };

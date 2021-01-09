@@ -90,7 +90,7 @@ namespace BackendCapstone.DataAccess
                                     AND ga.AgeId IN @selectedAges
                                     AND ginst.InstrumentId IN @selectedInstruments
                                     AND g.Keywords like '%' + @searchInput + '%'
-                                    group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.Keywords, gi.Id, gi.IconUrl, gi.Html
+                                    group by g.Name, g.Id, g.IsActive, g.Songs, g.Description, g.PreworkLevelId, pl.Id, pl.Name, pl.IconUrl, g.Prework, g.Instructions, g.Credit, g.WebsiteUrl,g.SubmittedByUserId, u.FirstName, u.LastName, g.DateCreated, g.GameIconId, g.PhotoUrl, g.GamePhotoId, g.Keywords, gi.Id, gi.IconUrl, gi.Html
                                     order by g.Name";
             var parametersForFilters = new { selectedAges, selectedInstruments, selectedPreworkLevels, searchInput = (searchInput ?? "") };
             var filteredGames = db.Query<GameWithMetadata>(sqlForFilteredListOfGames, parametersForFilters);
