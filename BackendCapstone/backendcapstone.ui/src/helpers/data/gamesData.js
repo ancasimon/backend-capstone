@@ -20,6 +20,7 @@ const getLatestGames = () => new Promise((resolve, reject) => {
 const getMostPopularGames = () => new Promise((resolve, reject) => {
   axios.get(`${baseUrl}/games/popular`)
     .then((mostPopularGamesResponse) => {
+      console.error('most po games respo in data file', mostPopularGamesResponse);
       resolve(mostPopularGamesResponse.data);
     })
     .catch((error) => reject(error));

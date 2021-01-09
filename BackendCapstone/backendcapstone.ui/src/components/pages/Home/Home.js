@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import PieChartPopularGames from '../../shared/PieChartPopularGames/PieChartPopularGames';
+
 import authData from '../../../helpers/data/authData';
 import gamesData from '../../../helpers/data/gamesData';
 import usersData from '../../../helpers/data/usersData';
@@ -18,7 +20,6 @@ class Home extends React.Component {
 
   state = {
     latestGames: [],
-    mostPopularGames: [],
   }
 
   getLatestGames = () => {
@@ -29,17 +30,8 @@ class Home extends React.Component {
       .catch((error) => console.error('Could not get latest games.', error));
   }
 
-  getMostPopularGames = () => {
-    gamesData.getMostPopularGames()
-      .then((mostPopularGamesResponse) => {
-        this.setState({ mostPopularGames: mostPopularGamesResponse });
-      })
-      .catch((error) => console.error('Could not get most mopoular games.', error));
-  }
-
   componentDidMount() {
     this.getLatestGames();
-    this.getMostPopularGames();
   }
 
   render() {
@@ -47,10 +39,6 @@ class Home extends React.Component {
     const { latestGames, mostPopularGames } = this.state;
 
     const buildLatestGames = () => latestGames.map((game) => (
-      <Link to={`/games/${game.id}`} gameId={game.id}>{game.name}<br /></Link>
-    ));
-
-    const buildMostPopularGames = () => mostPopularGames.map((game) => (
       <Link to={`/games/${game.id}`} gameId={game.id}>{game.name}<br /></Link>
     ));
 
@@ -62,7 +50,7 @@ class Home extends React.Component {
         <p>We're glad you're here!</p>
         <h6>Go ahead, check out our <Link to='/games'>database of fun games</Link> for the young musicians in your family.</h6>
         <h6>
-          <Link to='/register'>Register</Link> with us and you can take your practice planning to a next level - and will you be glad you did!
+          <Link to='/register'>Register</Link> with us and you can take your practice planning to the next level - and will you be glad you did!
         </h6>
         <div className="container stats">
           <div className="row d-flex flex-wrap">
@@ -72,7 +60,7 @@ class Home extends React.Component {
             </div>
             <div className="col-md-6">
               <h3>Most Popular Games</h3>
-              {buildMostPopularGames()}
+              <PieChartPopularGames />
             </div>
           </div>
         </div>
