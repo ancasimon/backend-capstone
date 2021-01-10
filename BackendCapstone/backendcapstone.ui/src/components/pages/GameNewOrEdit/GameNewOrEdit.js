@@ -139,8 +139,9 @@ class GameNewOrEdit extends React.Component {
 
   changeGameIcon = (e) => {
     e.preventDefault();
-    console.error('e.target', e.target.value);
-    this.setState({ gameIcon: e.target.value * 1, selectedIconUrl: e.target.src });
+    console.error('e.target', e.target.attributes.value);
+    const newIconid = e.target.attributes.value.value * 1;
+    this.setState({ gameIcon: newIconid, selectedIconUrl: e.target.src });
     this.toggleIconsDropdown();
   }
 
@@ -353,9 +354,9 @@ class GameNewOrEdit extends React.Component {
       <option key={level.id} value={level.id}>{level.name}</option>
     ));
 
-    const buildGameIconsList = () => this.state.gameIcons.map((icon) => (
+    const buildGameIconsList = () => this.state.gameIcons.map((item) => (
       // <DropdownItem key={icon.id} className="container" value={icon.id} icon={icon} onClick={this.changeGameIcon} src={icon.iconUrl}><img src={icon.iconUrl} alt="icon link" className="icon" /></DropdownItem>
-      <img src={icon.iconUrl} alt="icon path" className="icon" key={icon.id} value={icon.id} onClick={this.changeGameIcon} />
+      <img src={item.iconUrl} alt="icon path" className="icon" key={item.id} value={item.id} onClick={this.changeGameIcon} />
     ));
 
     const uploadPhotoOnClick = (e) => {
