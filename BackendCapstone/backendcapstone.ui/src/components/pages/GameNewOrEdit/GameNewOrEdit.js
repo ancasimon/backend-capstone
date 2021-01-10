@@ -139,7 +139,6 @@ class GameNewOrEdit extends React.Component {
 
   changeGameIcon = (e) => {
     e.preventDefault();
-    console.error('e.target', e.target.attributes.value);
     const newIconid = e.target.attributes.value.value * 1;
     this.setState({ gameIcon: newIconid, selectedIconUrl: e.target.src });
     this.toggleIconsDropdown();
