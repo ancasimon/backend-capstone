@@ -26,7 +26,7 @@ class ChartLatestGames extends React.Component {
   render() {
     const { data } = this.state;
     const buildLatestGames = () => data.map((entry) => (
-      <Link to={`/games/${entry.id}`} gameId={entry.id} class="orangeList">{entry.name}: {moment(entry.dateCreated).format('L')}<br /></Link>
+      <Link to={`/games/${entry.id}`} key={entry.id} gameid={entry.id} className="orangeList">{entry.name}: {moment(entry.dateCreated).format('L')}<br /></Link>
     ));
 
     return (
