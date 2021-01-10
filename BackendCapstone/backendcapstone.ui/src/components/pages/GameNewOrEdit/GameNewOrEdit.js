@@ -8,6 +8,10 @@ import {
   Label,
   Input,
   FormText,
+  Dropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
 } from 'reactstrap';
 import Swal from 'sweetalert2';
 
@@ -47,6 +51,8 @@ class GameNewOrEdit extends React.Component {
     currentGame: {},
     file: {},
     gamePhotoId: 0,
+    iconsDropdownOpen: false,
+    selectedIconUrl: '',
   }
 
   componentDidMount() {
@@ -81,6 +87,7 @@ class GameNewOrEdit extends React.Component {
             gameKeywords: currentGameResponse.data.keywords,
             gameSongs: currentGameResponse.data.songs,
             gamePhotoId: currentGameResponse.data.gamePhotoId,
+            selectedIconUrl: currentGameResponse.data.gameIconUrl,
           });
         })
         .catch((error) => console.error('Could not get current game.', error));
@@ -115,6 +122,10 @@ class GameNewOrEdit extends React.Component {
       });
   }
 
+  toggleIconsDropdown = () => {
+    this.setState({ iconsDropdownOpen: !this.state.iconsDropdownOpen });
+  }
+
   // change functions for the fields on the new game form:
   changeGameName = (e) => {
     e.preventDefault();
@@ -128,7 +139,9 @@ class GameNewOrEdit extends React.Component {
 
   changeGameIcon = (e) => {
     e.preventDefault();
-    this.setState({ gameIcon: e.target.value * 1 });
+    const newIconid = e.target.attributes.value.value * 1;
+    this.setState({ gameIcon: newIconid, selectedIconUrl: e.target.src });
+    this.toggleIconsDropdown();
   }
 
   changeInstruments = (event) => {
@@ -318,6 +331,8 @@ class GameNewOrEdit extends React.Component {
       gameSongs,
       newGameForm,
       fileUploaded,
+      iconsDropdownOpen,
+      selectedIconUrl,
     } = this.state;
 
     const buildAgesList = () => agesList.map((age) => (
@@ -338,8 +353,9 @@ class GameNewOrEdit extends React.Component {
       <option key={level.id} value={level.id}>{level.name}</option>
     ));
 
-    const buildGameIconsList = () => gameIcons.map((icon) => (
-      <option key={icon.id} value={icon.id}>{icon.name}</option>
+    const buildGameIconsList = () => this.state.gameIcons.map((item) => (
+      // <DropdownItem key={icon.id} className="container" value={icon.id} icon={icon} onClick={this.changeGameIcon} src={icon.iconUrl}><img src={icon.iconUrl} alt="icon link" className="icon" /></DropdownItem>
+      <img src={item.iconUrl} alt="icon path" className="icon" key={item.id} value={item.id} onClick={this.changeGameIcon} />
     ));
 
     const uploadPhotoOnClick = (e) => {
@@ -391,21 +407,24 @@ class GameNewOrEdit extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="gameIcon" sm={2}>Select an icon:</Label>
-            <Col sm={10}>
-              <Input
-                type="select"
-                name="icon"
-                id="gameIcon"
-                value={gameIcon}
-                onChange={this.changeGameIcon}
-              >
-                {buildGameIconsList()}
-              </Input>
+          <Label for="selectedIcon" sm={2}>Select an Icon:</Label>
+          <Dropdown direction="right" isOpen={iconsDropdownOpen} toggle={this.toggleIconsDropdown} sm={10}>
+            <DropdownToggle className="container mainButtons p-2" caret>
+              Click Here
+              </DropdownToggle>
+            <DropdownMenu className="container">
+              {buildGameIconsList()}
+            </DropdownMenu>
+          </Dropdown>
+          </FormGroup>
+          <FormGroup row>
+            <Label for="selectedIcon" sm={2}>Selected Icon:</Label>
+            <Col sm={1}>
+              <img src={selectedIconUrl} className="icon" />
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="gameInstruments" sm={2}>Select instruments:</Label>
+            <Label for="gameInstruments" sm={2}>Select Instruments:</Label>
             <Col sm={10}>
               <Input
                 type="select"
@@ -420,7 +439,7 @@ class GameNewOrEdit extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="gameAges" sm={2}>Select student ages:</Label>
+            <Label for="gameAges" sm={2}>Select Student Ages:</Label>
             <Col sm={10}>
               <Input
                 type="select"
@@ -459,7 +478,7 @@ class GameNewOrEdit extends React.Component {
             </Col>
           </FormGroup>
           <FormGroup row>
-            <Label for="gamePreworkLevel" sm={2}>Select the prework level:</Label>
+            <Label for="gamePreworkLevel" sm={2}>Select Prework Level:</Label>
             <Col sm={10}>
               <Input
                 type="select"
