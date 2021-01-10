@@ -110,7 +110,7 @@ class SingleGameView extends React.Component {
   }
 
   // functions supporting the ability to add this game to an existing practice plan:
-  togglePracticePlanssDropdown = () => {
+  togglePracticePlansDropdown = () => {
     this.setState({ practicePlansDropdownOpen: !this.state.practicePlansDropdownOpen });
   }
 
@@ -201,7 +201,7 @@ class SingleGameView extends React.Component {
               (authed)
                 ? <div className="col-md-3 container">
                 <FormGroup>
-                    <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlanssDropdown}>
+                    <Dropdown isOpen={practicePlansDropdownOpen} toggle={this.togglePracticePlansDropdown}>
                       <DropdownToggle caret className="mainButtons p-2">
                         Add to Practice Plan
                       </DropdownToggle>

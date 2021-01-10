@@ -27,7 +27,7 @@ class PieChartPopularGames extends PureComponent {
     const { data } = this.state;
 
     return (
-      <div style={{ width: '150%', height: 275 }} class="PieChartPopularGames">
+      <div style={{ width: '150%', height: 275 }} className="PieChartPopularGames">
       <ResponsiveContainer>
         <PieChart>
           <Pie dataKey="value" data={data} fill="green" label={(entry) => entry.name} />
