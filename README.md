@@ -3,6 +3,8 @@
 
 [And watch the demo here!](https://www.loom.com/share/0ee8e1f1d49e478eab1c805aa5038d86?sharedAppSource=personal_library)
 
+[And if you want to see the behind-the-scenes techy details of how I built it, you can do that here!](https://www.loom.com/share/1975b00255b54b199431d1bc9e3818c2)
+
 ## Description
 "The potential of every child is unlimited," said Dr. Shinichi Suzuki, founder of the Suzuki music pedagogy. Their potential is, indeed, but not their attention span! Enter ***Unlimited***, the app that will help you keep young musicians engaged and consistent in their practices.
 
